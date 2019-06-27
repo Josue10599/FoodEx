@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bottom_nav_titulo_clientes">Clientes</string>
+    <string name="bottom_nav_titulo_produtos">Produtos</string>
+    <string name="bottom_nav_titulo_perfil">Perfil</string>
+    <string name="bottom_nav_titulo_vendas">Vendas</string>
+    <string name="fragment_cliente_devedores">Devedores</string>
+    <string name="fragment_cliente_todos">Todos</string>
+    <string name="item_cliente_foto">Foto do usuário.</string>
+</resources>

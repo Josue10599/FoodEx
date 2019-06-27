@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">FoodEx</string>
+    <string name="app_name" translatable="false">FoodEx</string>
+    <string name="bottom_nav_titulo_clientes">Customers</string>
+    <string name="bottom_nav_titulo_produtos">Products</string>
+    <string name="bottom_nav_titulo_vendas">Sales</string>
+    <string name="bottom_nav_titulo_perfil">Profile</string>
+    <string name="fragment_cliente_todos">All</string>
+    <string name="fragment_cliente_devedores">Debtors</string>
+    <string name="item_cliente_foto">User photo.</string>
 </resources>
