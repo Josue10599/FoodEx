@@ -74,7 +74,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
         private TextView telefoneCliente;
         private TextView devendoCliente;
 
-        public ClienteViewHolder(@NonNull final View itemView,) {
+        public ClienteViewHolder(@NonNull final View itemView) {
             super(itemView);
             findView(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
