@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_nav_clients_cliente"
+        android:title="@string/bottom_nav_titulo_clientes"
+        android:icon="@drawable/ic_group_person_clientes"/>
+
+    <item
+        android:id="@+id/bottom_nav_products_produto"
+        android:title="@string/bottom_nav_titulo_produtos"
+        android:icon="@drawable/ic_bandeija_fechada"/>
+
+    <item
+        android:id="@+id/bottom_nav_sales_venda"
+        android:title="@string/bottom_nav_titulo_vendas"
+        android:icon="@drawable/ic_sifrao_dinheiro"/>
+
+    <item
+        android:id="@+id/bottom_nav_user_perfil"
+        android:title="@string/bottom_nav_titulo_perfil"
+        android:icon="@drawable/ic_perfil_usuario"/>
+
+</menu>
