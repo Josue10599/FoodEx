@@ -2,7 +2,8 @@ package com.fulltime.foodex.model;
 
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+
+import static java.math.RoundingMode.HALF_UP;
 
 public class Cliente {
     private String nome;
@@ -44,7 +45,7 @@ public class Cliente {
     }
 
     public void setValor(String valor) {
-        this.valor = new BigDecimal(valor).setScale(2, RoundingMode.HALF_UP);
+        this.valor = new BigDecimal(valor).setScale(2, HALF_UP);
     }
 
     public String getValor() {

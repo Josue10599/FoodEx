@@ -2,10 +2,11 @@ package com.fulltime.foodex.model;
 
 import java.math.BigDecimal;
 
+import static java.math.RoundingMode.HALF_UP;
+
 public class Produto {
     private String nome;
     private BigDecimal valor;
-
 
     public String getNome() {
         return nome;
@@ -15,11 +16,11 @@ public class Produto {
         this.nome = nome;
     }
 
-    public BigDecimal getValor() {
-        return valor;
+    public String getValor() {
+        return valor.toString();
     }
 
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
+    public void setValor(String valor) {
+        this.valor = new BigDecimal(valor).setScale(2, HALF_UP);
     }
 }
