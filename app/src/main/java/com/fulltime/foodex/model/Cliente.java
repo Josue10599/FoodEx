@@ -53,6 +53,6 @@ public class Cliente {
     }
 
     public String getPrimeiraLetra() {
-        return getNome().toUpperCase().substring(0,1);
+        return getNome().substring(0,1).toUpperCase();
     }
 }
