@@ -1,12 +1,15 @@
 package com.fulltime.foodex.model;
 
 
+import androidx.annotation.NonNull;
+
 import java.math.BigDecimal;
 
 import static java.math.RoundingMode.HALF_UP;
 
 public class Cliente {
     private String nome;
+    private String sobrenome;
     private String telefone;
     private String email;
     private String cpf;
@@ -52,7 +55,21 @@ public class Cliente {
         return valor.toString();
     }
 
-    public String getPrimeiraLetra() {
+    @NonNull
+    public String getPrimeiraLetraNome() {
         return getNome().substring(0,1).toUpperCase();
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public String getPrimeiraLetraSobrenome() {
+        if(sobrenome != null) return getSobrenome().substring(0,1).toUpperCase();
+        return "";
     }
 }

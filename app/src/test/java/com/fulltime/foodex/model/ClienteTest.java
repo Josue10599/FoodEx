@@ -1,12 +1,10 @@
 package com.fulltime.foodex.model;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.regex.Matcher;
-
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 
 public class ClienteTest {
 
@@ -14,7 +12,14 @@ public class ClienteTest {
     public void deve_DevolverAPrimeiraLetraDoNomeDoCliente_QuandoSeuNomeEhCadastrado() {
         Cliente cliente = new Cliente();
         cliente.setNome("Josue");
-        Assert.assertThat(cliente.getPrimeiraLetra(), is(equalTo("J")));
+        Assert.assertThat(cliente.getPrimeiraLetraNome(), is(equalTo("J")));
+    }
+
+    @Test
+    public void deve_DevolverAPrimeiraLetraDoSobrenomeDoCliente_QuandoSeuSobrenomeEhCadastrado() {
+        Cliente cliente = new Cliente();
+        cliente.setSobrenome("Lopes");
+        Assert.assertThat(cliente.getPrimeiraLetraSobrenome(), is(equalTo("L")));
     }
 
 }

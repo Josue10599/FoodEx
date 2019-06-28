@@ -95,7 +95,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
         public void bindView(@NonNull Cliente cliente) {
             ColorGenerator colorGenerator = ColorGenerator.MATERIAL;
             imagemCliente.setImageDrawable(TextDrawable.builder()
-                    .buildRect(cliente.getPrimeiraLetra(), colorGenerator.getRandomColor()));
+                    .buildRect(cliente.getPrimeiraLetraNome(), colorGenerator.getRandomColor()));
             nomeCliente.setText(cliente.getNome());
             telefoneCliente.setText(cliente.getTelefone());
             devendoCliente.setText(cliente.getValor());

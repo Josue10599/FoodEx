@@ -7,4 +7,6 @@
     <string name="fragment_cliente_todos">All</string>
     <string name="fragment_cliente_devedores">Debtors</string>
     <string name="item_cliente_foto">User photo.</string>
+    <string name="adicionar_cliente">Client</string>
+    <string name="adicionar_produtos">Product</string>
 </resources>
