@@ -8,7 +8,6 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/keyline_5"
         android:padding="@dimen/keyline_2"
         android:text="@string/bottom_nav_titulo_perfil"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3" />

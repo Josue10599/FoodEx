@@ -6,62 +6,84 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/item_venda_estado_venda_color"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
-        android:layout_height="15dp"
-        android:src="@color/color_nao_pago"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/keyline_4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/item_venda_nome_produto"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/keyline_1"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintEnd_toStartOf="@+id/item_venda_estado_venda"
-        app:layout_constraintBottom_toBottomOf="@id/item_venda_estado_venda"
-        app:layout_constraintTop_toTopOf="@id/item_venda_estado_venda"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Pizza" />
+            <ImageView
+                android:id="@+id/item_venda_estado_venda_color"
+                android:layout_width="0dp"
+                android:layout_height="15dp"
+                android:src="@color/color_nao_pago"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/item_venda_estado_venda"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintEnd_toStartOf="@id/item_venda_valor_produto"
-        app:layout_constraintStart_toEndOf="@id/item_venda_nome_produto"
-        app:layout_constraintTop_toBottomOf="@id/item_venda_estado_venda_color"
-        tools:text="NÃO PAGO" />
+            <TextView
+                android:id="@+id/item_venda_estado_venda"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/keyline_2"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/item_venda_nome_produto"
+                app:layout_constraintTop_toBottomOf="@id/item_venda_estado_venda_color"
+                tools:text="NÃO PAGO" />
 
-    <TextView
-        android:id="@+id/item_venda_valor_produto"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/keyline_2"
-        android:textAlignment="textEnd"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintBottom_toBottomOf="@id/item_venda_estado_venda"
-        app:layout_constraintTop_toTopOf="@id/item_venda_estado_venda"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/item_venda_estado_venda"
-        tools:text="R$ 100,00" />
+            <TextView
+                android:id="@+id/item_venda_nome_produto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/keyline_1"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+                android:textAlignment="textEnd"
+                app:layout_constraintBottom_toBottomOf="@id/item_venda_estado_venda"
+                app:layout_constraintEnd_toStartOf="@+id/item_venda_valor_produto"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintStart_toEndOf="@+id/item_venda_estado_venda"
+                app:layout_constraintTop_toTopOf="@id/item_venda_estado_venda"
+                tools:text="Pizza" />
 
-    <TextView
-        android:id="@+id/item_venda_nome_cliente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:layout_constraintEnd_toEndOf="@+id/item_venda_valor_produto"
-        app:layout_constraintStart_toStartOf="@+id/item_venda_nome_produto"
-        app:layout_constraintTop_toBottomOf="@+id/item_venda_estado_venda"
-        tools:text="Josue" />
+            <TextView
+                android:id="@+id/item_venda_valor_produto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/keyline_2"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+                app:layout_constraintBottom_toBottomOf="@+id/item_venda_nome_produto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/item_venda_nome_produto"
+                app:layout_constraintTop_toTopOf="@+id/item_venda_nome_produto"
+                tools:text="R$ 100,00" />
+
+            <TextView
+                android:id="@+id/item_venda_nome_cliente"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/item_venda_valor_produto"
+                app:layout_constraintStart_toStartOf="@+id/item_venda_nome_produto"
+                app:layout_constraintTop_toBottomOf="@+id/item_venda_nome_produto"
+                tools:text="Josue" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

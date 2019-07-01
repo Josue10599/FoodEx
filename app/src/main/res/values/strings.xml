@@ -9,4 +9,10 @@
     <string name="item_cliente_foto">User photo.</string>
     <string name="adicionar_cliente">Client</string>
     <string name="adicionar_produtos">Product</string>
+    <string name="add_new_cliente">Adding Client</string>
+    <string name="add_cliente_nome">Name</string>
+    <string name="add_cliente_telefone">Phone</string>
+    <string name="add_cliente_cpf" translatable="false">CPF</string>
+    <string name="add_cliente_sobrenome">Last Name</string>
+    <string name="add_cliente_email" translatable="false">E-mail</string>
 </resources>
