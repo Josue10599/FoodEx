@@ -1,5 +1,6 @@
 package com.fulltime.foodex.recyclerview.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,19 @@ import com.fulltime.foodex.R;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.recyclerview.adapter.listener.OnItemClickListener;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.ClienteViewHolder>{
-    private final List<Cliente> listaClientes;
+    private List<Cliente> listaClientes;
+    private Context context;
     private OnItemClickListener onItemClickListener;
 
+    public ClientesAdapter(Context context,List<Cliente> listaClientes) {
+        this.listaClientes = listaClientes;
+        this.context = context;
+    }
     public ClientesAdapter(List<Cliente> listaClientes) {
         this.listaClientes = listaClientes;
     }
@@ -58,6 +65,11 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
         notifyItemChanged(posicao);
     }
 
+    public void alteraLista(List<Cliente> clientes) {
+        listaClientes = clientes;
+        notifyDataSetChanged();
+    }
+
     public void removeCliente(int posicao) {
         listaClientes.remove(posicao);
         notifyItemRemoved(posicao);
@@ -69,36 +81,34 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
     }
 
     class ClienteViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imagemCliente;
-        private TextView nomeCliente;
-        private TextView telefoneCliente;
-        private TextView devendoCliente;
+        private final ImageView imagemCliente;
+        private final TextView nomeCliente;
+        private final TextView telefoneCliente;
+        private final TextView devendoCliente;
+        private Cliente cliente;
 
         public ClienteViewHolder(@NonNull final View itemView) {
             super(itemView);
-            findView(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.onItemClickListener(getAdapterPosition(), v);
-                }
-            });
-        }
-
-        private void findView(@NonNull View itemView) {
             imagemCliente = itemView.findViewById(R.id.item_cliente_foto);
             nomeCliente = itemView.findViewById(R.id.item_cliente_nome);
             telefoneCliente = itemView.findViewById(R.id.item_cliente_telefone);
             devendoCliente = itemView.findViewById(R.id.item_cliente_valor);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClickListener(getAdapterPosition(), cliente);
+                }
+            });
         }
 
         public void bindView(@NonNull Cliente cliente) {
+            this.cliente = cliente;
             ColorGenerator colorGenerator = ColorGenerator.MATERIAL;
             imagemCliente.setImageDrawable(TextDrawable.builder()
-                    .buildRect(cliente.getPrimeiraLetraNome(), colorGenerator.getRandomColor()));
-            nomeCliente.setText(cliente.getNome());
+                    .buildRound(cliente.getPrimeiraLetraNome(), colorGenerator.getRandomColor()));
+            nomeCliente.setText(cliente.getNomeCompleto());
             telefoneCliente.setText(cliente.getTelefone());
-            devendoCliente.setText(cliente.getValor());
+            devendoCliente.setText(cliente.getValorEmDefice());
         }
     }
 }

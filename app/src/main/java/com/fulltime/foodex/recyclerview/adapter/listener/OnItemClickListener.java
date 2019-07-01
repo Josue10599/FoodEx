@@ -1,11 +1,9 @@
 package com.fulltime.foodex.recyclerview.adapter.listener;
 
-import android.view.View;
-
-import androidx.recyclerview.widget.RecyclerView;
+import com.fulltime.foodex.model.Cliente;
 
 public interface OnItemClickListener {
 
-    void onItemClickListener(int posicao, View itemClicado);
+    void onItemClickListener(int posicao, Cliente clienteSelecionado);
 
 }
