@@ -21,8 +21,6 @@ import java.util.Objects;
 
 public class AdicionarClienteFragment extends BottomSheetDialogFragment {
 
-    public static final String BOTTOM_SHEET_FRAGMENT_TAG = "bottom_sheet_fragment_tag";
-
     private final ClienteImplementado clienteImplementado;
 
     private final Cliente cliente;

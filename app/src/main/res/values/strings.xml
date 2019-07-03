@@ -7,8 +7,8 @@
     <string name="fragment_cliente_todos">All</string>
     <string name="fragment_cliente_devedores">Debtors</string>
     <string name="item_cliente_foto">User photo.</string>
-    <string name="adicionar_cliente">Client</string>
-    <string name="adicionar_produtos">Product</string>
+    <string name="adicionar_cliente">Add Client</string>
+    <string name="adicionar_produtos">Add Product</string>
     <string name="add_new_cliente">Adding Client</string>
     <string name="add_cliente_nome">Name</string>
     <string name="add_cliente_telefone">Phone</string>
@@ -18,4 +18,7 @@
     <string name="cadastrar_cliente">Customer Registration</string>
     <string name="alter_cliente">Changing Client</string>
     <string name="alter_cliente_button">Change Client</string>
+    <string name="vender_produto">Make a sale</string>
+    <string name="receber_pagamento">Receive money</string>
+    <string name="tarefas">Tasks</string>
 </resources>
