@@ -2,6 +2,7 @@ package com.fulltime.foodex.ui.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,11 @@ import com.fulltime.foodex.ui.fragments.ClientesFragment;
 import com.fulltime.foodex.ui.fragments.PerfilFragment;
 import com.fulltime.foodex.ui.fragments.ProdutosFragment;
 import com.fulltime.foodex.ui.fragments.VendasFragment;
+import com.fulltime.foodex.ui.fragments.bottomsheet.MenuOpcoesFragments;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import static com.fulltime.foodex.ui.fragments.bottomsheet.Constantes.BOTTOM_SHEET_FRAGMENT_TAG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         populaFragment(new ClientesFragment());
+        FloatingActionButton fab = findViewById(R.id.activity_main_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MenuOpcoesFragments().show(getSupportFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
+            }
+        });
         configuraBottomNavigation();
     }
 

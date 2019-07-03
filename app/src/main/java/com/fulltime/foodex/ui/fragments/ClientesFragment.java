@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.fulltime.foodex.ui.fragments.bottomsheet.Constantes.BOTTOM_SHEET_FRAGMENT_TAG;
+
 public class ClientesFragment extends Fragment {
 
     private ClientesAdapter adapter;
@@ -41,17 +43,7 @@ public class ClientesFragment extends Fragment {
         configuraTabMenu(clientView);
         configuraAdapter();
         configuraRecyclerView(clientView);
-        configuraFab(clientView);
         return clientView;
-    }
-
-    private void configuraFab(View clientView) {
-        clientView.findViewById(R.id.fragment_cliente_floatingActionButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onShowBottomSheetClicked();
-            }
-        });
     }
 
     private void configuraTabMenu(View clientView) {
@@ -89,7 +81,7 @@ public class ClientesFragment extends Fragment {
                     public void clienteImplementado(Cliente cliente) {
                         adapter.alteraCliente(posicao, cliente);
                     }
-                }).show(getFragmentManager(), AdicionarClienteFragment.BOTTOM_SHEET_FRAGMENT_TAG);
+                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }
@@ -97,16 +89,6 @@ public class ClientesFragment extends Fragment {
     private void configuraRecyclerView(View clientView) {
         RecyclerView listaCliente = clientView.findViewById(R.id.fragment_cliente_recycler_view);
         listaCliente.setAdapter(adapter);
-    }
-
-    private void onShowBottomSheetClicked() {
-        assert getFragmentManager() != null;
-        new AdicionarClienteFragment(new AdicionarClienteFragment.ClienteImplementado() {
-            @Override
-            public void clienteImplementado(Cliente cliente) {
-                adapter.adicionaCliente(cliente);
-            }
-        }).show(getFragmentManager(), AdicionarClienteFragment.BOTTOM_SHEET_FRAGMENT_TAG);
     }
 
     private List<Cliente> filtraDevedores(List<Cliente> clientes) {
