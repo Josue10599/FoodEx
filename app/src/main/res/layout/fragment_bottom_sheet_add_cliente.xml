@@ -2,111 +2,117 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/keyline_5"
+    android:paddingTop="@dimen/keyline_2"
+    android:paddingEnd="@dimen/keyline_5"
+    android:paddingBottom="@dimen/keyline_5">
 
     <TextView
         android:id="@+id/bottom_sheet_title_add_cliente"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:alpha="?alphaEmphasisHigh"
         android:text="@string/add_new_cliente"
+        android:textAppearance="?textAppearanceHeadline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
-
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/bottom_sheet_nome"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_4"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title_add_cliente"
-        app:layout_constraintStart_toStartOf="@id/bottom_sheet_title_add_cliente"
-        app:layout_constraintEnd_toEndOf="@id/bottom_sheet_title_add_cliente">
+        android:layout_marginTop="@dimen/keyline_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title_add_cliente">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_cliente_nome" />
+            android:hint="@string/add_cliente_nome"
+            android:inputType="textCapWords" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/bottom_sheet_sobrenome"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_4"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_nome"
-        app:layout_constraintStart_toStartOf="@id/bottom_sheet_title_add_cliente"
-        app:layout_constraintEnd_toEndOf="@id/bottom_sheet_title_add_cliente">
+        android:layout_marginTop="@dimen/keyline_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_nome">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_cliente_sobrenome" />
+            android:hint="@string/add_cliente_sobrenome"
+            android:inputType="textCapWords" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/bottom_sheet_telefone"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_4"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_sobrenome"
-        app:layout_constraintStart_toStartOf="@id/bottom_sheet_title_add_cliente"
-        app:layout_constraintEnd_toEndOf="@id/bottom_sheet_title_add_cliente">
+        android:layout_marginTop="@dimen/keyline_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_sobrenome">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_cliente_telefone" />
+            android:hint="@string/add_cliente_telefone"
+            android:inputType="number|text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/bottom_sheet_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_4"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_telefone"
-        app:layout_constraintStart_toStartOf="@id/bottom_sheet_title_add_cliente"
-        app:layout_constraintEnd_toEndOf="@id/bottom_sheet_title_add_cliente">
+        android:layout_marginTop="@dimen/keyline_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_telefone">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_cliente_email" />
+            android:hint="@string/add_cliente_email"
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/bottom_sheet_cpf"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_4"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_email"
-        app:layout_constraintStart_toStartOf="@id/bottom_sheet_title_add_cliente"
-        app:layout_constraintEnd_toEndOf="@id/bottom_sheet_title_add_cliente">
+        android:layout_marginTop="@dimen/keyline_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_cliente_cpf" />
+            android:hint="@string/add_cliente_cpf"
+            android:inputType="number|text" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottom_sheet_botao_cadastrar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cadastrar_cliente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_cpf" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

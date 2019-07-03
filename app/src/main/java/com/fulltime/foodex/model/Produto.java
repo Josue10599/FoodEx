@@ -1,15 +1,21 @@
 package com.fulltime.foodex.model;
 
-import java.math.BigDecimal;
+import com.fulltime.foodex.formatter.FormataDinheiro;
 
-import static java.math.RoundingMode.HALF_UP;
+import java.math.BigDecimal;
 
 public class Produto {
     private String nome;
     private BigDecimal valor;
+    private FormataDinheiro formataDinheiro = new FormataDinheiro();
+
+    public Produto(String nome, String valor) {
+        setNome(nome);
+        setValor(valor);
+    }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -17,10 +23,10 @@ public class Produto {
     }
 
     public String getValor() {
-        return valor.toString();
+        return formataDinheiro.formataValor(this.valor);
     }
 
     public void setValor(String valor) {
-        this.valor = new BigDecimal(valor).setScale(2, HALF_UP);
+        this.valor = formataDinheiro.getBigDecimal(valor);
     }
 }

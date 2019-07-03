@@ -1,6 +1,5 @@
-package com.fulltime.foodex.recyclerview.adapter;
+package com.fulltime.foodex.ui.recyclerview.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +13,15 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.model.Cliente;
-import com.fulltime.foodex.recyclerview.adapter.listener.OnItemClickListener;
+import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.ClienteViewHolder>{
     private List<Cliente> listaClientes;
-    private Context context;
     private OnItemClickListener onItemClickListener;
 
-    public ClientesAdapter(Context context,List<Cliente> listaClientes) {
-        this.listaClientes = listaClientes;
-        this.context = context;
-    }
     public ClientesAdapter(List<Cliente> listaClientes) {
         this.listaClientes = listaClientes;
     }
@@ -108,7 +101,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
                     .buildRound(cliente.getPrimeiraLetraNome(), colorGenerator.getRandomColor()));
             nomeCliente.setText(cliente.getNomeCompleto());
             telefoneCliente.setText(cliente.getTelefone());
-            devendoCliente.setText(cliente.getValorEmDefice());
+            devendoCliente.setText(cliente.getValorEmDeficit());
         }
     }
 }

@@ -38,7 +38,7 @@
         tools:listitem="@layout/item_cliente"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/fragment_cliente_floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/keyline_2"

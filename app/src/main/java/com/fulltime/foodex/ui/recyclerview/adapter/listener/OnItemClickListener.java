@@ -1,4 +1,4 @@
-package com.fulltime.foodex.recyclerview.adapter.listener;
+package com.fulltime.foodex.ui.recyclerview.adapter.listener;
 
 import com.fulltime.foodex.model.Cliente;
 

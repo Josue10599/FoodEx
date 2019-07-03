@@ -3,8 +3,6 @@ package com.fulltime.foodex.model;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.text.ParseException;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -25,8 +23,8 @@ public class ClienteTest {
     }
 
     @Test
-    public void deve_DevolverVerdadeiro_QuandoClienteEstiverDevendo() throws ParseException {
-        cliente.setValorEmDefice("10,00");
+    public void deve_DevolverVerdadeiro_QuandoClienteEstiverDevendo() {
+        cliente.setValorEmDeficit("10,00");
         Assert.assertThat(cliente.estaDevendo(), is(equalTo(true)));
     }
 
@@ -37,8 +35,24 @@ public class ClienteTest {
 
     @Test
     public void deve_DevolverQuantiaEmDeficitFormata_QuandoEstiverDevendo() {
-        cliente.setValorEmDefice("10");
-        Assert.assertThat(cliente.getValorEmDefice(), is(equalTo("10,00")));
+        cliente.setValorEmDeficit("10");
+        Assert.assertThat(cliente.getValorEmDeficit(), is(equalTo("10,00")));
+    }
+
+    @Test
+    public void deve_DescontarValor_QuandoClientePagar() {
+        cliente.setValorEmDeficit("10");
+        cliente.valorPago("10");
+        Assert.assertThat(cliente.estaDevendo(), is(equalTo(false)));
+    }
+
+    @Test
+    public void deve_DescontarValor_QuandoClientePagarUmValorMenorEContinuarDevendo() {
+        cliente.setValorEmDeficit("10");
+        System.out.println(cliente.getValorEmDeficit());
+        cliente.valorPago("9");
+        System.out.println(cliente.getValorEmDeficit());
+        Assert.assertThat(cliente.estaDevendo(), is(equalTo(true)));
     }
 
 }

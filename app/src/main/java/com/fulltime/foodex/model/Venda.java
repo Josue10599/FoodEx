@@ -1,21 +1,54 @@
 package com.fulltime.foodex.model;
 
+import com.fulltime.foodex.formatter.FormataDinheiro;
+
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class Venda {
+    private FormataDinheiro formataDinheiro = new FormataDinheiro();
     private Date dataVenda;
     private Cliente cliente;
-    private Produto produtoVendido;
+    private Produto[] produtosVendidos;
+    private BigDecimal valorEmDeficit;
+    private BigDecimal valorDaCompra;
     private boolean estadoVenda;
 
-    public boolean getEstadoVenda() {
+    public Venda(Cliente cliente, boolean pago, Produto... produtoVendido) {
+        this.dataVenda = Calendar.getInstance().getTime();
+        this.cliente = cliente;
+        this.produtosVendidos = produtoVendido;
+        this.estadoVenda = pago;
+        this.valorDaCompra = new BigDecimal("0");
+        setValorDaCompra();
+        this.valorEmDeficit = new BigDecimal("0");
+        if (!pago) {
+            valorEmDeficit = valorDaCompra;
+            cliente.setValorEmDeficit(formataDinheiro.formataValor(valorEmDeficit));
+        }
+    }
+
+    private void setValorDaCompra() {
+        for (Produto produto : produtosVendidos) {
+            valorDaCompra = valorDaCompra.add(formataDinheiro.getBigDecimal(produto.getValor()));
+        }
+    }
+
+    public boolean vendaPagaCompletamente() {
         return estadoVenda;
     }
 
-    public void setEstadoVenda(boolean estadoVenda) {
+    private void setEstadoVenda(boolean estadoVenda) {
         this.estadoVenda = estadoVenda;
+    }
+
+    public void registrarPagamento(String valor) {
+        cliente.valorPago(valor);
+        valorEmDeficit = valorEmDeficit.subtract(formataDinheiro.getBigDecimal(valor));
+        vendaPaga();
     }
 
     public String getDataVenda() {
@@ -26,13 +59,23 @@ public class Venda {
         return cliente;
     }
 
-    public Produto getProdutoVendido() {
-        return produtoVendido;
+    public Produto getProdutosVendidos(int posicao) {
+        return produtosVendidos[posicao];
     }
 
-    public Venda(Date dataVenda, Cliente cliente, Produto produtoVendido) {
-        this.dataVenda = dataVenda;
-        this.cliente = cliente;
-        this.produtoVendido = produtoVendido;
+    public int getNumeroProdutosVendidos() {
+        return produtosVendidos.length;
+    }
+
+    public String getValorDaCompra() {
+        return formataDinheiro.formataValor(valorDaCompra);
+    }
+
+    public String getValorEmDeficit() {
+        return formataDinheiro.formataValor(valorEmDeficit);
+    }
+
+    private void vendaPaga() {
+        estadoVenda = valorEmDeficit.compareTo(new BigDecimal("0")) == 0;
     }
 }

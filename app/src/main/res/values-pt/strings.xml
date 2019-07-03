@@ -13,4 +13,7 @@
     <string name="add_cliente_nome">Nome</string>
     <string name="add_cliente_telefone">Telefone</string>
     <string name="add_cliente_sobrenome">Sobrenome</string>
+    <string name="cadastrar_cliente">Cadastrar Cliente</string>
+    <string name="alter_cliente">Alterando Cliente</string>
+    <string name="alter_cliente_button">Alterar Cliente</string>
 </resources>

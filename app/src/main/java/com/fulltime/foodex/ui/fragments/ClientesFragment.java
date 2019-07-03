@@ -8,32 +8,36 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.model.Cliente;
-import com.fulltime.foodex.recyclerview.adapter.ClientesAdapter;
-import com.fulltime.foodex.recyclerview.adapter.listener.OnItemClickListener;
 import com.fulltime.foodex.ui.fragments.bottomsheet.AdicionarClienteFragment;
+import com.fulltime.foodex.ui.recyclerview.adapter.ClientesAdapter;
+import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class ClientesFragment extends Fragment {
 
     private ClientesAdapter adapter;
-    private RecyclerView listaCliente;
-    private List<Cliente> dividendos = new ArrayList<>();
-    private List<Cliente> todosClientes = new ArrayList<>();
+    private List<Cliente> todosClientes;
+    private List<Cliente> devedores;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View clientView = inflater.inflate(R.layout.fragment_cliente, container, false);
-        listaDividendo(getCliente());
+        todosClientes = new ArrayList<>();
+        Cliente cliente = new Cliente("Josue", "Lopes", "(14) 99802-1667", "josue10599@gmail.com", "432.418.048-28");
+        cliente.setValorEmDeficit("50,00");
+        todosClientes.add(cliente);
+        todosClientes.add(new Cliente("Silas", "Malaquias", "(14) 99802-1667", "josue10599@gmail.com", "432.418.048-28"));
+        devedores = filtraDevedores(todosClientes);
         configuraTabMenu(clientView);
         configuraAdapter();
         configuraRecyclerView(clientView);
@@ -42,7 +46,7 @@ public class ClientesFragment extends Fragment {
     }
 
     private void configuraFab(View clientView) {
-        clientView.setOnClickListener(new View.OnClickListener() {
+        clientView.findViewById(R.id.fragment_cliente_floatingActionButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onShowBottomSheetClicked();
@@ -50,22 +54,16 @@ public class ClientesFragment extends Fragment {
         });
     }
 
-    private void listaDividendo(List<Cliente> clientes) {
-        for (Cliente cliente : clientes) {
-            if (cliente.estaDevendo()) dividendos.add(cliente);
-        }
-    }
-
     private void configuraTabMenu(View clientView) {
         TabLayout tabLayoutMenuCliente = clientView.findViewById(R.id.fragment_cliente_tab_menu);
-        tabLayoutMenuCliente.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayoutMenuCliente.addOnTabSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getText().toString().equals(getContext().getString(R.string.fragment_cliente_devedores))) {
-                    adapter.alteraLista(dividendos);
-                } else {
-                    adapter.alteraLista(todosClientes);
-                }
+                if (Objects.requireNonNull(tab.getText()).toString()
+                        .equals(Objects.requireNonNull(getContext())
+                                .getString(R.string.fragment_cliente_devedores)))
+                    adapter.alteraLista(devedores);
+                else adapter.alteraLista(todosClientes);
             }
 
             @Override
@@ -81,37 +79,41 @@ public class ClientesFragment extends Fragment {
     }
 
     private void configuraAdapter() {
-        todosClientes = getCliente();
         adapter = new ClientesAdapter(todosClientes);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClickListener(int posicao, Cliente clienteSelecionado) {
-
+            public void onItemClickListener(final int posicao, Cliente clienteSelecionado) {
+                assert getFragmentManager() != null;
+                new AdicionarClienteFragment(clienteSelecionado, new AdicionarClienteFragment.ClienteImplementado() {
+                    @Override
+                    public void clienteImplementado(Cliente cliente) {
+                        adapter.alteraCliente(posicao, cliente);
+                    }
+                }).show(getFragmentManager(), AdicionarClienteFragment.BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }
 
     private void configuraRecyclerView(View clientView) {
-        listaCliente = clientView.findViewById(R.id.fragment_cliente_recycler_view);
-        listaCliente.setItemAnimator(new DefaultItemAnimator());
+        RecyclerView listaCliente = clientView.findViewById(R.id.fragment_cliente_recycler_view);
         listaCliente.setAdapter(adapter);
     }
 
-    private List<Cliente> getCliente() {
-        Cliente clienteJosue = new Cliente();
-        clienteJosue.setNome("Josue");
-        clienteJosue.setSobrenome("Lopes");
-        clienteJosue.setTelefone("(14) 99802-1667");
-        clienteJosue.setValorEmDefice("0");
-        Cliente clienteLopes = new Cliente();
-        clienteLopes.setNome("Lopes");
-        clienteLopes.setSobrenome("Anchieta");
-        clienteLopes.setTelefone("(14) 99802-1667");
-        clienteLopes.setValorEmDefice("10");
-        return Arrays.asList(clienteJosue, clienteLopes);
+    private void onShowBottomSheetClicked() {
+        assert getFragmentManager() != null;
+        new AdicionarClienteFragment(new AdicionarClienteFragment.ClienteImplementado() {
+            @Override
+            public void clienteImplementado(Cliente cliente) {
+                adapter.adicionaCliente(cliente);
+            }
+        }).show(getFragmentManager(), AdicionarClienteFragment.BOTTOM_SHEET_FRAGMENT_TAG);
     }
 
-    private void onShowBottomSheetClicked() {
-        new AdicionarClienteFragment().show(getFragmentManager(), AdicionarClienteFragment.BOTTOM_SHEET_FRAGMENT_TAG);
+    private List<Cliente> filtraDevedores(List<Cliente> clientes) {
+        final List<Cliente> listaFiltrada = new ArrayList<>();
+        for (Cliente cliente : clientes) {
+            if (cliente.estaDevendo()) listaFiltrada.add(cliente);
+        }
+        return listaFiltrada;
     }
 }

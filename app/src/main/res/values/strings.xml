@@ -15,4 +15,7 @@
     <string name="add_cliente_cpf" translatable="false">CPF</string>
     <string name="add_cliente_sobrenome">Last Name</string>
     <string name="add_cliente_email" translatable="false">E-mail</string>
+    <string name="cadastrar_cliente">Customer Registration</string>
+    <string name="alter_cliente">Changing Client</string>
+    <string name="alter_cliente_button">Change Client</string>
 </resources>

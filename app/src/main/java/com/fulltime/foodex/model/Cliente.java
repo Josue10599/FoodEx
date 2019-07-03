@@ -3,27 +3,37 @@ package com.fulltime.foodex.model;
 
 import androidx.annotation.NonNull;
 
+import com.fulltime.foodex.formatter.FormataDinheiro;
+
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
-import java.util.Locale;
 
 import static java.math.RoundingMode.HALF_UP;
 
 public class Cliente {
-    private final DecimalFormat decimalFormat;
     private String nome;
     private String sobrenome;
     private String telefone;
     private String email;
     private String cpf;
-    private BigDecimal valorEmDefice;
+    private BigDecimal valorEmDeficit;
+    private FormataDinheiro formataDinheiro = new FormataDinheiro();
 
     public Cliente() {
-        decimalFormat = new DecimalFormat("#,##0.00");
-        decimalFormat.setParseBigDecimal(true);
-        setValorEmDefice("0");
+        setNome("");
+        setSobrenome("");
+        setTelefone("");
+        setEmail("");
+        setCpf("");
+        valorEmDeficit = new BigDecimal("0").setScale(2, HALF_UP);
+    }
+
+    public Cliente(String nome, String sobrenome, String telefone, String email, String cpf) {
+        setNome(nome);
+        setSobrenome(sobrenome);
+        setTelefone(telefone);
+        setEmail(email);
+        setCpf(cpf);
+        valorEmDeficit = new BigDecimal("0").setScale(2, HALF_UP);
     }
 
     public String getNome() {
@@ -58,12 +68,12 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public String getValorEmDefice() {
-        return decimalFormat.format(valorEmDefice);
+    public String getValorEmDeficit() {
+        return formataDinheiro.formataValor(valorEmDeficit);
     }
 
-    public void setValorEmDefice(String valorEmDefice) {
-        this.valorEmDefice = (getBigDecimal(valorEmDefice)).setScale(2, HALF_UP);
+    public void setValorEmDeficit(String valorEmDeficit) {
+        this.valorEmDeficit = this.valorEmDeficit.add(formataDinheiro.getBigDecimal(valorEmDeficit));
     }
 
     public String getNomeCompleto() {
@@ -88,20 +98,15 @@ public class Cliente {
         return "";
     }
 
-    public void quantiaValorPago(String valorPago) {
-        valorEmDefice = valorEmDefice.subtract(getBigDecimal(valorPago));
+    public void valorPago(String valorPago) {
+        valorEmDeficit = valorEmDeficit.subtract(formataDinheiro.getBigDecimal(valorPago));
     }
 
     public boolean estaDevendo() {
-        return valorEmDefice.compareTo(new BigDecimal("0")) > 0;
+        return valorEmDeficit.compareTo(new BigDecimal("0")) > 0;
     }
 
-    private BigDecimal getBigDecimal(String valor) {
-        try {
-            return (BigDecimal) decimalFormat.parse(valor);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new BigDecimal(valor.replace(',', '.'));
+    public boolean clienteEhCadastrado() {
+        return !getNome().equals("");
     }
 }
