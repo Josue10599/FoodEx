@@ -5,11 +5,12 @@ import androidx.annotation.NonNull;
 
 import com.fulltime.foodex.formatter.FormataDinheiro;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import static java.math.RoundingMode.HALF_UP;
 
-public class Cliente {
+public class Cliente implements Serializable {
     private String nome;
     private String sobrenome;
     private String telefone;

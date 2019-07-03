@@ -2,9 +2,10 @@ package com.fulltime.foodex.model;
 
 import com.fulltime.foodex.formatter.FormataDinheiro;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Produto {
+public class Produto implements Serializable {
     private String nome;
     private BigDecimal valor;
     private FormataDinheiro formataDinheiro = new FormataDinheiro();

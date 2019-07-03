@@ -2,13 +2,14 @@ package com.fulltime.foodex.model;
 
 import com.fulltime.foodex.formatter.FormataDinheiro;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class Venda {
+public class Venda implements Serializable {
     private FormataDinheiro formataDinheiro = new FormataDinheiro();
     private Date dataVenda;
     private Cliente cliente;
