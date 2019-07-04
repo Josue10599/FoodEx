@@ -10,6 +10,11 @@ public class Produto implements Serializable {
     private BigDecimal valor;
     private FormataDinheiro formataDinheiro = new FormataDinheiro();
 
+    public Produto() {
+        this.nome = "";
+        this.valor = new BigDecimal("0");
+    }
+
     public Produto(String nome, String valor) {
         setNome(nome);
         setValor(valor);
@@ -29,5 +34,9 @@ public class Produto implements Serializable {
 
     public void setValor(String valor) {
         this.valor = formataDinheiro.getBigDecimal(valor);
+    }
+
+    public boolean produtoPreenchido() {
+        return !nome.isEmpty();
     }
 }

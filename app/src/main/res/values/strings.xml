@@ -15,10 +15,15 @@
     <string name="add_cliente_cpf" translatable="false">CPF</string>
     <string name="add_cliente_sobrenome">Last Name</string>
     <string name="add_cliente_email" translatable="false">E-mail</string>
-    <string name="cadastrar_cliente">Customer Registration</string>
+    <string name="cadastrar_cliente">Register customer</string>
     <string name="alter_cliente">Changing Client</string>
     <string name="alter_cliente_button">Change Client</string>
     <string name="vender_produto">Make a sale</string>
     <string name="receber_pagamento">Receive money</string>
     <string name="tarefas">Tasks</string>
+    <string name="add_new_produto">Adding Product</string>
+    <string name="add_produto_nome">Product\'s name</string>
+    <string name="add_produto_preco">Product value</string>
+    <string name="error_campo_obrigatorio">Required field</string>
+    <string name="cadastrar_produto">Register Product</string>
 </resources>

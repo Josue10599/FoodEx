@@ -9,7 +9,7 @@
     android:paddingBottom="@dimen/keyline_5">
 
     <TextView
-        android:id="@+id/bottom_sheet_title_add_cliente"
+        android:id="@+id/bottom_sheet_title_add_produto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="?alphaEmphasisHigh"
@@ -20,14 +20,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/bottom_sheet_nome"
+        android:id="@+id/bottom_sheet_produto_nome"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/keyline_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title_add_cliente">
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title_add_produto">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
         android:layout_marginTop="@dimen/keyline_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_nome">
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_produto_nome">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -54,7 +54,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/bottom_sheet_telefone"
+        android:id="@+id/bottom_sheet_produto_valor"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         android:layout_marginTop="@dimen/keyline_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_telefone">
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_produto_valor">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

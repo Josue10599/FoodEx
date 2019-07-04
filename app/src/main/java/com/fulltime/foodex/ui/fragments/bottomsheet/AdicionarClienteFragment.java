@@ -51,7 +51,7 @@ public class AdicionarClienteFragment extends BottomSheetDialogFragment {
         bindCampo();
         configuraBotao();
         if (cliente.clienteEhCadastrado()) {
-            TextView titulo = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_title_add_cliente);
+            TextView titulo = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_title_add_produto);
             titulo.setText(R.string.alter_cliente);
             buttonCadastrar.setText(R.string.alter_cliente_button);
             populaCampos();
@@ -72,9 +72,9 @@ public class AdicionarClienteFragment extends BottomSheetDialogFragment {
     }
 
     private void bindCampo() {
-        campoNome = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_nome);
+        campoNome = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_produto_nome);
         campoSobrenome = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_sobrenome);
-        campoTelefone = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_telefone);
+        campoTelefone = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_produto_valor);
         Objects.requireNonNull(campoTelefone.getEditText()).addTextChangedListener(MaskWatcher.buildPhone());
         campoTelefone.getEditText().setOnFocusChangeListener(new FormataTelefone());
         campoEmail = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_email);

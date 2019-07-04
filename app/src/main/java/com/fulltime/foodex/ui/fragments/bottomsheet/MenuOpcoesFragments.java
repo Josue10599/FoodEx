@@ -10,8 +10,11 @@ import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.model.Cliente;
+import com.fulltime.foodex.model.Produto;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
+
+import static com.fulltime.foodex.ui.fragments.bottomsheet.Constantes.BOTTOM_SHEET_FRAGMENT_TAG;
 
 public class MenuOpcoesFragments extends BottomSheetDialogFragment {
 
@@ -55,7 +58,12 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
         botaoAddProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new AdicionarProdutoFragment(new AdicionarProdutoFragment.SalvaProdutoListener() {
+                    @Override
+                    public void produtoSalva(Produto produto) {
 
+                    }
+                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }
@@ -71,7 +79,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
                     public void clienteImplementado(Cliente cliente) {
 
                     }
-                }).show(getFragmentManager(), "");
+                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }

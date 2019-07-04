@@ -19,4 +19,9 @@
     <string name="vender_produto">Realizar Venda</string>
     <string name="receber_pagamento">Receber Pagamento</string>
     <string name="tarefas">Tarefas</string>
+    <string name="add_new_produto">Adicionando Produto</string>
+    <string name="add_produto_nome">Nome do Produto</string>
+    <string name="add_produto_preco">Valor do Produto</string>
+    <string name="error_campo_obrigatorio">Campo Obrigatório</string>
+    <string name="cadastrar_produto">Cadastrar Produto</string>
 </resources>
