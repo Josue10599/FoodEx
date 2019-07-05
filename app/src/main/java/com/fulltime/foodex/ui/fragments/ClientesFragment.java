@@ -74,9 +74,9 @@ public class ClientesFragment extends Fragment {
         adapter = new ClientesAdapter(todosClientes);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClickListener(final int posicao, Cliente clienteSelecionado) {
+            public void onItemClickListener(final int posicao, Object clienteSelecionado) {
                 assert getFragmentManager() != null;
-                new AdicionarClienteFragment(clienteSelecionado, new AdicionarClienteFragment.ClienteImplementado() {
+                new AdicionarClienteFragment((Cliente) clienteSelecionado, new AdicionarClienteFragment.ClienteImplementado() {
                     @Override
                     public void clienteImplementado(Cliente cliente) {
                         adapter.alteraCliente(posicao, cliente);

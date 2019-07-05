@@ -7,12 +7,14 @@ import java.math.BigDecimal;
 
 public class Produto implements Serializable {
     private String nome;
+    private String descricao;
     private BigDecimal valor;
     private FormataDinheiro formataDinheiro = new FormataDinheiro();
 
     public Produto() {
-        this.nome = "";
-        this.valor = new BigDecimal("0");
+        setNome("");
+        setDescricao("");
+        setValor("0");
     }
 
     public Produto(String nome, String valor) {
@@ -38,5 +40,13 @@ public class Produto implements Serializable {
 
     public boolean produtoPreenchido() {
         return !nome.isEmpty();
+    }
+
+    public String getDescricao() {
+        return this.descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

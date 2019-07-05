@@ -26,4 +26,6 @@
     <string name="add_produto_preco">Product value</string>
     <string name="error_campo_obrigatorio">Required field</string>
     <string name="cadastrar_produto">Register Product</string>
+    <string name="add_produto_descricao">Description</string>
+    <string name="produto_sem_descricao">Product without description.</string>
 </resources>

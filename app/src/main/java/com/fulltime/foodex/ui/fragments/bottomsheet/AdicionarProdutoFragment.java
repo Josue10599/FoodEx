@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.mask.MaskDinheiroWatcher;
+import com.fulltime.foodex.mask.MoneyMaskWatcher;
 import com.fulltime.foodex.model.Produto;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
@@ -23,6 +23,7 @@ public class AdicionarProdutoFragment extends BottomSheetDialogFragment {
     private final SalvaProdutoListener listener;
     private TextInputLayout textInputLayoutProdutoValor;
     private TextInputLayout textInputLayoutProdutoNome;
+    private TextInputLayout textInputLayoutProdutoDescricao;
 
     public AdicionarProdutoFragment(Produto produto, SalvaProdutoListener listener) {
         this.produto = produto;
@@ -40,56 +41,85 @@ public class AdicionarProdutoFragment extends BottomSheetDialogFragment {
         View bottomSheetAddProduto = inflater.inflate(R.layout.fragment_bottom_sheet_add_produto, container, false);
         configuraCampoNome(bottomSheetAddProduto);
         configuraCampoValor(bottomSheetAddProduto);
+        configuraCampoDescricao(bottomSheetAddProduto);
         configuraBotaoCadastrar(bottomSheetAddProduto);
+        if (produto.produtoPreenchido()) {
+            preencheCampos();
+        }
         return bottomSheetAddProduto;
     }
 
+    private void preencheCampos() {
+        Objects.requireNonNull(textInputLayoutProdutoNome.getEditText()).setText(produto.getNome());
+        Objects.requireNonNull(textInputLayoutProdutoValor.getEditText()).setText(produto.getValor());
+        Objects.requireNonNull(textInputLayoutProdutoDescricao.getEditText()).setText(produto.getDescricao());
+    }
+
     private void configuraBotaoCadastrar(View bottomSheetAddProduto) {
-        MaterialButton buttonCadastrarProduto = bottomSheetAddProduto.findViewById(R.id.bottom_sheet_botao_cadastrar_produto);
+        MaterialButton buttonCadastrarProduto = bottomSheetAddProduto
+                .findViewById(R.id.bottom_sheet_botao_cadastrar_produto);
         buttonCadastrarProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getCampoNome() && getCampoProduto() && produto.produtoPreenchido()) {
-                    listener.produtoSalva(produto);
+                if ((getCampoValorProduto() || getCampoNomeProduto()) && produto.produtoPreenchido()) {
+                    getCampoNomeProduto();
+                    getCampoDescricaoProduto();
+                    listener.produtoSalvo(produto);
                     dismiss();
                 }
             }
         });
     }
 
-    private boolean getCampoNome() {
-        String textProdutoValor = textInputLayoutProdutoValor.getEditText().getText().toString();
+    private boolean getCampoValorProduto() {
+        String textProdutoValor = Objects.requireNonNull(textInputLayoutProdutoValor.getEditText()).getText().toString();
         if (textProdutoValor.isEmpty()) {
             textInputLayoutProdutoValor.setError(getString(R.string.error_campo_obrigatorio));
             return false;
-        } else
-            produto.setValor(textProdutoValor);
+        }
+        produto.setValor(textProdutoValor);
         return true;
     }
 
-    private boolean getCampoProduto() {
-        String textProdutoNome = textInputLayoutProdutoNome.getEditText().getText().toString();
+    private boolean getCampoNomeProduto() {
+        String textProdutoNome = Objects.requireNonNull(textInputLayoutProdutoNome.getEditText()).getText().toString();
         if (textProdutoNome.isEmpty()) {
             textInputLayoutProdutoNome.setError(getString(R.string.error_campo_obrigatorio));
             return false;
-        } else
-            produto.setNome(textProdutoNome);
+        }
+        produto.setNome(textProdutoNome);
         return true;
     }
 
+    private void getCampoDescricaoProduto() {
+        String textProdutoDescricao = Objects.requireNonNull(textInputLayoutProdutoDescricao.getEditText()).getText().toString();
+        if (textProdutoDescricao.isEmpty()) {
+            produto.setDescricao(getString(R.string.produto_sem_descricao));
+            return;
+        }
+        produto.setDescricao(textProdutoDescricao);
+    }
+
     private void configuraCampoValor(View bottomSheetAddProduto) {
-        textInputLayoutProdutoValor = bottomSheetAddProduto.findViewById(R.id.bottom_sheet_produto_valor);
+        textInputLayoutProdutoValor = bottomSheetAddProduto
+                .findViewById(R.id.bottom_sheet_produto_valor);
         Objects.requireNonNull(textInputLayoutProdutoValor.getEditText())
-                .addTextChangedListener(MaskDinheiroWatcher.buildDinheiro());
+                .addTextChangedListener(MoneyMaskWatcher.buildMoney());
         Objects.requireNonNull(textInputLayoutProdutoValor.getEditText())
-                .setOnFocusChangeListener(MaskDinheiroWatcher.buildDinheiro());
+                .setOnFocusChangeListener(MoneyMaskWatcher.buildMoney());
     }
 
     private void configuraCampoNome(View bottomSheetAddProduto) {
-        textInputLayoutProdutoNome = bottomSheetAddProduto.findViewById(R.id.bottom_sheet_produto_nome);
+        textInputLayoutProdutoNome = bottomSheetAddProduto
+                .findViewById(R.id.bottom_sheet_produto_nome);
+    }
+
+    private void configuraCampoDescricao(View bottomSheetAddProduto) {
+        textInputLayoutProdutoDescricao = bottomSheetAddProduto
+                .findViewById(R.id.bottom_sheet_produto_descricao);
     }
 
     public interface SalvaProdutoListener {
-        void produtoSalva(Produto produto);
+        void produtoSalvo(Produto produto);
     }
 }

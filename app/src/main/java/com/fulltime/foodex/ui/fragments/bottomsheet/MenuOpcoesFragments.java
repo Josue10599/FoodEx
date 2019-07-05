@@ -36,7 +36,9 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
         botaoAddVenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                /*Se o valor for pago somente registrar a venda,
+                senão adicionar saldo devedor para o cliente e quantia a pagar no registro de venda
+                */
             }
         });
     }
@@ -47,7 +49,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
         botaoAddPagamento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Diminuir o saldo devedor dos clientes e a quantidade a pagar da venda
             }
         });
     }
@@ -58,10 +60,11 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
         botaoAddProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                assert getFragmentManager() != null;
                 new AdicionarProdutoFragment(new AdicionarProdutoFragment.SalvaProdutoListener() {
                     @Override
-                    public void produtoSalva(Produto produto) {
-
+                    public void produtoSalvo(Produto produto) {
+                        //Adicionar na Lista do RecyclerView e mandar para o Firebase
                     }
                 }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
@@ -74,10 +77,11 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
         botaoAddCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                assert getFragmentManager() != null;
                 new AdicionarClienteFragment(new AdicionarClienteFragment.ClienteImplementado() {
                     @Override
                     public void clienteImplementado(Cliente cliente) {
-
+                        //Adicionar na Lista do RecyclerView e mandar para o Firebase
                     }
                 }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
