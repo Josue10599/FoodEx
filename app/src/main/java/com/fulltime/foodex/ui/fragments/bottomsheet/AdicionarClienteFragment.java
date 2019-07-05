@@ -51,7 +51,7 @@ public class AdicionarClienteFragment extends BottomSheetDialogFragment {
         bindCampo();
         configuraBotao();
         if (cliente.clienteEhCadastrado()) {
-            TextView titulo = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_title_add_produto);
+            TextView titulo = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_title_add);
             titulo.setText(R.string.alter_cliente);
             buttonCadastrar.setText(R.string.alter_cliente_button);
             populaCampos();

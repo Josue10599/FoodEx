@@ -28,4 +28,6 @@
     <string name="cadastrar_produto">Register Product</string>
     <string name="add_produto_descricao">Description</string>
     <string name="produto_sem_descricao">Product without description.</string>
+    <string name="add_new_venda">Adding Sale</string>
+    <string name="sifra">R$ %s</string>
 </resources>

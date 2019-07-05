@@ -26,4 +26,6 @@
     <string name="cadastrar_produto">Cadastrar Produto</string>
     <string name="add_produto_descricao">Descrição</string>
     <string name="produto_sem_descricao">Produto sem descrição.</string>
+    <string name="add_new_venda">Adicionando Venda</string>
+    <string name="sifra">R$ %s</string>
 </resources>

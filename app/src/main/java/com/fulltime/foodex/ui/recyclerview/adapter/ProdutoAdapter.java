@@ -1,5 +1,6 @@
 package com.fulltime.foodex.ui.recyclerview.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
 
     private final List<Produto> produtosSalvos;
     private OnItemClickListener listener;
+    private Context context;
 
     public ProdutoAdapter(List<Produto> produtos) {
         this.produtosSalvos = produtos;
@@ -32,7 +34,8 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
     @NonNull
     @Override
     public ProdutoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ProdutoViewHolder(LayoutInflater.from(parent.getContext())
+        this.context = parent.getContext();
+        return new ProdutoViewHolder(LayoutInflater.from(context)
                 .inflate(R.layout.item_produto, parent, false));
     }
 
@@ -90,7 +93,7 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
             this.produto = produto;
             nomeProduto.setText(produto.getNome());
             descricaoProduto.setText(produto.getDescricao());
-            valorProduto.setText(produto.getValor());
+            valorProduto.setText(context.getString(R.string.sifra, produto.getValor()));
         }
 
     }

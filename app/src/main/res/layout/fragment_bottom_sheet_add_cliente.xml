@@ -9,7 +9,7 @@
     android:paddingBottom="@dimen/keyline_5">
 
     <TextView
-        android:id="@+id/bottom_sheet_title_add_produto"
+        android:id="@+id/bottom_sheet_title_add"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="?alphaEmphasisHigh"
@@ -27,7 +27,7 @@
         android:layout_marginTop="@dimen/keyline_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title_add_produto">
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title_add">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

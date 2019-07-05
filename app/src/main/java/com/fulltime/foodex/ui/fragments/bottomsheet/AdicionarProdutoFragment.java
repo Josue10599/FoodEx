@@ -61,9 +61,10 @@ public class AdicionarProdutoFragment extends BottomSheetDialogFragment {
         buttonCadastrarProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((getCampoValorProduto() || getCampoNomeProduto()) && produto.produtoPreenchido()) {
-                    getCampoNomeProduto();
-                    getCampoDescricaoProduto();
+                getCampoNomeProduto();
+                getCampoValorProduto();
+                getCampoDescricaoProduto();
+                if (produto.produtoPreenchido()) {
                     listener.produtoSalvo(produto);
                     dismiss();
                 }
