@@ -7,10 +7,12 @@ import com.fulltime.foodex.formatter.FormataDinheiro;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static java.math.RoundingMode.HALF_UP;
 
 public class Cliente implements Serializable {
+    private String id;
     private String nome;
     private String sobrenome;
     private String telefone;
@@ -20,6 +22,7 @@ public class Cliente implements Serializable {
     private FormataDinheiro formataDinheiro = new FormataDinheiro();
 
     public Cliente() {
+        id = UUID.randomUUID().toString();
         setNome("");
         setSobrenome("");
         setTelefone("");
@@ -29,12 +32,17 @@ public class Cliente implements Serializable {
     }
 
     public Cliente(String nome, String sobrenome, String telefone, String email, String cpf) {
+        id = UUID.randomUUID().toString();
         setNome(nome);
         setSobrenome(sobrenome);
         setTelefone(telefone);
         setEmail(email);
         setCpf(cpf);
         valorEmDeficit = new BigDecimal("0").setScale(2, HALF_UP);
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     public String getNome() {

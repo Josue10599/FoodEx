@@ -8,8 +8,10 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 public class Venda implements Serializable {
+    private final String id;
     private FormataDinheiro formataDinheiro = new FormataDinheiro();
     private Date dataVenda;
     private Cliente cliente;
@@ -18,7 +20,16 @@ public class Venda implements Serializable {
     private BigDecimal valorDaCompra;
     private boolean estadoVenda;
 
+    public Venda() {
+        this.id = UUID.randomUUID().toString();
+        this.dataVenda = Calendar.getInstance().getTime();
+        this.valorEmDeficit = new BigDecimal("0");
+        this.valorDaCompra = new BigDecimal("0");
+        this.estadoVenda = false;
+    }
+
     public Venda(Cliente cliente, boolean pago, Produto... produtoVendido) {
+        this.id = UUID.randomUUID().toString();
         this.dataVenda = Calendar.getInstance().getTime();
         this.cliente = cliente;
         this.produtosVendidos = produtoVendido;
@@ -78,5 +89,9 @@ public class Venda implements Serializable {
 
     private void vendaPaga() {
         estadoVenda = valorEmDeficit.compareTo(new BigDecimal("0")) == 0;
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

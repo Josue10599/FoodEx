@@ -4,22 +4,30 @@ import com.fulltime.foodex.formatter.FormataDinheiro;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class Produto implements Serializable {
+    private final String id;
     private String nome;
     private String descricao;
     private BigDecimal valor;
     private FormataDinheiro formataDinheiro = new FormataDinheiro();
 
     public Produto() {
+        this.id = UUID.randomUUID().toString();
         setNome("");
         setDescricao("");
         setValor("0");
     }
 
     public Produto(String nome, String valor) {
+        this.id = UUID.randomUUID().toString();
         setNome(nome);
         setValor(valor);
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     public String getNome() {
