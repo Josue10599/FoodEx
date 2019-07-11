@@ -118,4 +118,19 @@ public class Cliente implements Serializable {
     public boolean clienteEhCadastrado() {
         return !getNome().equals("");
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cliente cliente = (Cliente) o;
+
+        return id.equals(cliente.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

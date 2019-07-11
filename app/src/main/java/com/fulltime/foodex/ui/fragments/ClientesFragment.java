@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulltime.foodex.R;
+import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
+import com.fulltime.foodex.firebase.firestore.OnQueryListener;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.ui.fragments.bottomsheet.AdicionarClienteFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClientesAdapter;
@@ -35,15 +37,22 @@ public class ClientesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View clientView = inflater.inflate(R.layout.fragment_cliente, container, false);
         todosClientes = new ArrayList<>();
-        Cliente cliente = new Cliente("Josue", "Lopes", "(14) 99802-1667", "josue10599@gmail.com", "432.418.048-28");
-        cliente.setValorEmDeficit("50,00");
-        todosClientes.add(cliente);
-        todosClientes.add(new Cliente("Silas", "Malaquias", "(14) 99802-1667", "josue10599@gmail.com", "432.418.048-28"));
         devedores = filtraDevedores(todosClientes);
         configuraTabMenu(clientView);
         configuraAdapter();
         configuraRecyclerView(clientView);
         return clientView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirestoreAdapter.build().getClientes(new OnQueryListener() {
+            @Override
+            public void onSucessful(List item) {
+                for (Object cliente : item) adapter.adicionaCliente((Cliente) cliente);
+            }
+        });
     }
 
     private void configuraTabMenu(View clientView) {
@@ -80,6 +89,7 @@ public class ClientesFragment extends Fragment {
                     @Override
                     public void clienteImplementado(Cliente cliente) {
                         adapter.alteraCliente(posicao, cliente);
+                        FirestoreAdapter.build().setCliente(cliente);
                     }
                 }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }

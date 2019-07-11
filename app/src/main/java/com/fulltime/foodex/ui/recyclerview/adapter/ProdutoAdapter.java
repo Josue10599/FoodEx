@@ -11,20 +11,28 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.fulltime.foodex.R;
+import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
+import com.fulltime.foodex.firebase.firestore.OnQueryListener;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
 
-    private final List<Produto> produtosSalvos;
+    private final List<Produto> produtosSalvos = new ArrayList<>();
     private OnItemClickListener listener;
     private Context context;
 
-    public ProdutoAdapter(List<Produto> produtos) {
-        this.produtosSalvos = produtos;
+    public ProdutoAdapter() {
+        FirestoreAdapter.build().getProdutos(new OnQueryListener() {
+            @Override
+            public void onSucessful(List item) {
+                for (Object produto : item) insereItem((Produto) produto);
+            }
+        });
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -51,8 +59,10 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
     }
 
     public void insereItem(Produto novoProduto) {
-        this.produtosSalvos.add(novoProduto);
-        notifyItemInserted(this.produtosSalvos.size() - 1);
+        if (!this.produtosSalvos.contains(novoProduto)) {
+            this.produtosSalvos.add(novoProduto);
+            notifyItemInserted(this.produtosSalvos.size() - 1);
+        }
     }
 
     public void alteraItem(Produto produtoAlterado, int posicao) {

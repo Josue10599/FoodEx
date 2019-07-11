@@ -1,5 +1,6 @@
 package com.fulltime.foodex.ui.recyclerview.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,10 @@ import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 import java.util.Collections;
 import java.util.List;
 
-public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.ClienteViewHolder>{
+public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.ClienteViewHolder> {
     private List<Cliente> listaClientes;
     private OnItemClickListener onItemClickListener;
+    private Context context;
 
     public ClientesAdapter(List<Cliente> listaClientes) {
         this.listaClientes = listaClientes;
@@ -33,6 +35,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
     @NonNull
     @Override
     public ClienteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        this.context = parent.getContext();
         View viewHolderCliente = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_cliente, parent, false);
         return new ClienteViewHolder(viewHolderCliente);
@@ -49,8 +52,10 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
     }
 
     public void adicionaCliente(Cliente novoCliente) {
-        listaClientes.add(0, novoCliente);
-        notifyItemInserted(0);
+        if (!listaClientes.contains(novoCliente)) {
+            listaClientes.add(novoCliente);
+            notifyItemInserted(listaClientes.size() - 1);
+        }
     }
 
     public void alteraCliente(int posicao, Cliente clienteAlterado) {
@@ -101,7 +106,10 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
                     .buildRound(cliente.getPrimeiraLetraNome(), colorGenerator.getRandomColor()));
             nomeCliente.setText(cliente.getNomeCompleto());
             telefoneCliente.setText(cliente.getTelefone());
-            devendoCliente.setText(cliente.getValorEmDeficit());
+            devendoCliente.setText(context.getString(R.string.sifra, cliente.getValorEmDeficit()));
+            if (cliente.estaDevendo())
+                devendoCliente.setTextColor(context.getResources().getColor(R.color.color_nao_pago));
+            else devendoCliente.setTextColor(context.getResources().getColor(R.color.color_pago));
         }
     }
 }

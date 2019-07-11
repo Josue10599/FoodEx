@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
+import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -36,9 +37,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
         botaoAddVenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Se o valor for pago somente registrar a venda,
-                senão adicionar saldo devedor para o cliente e quantia a pagar no registro de venda
-                */
+                new AdicionarVendaFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }
@@ -65,6 +64,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
                     @Override
                     public void produtoSalvo(Produto produto) {
                         //Adicionar na Lista do RecyclerView e mandar para o Firebase
+                        FirestoreAdapter.build().setProduto(produto);
                     }
                 }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
@@ -82,6 +82,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
                     @Override
                     public void clienteImplementado(Cliente cliente) {
                         //Adicionar na Lista do RecyclerView e mandar para o Firebase
+                        FirestoreAdapter.build().setCliente(cliente);
                     }
                 }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
