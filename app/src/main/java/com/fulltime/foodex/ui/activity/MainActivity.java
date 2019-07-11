@@ -19,46 +19,65 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import static com.fulltime.foodex.ui.fragments.bottomsheet.Constantes.BOTTOM_SHEET_FRAGMENT_TAG;
+import static com.google.android.material.bottomnavigation.BottomNavigationView.OnClickListener;
+import static com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static int itemSelectedBottonNavigation = R.id.bottom_nav_clients_cliente;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        populaFragment(new ClientesFragment());
+        configuraFloatingActionButton();
+        configuraBottomNavigation();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        itemSelectedBottonNavigation = bottomNavigationView.getSelectedItemId();
+    }
+
+    private void configuraFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.activity_main_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 new MenuOpcoesFragments().show(getSupportFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
-        configuraBottomNavigation();
     }
 
     private void configuraBottomNavigation() {
-        final BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.bottom_nav_clients_cliente:
-                        populaFragment(new ClientesFragment());
-                        break;
-                    case R.id.bottom_nav_products_produto:
-                        populaFragment(new ProdutosFragment());
-                        break;
-                    case R.id.bottom_nav_sales_venda:
-                        populaFragment(new VendasFragment());
-                        break;
-                    case R.id.bottom_nav_user_perfil:
-                        populaFragment(new PerfilFragment());
-                        break;
-                }
+                setFragment(item.getItemId());
                 return true;
             }
         });
+        setFragment(itemSelectedBottonNavigation);
+    }
+
+    private void setFragment(@NonNull int id) {
+        switch (id) {
+            case R.id.bottom_nav_clients_cliente:
+                populaFragment(new ClientesFragment());
+                break;
+            case R.id.bottom_nav_products_produto:
+                populaFragment(new ProdutosFragment());
+                break;
+            case R.id.bottom_nav_sales_venda:
+                populaFragment(new VendasFragment());
+                break;
+            case R.id.bottom_nav_user_perfil:
+                populaFragment(new PerfilFragment());
+                break;
+        }
     }
 
     private void populaFragment(Fragment fragment) {
