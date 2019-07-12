@@ -29,15 +29,14 @@ import static com.fulltime.foodex.ui.fragments.bottomsheet.Constantes.BOTTOM_SHE
 public class ClientesFragment extends Fragment {
 
     private ClientesAdapter adapter;
-    private List<Cliente> todosClientes;
-    private List<Cliente> devedores;
+
+    private List<Cliente> todosClientes = new ArrayList<>();
+    private List<Cliente> devedores = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View clientView = inflater.inflate(R.layout.fragment_cliente, container, false);
-        todosClientes = new ArrayList<>();
-        devedores = filtraDevedores(todosClientes);
         configuraTabMenu(clientView);
         configuraAdapter();
         configuraRecyclerView(clientView);
@@ -47,10 +46,11 @@ public class ClientesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirestoreAdapter.build().getClientes(new OnQueryListener() {
+        FirestoreAdapter.build().getCliente(new OnQueryListener() {
             @Override
-            public void onSucessful(List item) {
-                for (Object cliente : item) adapter.adicionaCliente((Cliente) cliente);
+            public void onSucessful(Object cliente) {
+                adapter.adicionaCliente((Cliente) cliente);
+                devedores = filtraDevedores(todosClientes);
             }
         });
     }
