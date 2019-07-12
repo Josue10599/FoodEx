@@ -19,10 +19,11 @@ import javax.annotation.Nullable;
 
 public class FirestoreAdapter {
 
-    private static final String CLIENTES = "clientes";
     private static final String TAG_FIRESTONE = "Firestone";
+    private static final String CLIENTES = "clientes";
     private static final String PRODUTOS = "produtos";
     private static final String VENDAS = "vendas";
+
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public FirestoreAdapter() {
@@ -36,7 +37,7 @@ public class FirestoreAdapter {
         return new FirestoreAdapter();
     }
 
-    public void getClientes(final OnQueryListener onQueryListener) {
+    public List<Cliente> getClientes(final OnQueryListener onQueryListener) {
         final List<Cliente> clientes = new ArrayList<>();
         db.collection(CLIENTES).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -44,9 +45,10 @@ public class FirestoreAdapter {
                 populaLista(queryDocumentSnapshots, clientes, Cliente.class, onQueryListener);
             }
         });
+        return clientes;
     }
 
-    public void getProdutos(final OnQueryListener onQueryListener) {
+    public List<Produto> getProdutos(final OnQueryListener onQueryListener) {
         final List<Produto> produtos = new ArrayList<>();
         db.collection(PRODUTOS).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -54,9 +56,10 @@ public class FirestoreAdapter {
                 populaLista(queryDocumentSnapshots, produtos, Produto.class, onQueryListener);
             }
         });
+        return produtos;
     }
 
-    public void getVendas(final OnQueryListener onQueryListener) {
+    public List<Venda> getVendas(final OnQueryListener onQueryListener) {
         final List<Venda> vendas = new ArrayList<>();
         db.collection(VENDAS).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -64,6 +67,7 @@ public class FirestoreAdapter {
                 populaLista(queryDocumentSnapshots, vendas, Venda.class, onQueryListener);
             }
         });
+        return vendas;
     }
 
     public void setCliente(Cliente cliente) {
@@ -74,17 +78,18 @@ public class FirestoreAdapter {
         db.collection(PRODUTOS).document(produto.getId()).set(produto);
     }
 
-    public void setVendas(Venda venda) {
+    public void setVenda(Venda venda) {
         db.collection(VENDAS).document(venda.getId()).set(venda);
     }
 
     private void populaLista(QuerySnapshot documentSnapshots, List list, Class _class, OnQueryListener onQueryListener) {
         if (documentSnapshots != null) {
             for (DocumentChange document : documentSnapshots.getDocumentChanges()) {
-                list.add(document.getDocument().toObject(_class));
+                Object object = document.getDocument().toObject(_class);
+                list.add(object);
+                onQueryListener.onSucessful(object);
                 Log.d(TAG_FIRESTONE, document.getDocument().getId() + " => " + document.getDocument().getData());
             }
-            onQueryListener.onSucessful(list);
         }
     }
 }
