@@ -17,20 +17,20 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
-public class AdicionarProdutoFragment extends BottomSheetDialogFragment {
+public class ImplementaProdutoFragment extends BottomSheetDialogFragment {
 
     private final Produto produto;
-    private final SalvaProdutoListener listener;
+    private final ProdutoImplementadoListener listener;
     private TextInputLayout textInputLayoutProdutoValor;
     private TextInputLayout textInputLayoutProdutoNome;
     private TextInputLayout textInputLayoutProdutoDescricao;
 
-    public AdicionarProdutoFragment(Produto produto, SalvaProdutoListener listener) {
+    public ImplementaProdutoFragment(Produto produto, ProdutoImplementadoListener listener) {
         this.produto = produto;
         this.listener = listener;
     }
 
-    public AdicionarProdutoFragment(SalvaProdutoListener listener) {
+    public ImplementaProdutoFragment(ProdutoImplementadoListener listener) {
         this.produto = new Produto();
         this.listener = listener;
     }
@@ -120,7 +120,7 @@ public class AdicionarProdutoFragment extends BottomSheetDialogFragment {
                 .findViewById(R.id.bottom_sheet_produto_descricao);
     }
 
-    public interface SalvaProdutoListener {
+    public interface ProdutoImplementadoListener {
         void produtoSalvo(Produto produto);
     }
 }

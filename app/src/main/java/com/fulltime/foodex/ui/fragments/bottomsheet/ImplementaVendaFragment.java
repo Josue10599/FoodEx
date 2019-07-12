@@ -28,17 +28,17 @@ import java.util.List;
 import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 import gr.escsoft.michaelprimez.searchablespinner.interfaces.OnItemSelectedListener;
 
-public class AdicionarVendaFragment extends BottomSheetDialogFragment {
+public class ImplementaVendaFragment extends BottomSheetDialogFragment {
 
-    private final OnCreateVendaListener onCreateVendaListener;
+    private final VendaImplementadaListener vendaImplementadaListener;
     private TextView textViewQuantidade;
     private Cliente clienteSelecionado;
     private Produto produtoSelecionado;
     private boolean vendaPaga;
     private int quantidade = 1;
 
-    public AdicionarVendaFragment(OnCreateVendaListener onCreateVendaListener) {
-        this.onCreateVendaListener = onCreateVendaListener;
+    public ImplementaVendaFragment(VendaImplementadaListener vendaImplementadaListener) {
+        this.vendaImplementadaListener = vendaImplementadaListener;
     }
 
     @Nullable
@@ -48,6 +48,11 @@ public class AdicionarVendaFragment extends BottomSheetDialogFragment {
                              @Nullable Bundle savedInstanceState) {
         View bottomSheetAdicionarVenda = inflater.
                 inflate(R.layout.fragment_bottom_sheet_add_venda, container, false);
+        bindCampos(bottomSheetAdicionarVenda);
+        return bottomSheetAdicionarVenda;
+    }
+
+    private void bindCampos(View bottomSheetAdicionarVenda) {
         configuraSearchableSpinnerCliente(bottomSheetAdicionarVenda);
         configuraSearchableSpinnerProduto(bottomSheetAdicionarVenda);
         configuraTextViewQuantidade(bottomSheetAdicionarVenda);
@@ -55,7 +60,6 @@ public class AdicionarVendaFragment extends BottomSheetDialogFragment {
         configuraBotaoDecrementa(bottomSheetAdicionarVenda);
         configuraSwitchEstadoVenda(bottomSheetAdicionarVenda);
         configuraBotaoCadastrar(bottomSheetAdicionarVenda);
-        return bottomSheetAdicionarVenda;
     }
 
     private void configuraSwitchEstadoVenda(View bottomSheetAdicionarVenda) {
@@ -77,7 +81,7 @@ public class AdicionarVendaFragment extends BottomSheetDialogFragment {
                     List<Produto> produtos = new ArrayList<>();
                     for (int i = 0; i < quantidade; i++) produtos.add(produtoSelecionado);
                     Venda venda = new Venda(clienteSelecionado, vendaPaga, produtos);
-                    onCreateVendaListener.vendaConcluida(venda, clienteSelecionado);
+                    vendaImplementadaListener.vendaConcluida(venda, clienteSelecionado);
                     dismiss();
                 }
             }
@@ -112,7 +116,7 @@ public class AdicionarVendaFragment extends BottomSheetDialogFragment {
         final SearchableSpinner spinnerCliente = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_searchspinner_cliente);
         final ArrayList<Object> clientes = new ArrayList<>();
-        FirestoreAdapter.build().getClientes(new OnQueryListener() {
+        FirestoreAdapter.build().getCliente(new OnQueryListener() {
             @Override
             public void onSucessful(Object cliente) {
                 clientes.add(cliente);
@@ -162,7 +166,7 @@ public class AdicionarVendaFragment extends BottomSheetDialogFragment {
         });
     }
 
-    public interface OnCreateVendaListener {
+    public interface VendaImplementadaListener {
         void vendaConcluida(Venda venda, Cliente clienteQueComprou);
     }
 }

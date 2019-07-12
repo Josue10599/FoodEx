@@ -19,12 +19,12 @@ import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 import java.util.Collections;
 import java.util.List;
 
-public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.ClienteViewHolder> {
+public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteViewHolder> {
     private List<Cliente> listaClientes;
     private OnItemClickListener onItemClickListener;
     private Context context;
 
-    public ClientesAdapter(List<Cliente> listaClientes) {
+    public ClienteAdapter(List<Cliente> listaClientes) {
         this.listaClientes = listaClientes;
     }
 
@@ -85,7 +85,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
         private final TextView devendoCliente;
         private Cliente cliente;
 
-        public ClienteViewHolder(@NonNull final View itemView) {
+        ClienteViewHolder(@NonNull final View itemView) {
             super(itemView);
             imagemCliente = itemView.findViewById(R.id.item_cliente_foto);
             nomeCliente = itemView.findViewById(R.id.item_cliente_nome);
@@ -99,7 +99,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.Client
             });
         }
 
-        public void bindView(@NonNull Cliente cliente) {
+        void bindView(@NonNull Cliente cliente) {
             this.cliente = cliente;
             ColorGenerator colorGenerator = ColorGenerator.MATERIAL;
             imagemCliente.setImageDrawable(TextDrawable.builder()

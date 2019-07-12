@@ -10,19 +10,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.ui.fragments.ClientesFragment;
-import com.fulltime.foodex.ui.fragments.PerfilFragment;
-import com.fulltime.foodex.ui.fragments.ProdutosFragment;
-import com.fulltime.foodex.ui.fragments.VendasFragment;
+import com.fulltime.foodex.ui.fragments.ListaClientesFragment;
+import com.fulltime.foodex.ui.fragments.ListaProdutosFragment;
+import com.fulltime.foodex.ui.fragments.ListaVendasFragment;
+import com.fulltime.foodex.ui.fragments.PerfilUsuarioFragment;
 import com.fulltime.foodex.ui.fragments.bottomsheet.MenuOpcoesFragments;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import static com.fulltime.foodex.ui.fragments.bottomsheet.Constantes.BOTTOM_SHEET_FRAGMENT_TAG;
-import static com.google.android.material.bottomnavigation.BottomNavigationView.OnClickListener;
+import static android.view.View.OnClickListener;
+import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 import static com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
 
-public class MainActivity extends AppCompatActivity {
+public class GerenciarActivity extends AppCompatActivity {
 
     private static int itemSelectedBottonNavigation = R.id.bottom_nav_clients_cliente;
     private BottomNavigationView bottomNavigationView;
@@ -63,19 +63,19 @@ public class MainActivity extends AppCompatActivity {
         setFragment(itemSelectedBottonNavigation);
     }
 
-    private void setFragment(@NonNull int id) {
+    private void setFragment(int id) {
         switch (id) {
             case R.id.bottom_nav_clients_cliente:
-                populaFragment(new ClientesFragment());
+                populaFragment(new ListaClientesFragment());
                 break;
             case R.id.bottom_nav_products_produto:
-                populaFragment(new ProdutosFragment());
+                populaFragment(new ListaProdutosFragment());
                 break;
             case R.id.bottom_nav_sales_venda:
-                populaFragment(new VendasFragment());
+                populaFragment(new ListaVendasFragment());
                 break;
             case R.id.bottom_nav_user_perfil:
-                populaFragment(new PerfilFragment());
+                populaFragment(new PerfilUsuarioFragment());
                 break;
         }
     }

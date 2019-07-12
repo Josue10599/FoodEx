@@ -29,8 +29,8 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
     public ProdutoAdapter() {
         FirestoreAdapter.build().getProdutos(new OnQueryListener() {
             @Override
-            public void onSucessful(List item) {
-                for (Object produto : item) insereItem((Produto) produto);
+            public void onSucessful(Object produto) {
+                insereItem((Produto) produto);
             }
         });
     }

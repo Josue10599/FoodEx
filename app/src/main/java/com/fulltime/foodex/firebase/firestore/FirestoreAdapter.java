@@ -37,12 +37,12 @@ public class FirestoreAdapter {
         return new FirestoreAdapter();
     }
 
-    public List<Cliente> getClientes(final OnQueryListener onQueryListener) {
+    public List<Cliente> getCliente(final OnQueryListener onQueryListener) {
         final List<Cliente> clientes = new ArrayList<>();
         db.collection(CLIENTES).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                populaLista(queryDocumentSnapshots, clientes, Cliente.class, onQueryListener);
+                getItens(queryDocumentSnapshots, clientes, Cliente.class, onQueryListener, e);
             }
         });
         return clientes;
@@ -53,7 +53,7 @@ public class FirestoreAdapter {
         db.collection(PRODUTOS).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                populaLista(queryDocumentSnapshots, produtos, Produto.class, onQueryListener);
+                getItens(queryDocumentSnapshots, produtos, Produto.class, onQueryListener, e);
             }
         });
         return produtos;
@@ -64,7 +64,7 @@ public class FirestoreAdapter {
         db.collection(VENDAS).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                populaLista(queryDocumentSnapshots, vendas, Venda.class, onQueryListener);
+                getItens(queryDocumentSnapshots, vendas, Venda.class, onQueryListener, e);
             }
         });
         return vendas;
@@ -82,7 +82,11 @@ public class FirestoreAdapter {
         db.collection(VENDAS).document(venda.getId()).set(venda);
     }
 
-    private void populaLista(QuerySnapshot documentSnapshots, List list, Class _class, OnQueryListener onQueryListener) {
+    private void getItens(QuerySnapshot documentSnapshots,
+                          List list,
+                          Class _class,
+                          OnQueryListener onQueryListener,
+                          FirebaseFirestoreException e) {
         if (documentSnapshots != null) {
             for (DocumentChange document : documentSnapshots.getDocumentChanges()) {
                 Object object = document.getDocument().toObject(_class);
@@ -90,6 +94,6 @@ public class FirestoreAdapter {
                 onQueryListener.onSucessful(object);
                 Log.d(TAG_FIRESTONE, document.getDocument().getId() + " => " + document.getDocument().getData());
             }
-        }
+        } else Log.e(TAG_FIRESTONE, e.getLocalizedMessage());
     }
 }

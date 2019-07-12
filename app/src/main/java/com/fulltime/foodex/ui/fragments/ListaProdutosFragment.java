@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
 import com.fulltime.foodex.model.Produto;
-import com.fulltime.foodex.ui.fragments.bottomsheet.AdicionarProdutoFragment;
+import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaProdutoFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
 import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 
-import static com.fulltime.foodex.ui.fragments.bottomsheet.Constantes.BOTTOM_SHEET_FRAGMENT_TAG;
+import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 
-public class ProdutosFragment extends Fragment {
+public class ListaProdutosFragment extends Fragment {
 
     @Nullable
     @Override
@@ -36,7 +36,7 @@ public class ProdutosFragment extends Fragment {
             @Override
             public void onItemClickListener(final int posicao, Object itemSelecionado) {
                 assert getFragmentManager() != null;
-                new AdicionarProdutoFragment((Produto) itemSelecionado, new AdicionarProdutoFragment.SalvaProdutoListener() {
+                new ImplementaProdutoFragment((Produto) itemSelecionado, new ImplementaProdutoFragment.ProdutoImplementadoListener() {
                     @Override
                     public void produtoSalvo(Produto produto) {
                         produtoAdapter.alteraItem(produto, posicao);

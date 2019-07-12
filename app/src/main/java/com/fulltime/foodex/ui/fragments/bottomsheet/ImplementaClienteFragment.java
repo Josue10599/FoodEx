@@ -19,9 +19,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
-public class AdicionarClienteFragment extends BottomSheetDialogFragment {
+public class ImplementaClienteFragment extends BottomSheetDialogFragment {
 
-    private final ClienteImplementado clienteImplementado;
+    private final ClienteImplementadoListener clienteImplementadoListener;
 
     private final Cliente cliente;
 
@@ -33,13 +33,13 @@ public class AdicionarClienteFragment extends BottomSheetDialogFragment {
     private TextInputLayout campoCpf;
     private MaterialButton buttonCadastrar;
 
-    public AdicionarClienteFragment(ClienteImplementado clienteImplementado) {
-        this.clienteImplementado = clienteImplementado;
+    public ImplementaClienteFragment(ClienteImplementadoListener clienteImplementadoListener) {
+        this.clienteImplementadoListener = clienteImplementadoListener;
         this.cliente = new Cliente();
     }
 
-    public AdicionarClienteFragment(Cliente cliente, ClienteImplementado clienteImplementado) {
-        this.clienteImplementado = clienteImplementado;
+    public ImplementaClienteFragment(Cliente cliente, ClienteImplementadoListener clienteImplementadoListener) {
+        this.clienteImplementadoListener = clienteImplementadoListener;
         this.cliente = cliente;
     }
 
@@ -48,18 +48,21 @@ public class AdicionarClienteFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         bottomSheetAdicionarCliente = inflater.inflate
                 (R.layout.fragment_bottom_sheet_add_cliente, container, false);
-        bindCampo();
-        configuraBotao();
+        bindCampos();
         if (cliente.clienteEhCadastrado()) {
-            TextView titulo = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_title_add);
-            titulo.setText(R.string.alter_cliente);
-            buttonCadastrar.setText(R.string.alter_cliente_button);
-            populaCampos();
+            alteraInformacoesParaAlterarCliente();
+            preencheCampos();
         }
         return bottomSheetAdicionarCliente;
     }
 
-    private void populaCampos() {
+    private void alteraInformacoesParaAlterarCliente() {
+        TextView titulo = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_title_add);
+        titulo.setText(R.string.alter_cliente);
+        buttonCadastrar.setText(R.string.alter_cliente_button);
+    }
+
+    private void preencheCampos() {
         Objects.requireNonNull(campoNome.getEditText()).setText(cliente.getNome());
         Objects.requireNonNull(campoSobrenome.getEditText()).setText(cliente.getSobrenome());
         if (!cliente.getTelefone().isEmpty()) {
@@ -71,15 +74,36 @@ public class AdicionarClienteFragment extends BottomSheetDialogFragment {
         }
     }
 
-    private void bindCampo() {
+    private void bindCampos() {
+        configuraCampoNome();
+        configuraCampoSobrenome();
+        configuraTelefone();
+        configuraEmail();
+        configuraCpf();
+        configuraBotao();
+    }
+
+    private void configuraCpf() {
+        campoCpf = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_cpf);
+        Objects.requireNonNull(campoCpf.getEditText()).addTextChangedListener(MaskWatcher.buildCpf());
+    }
+
+    private void configuraEmail() {
+        campoEmail = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_email);
+    }
+
+    private void configuraCampoNome() {
         campoNome = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_produto_nome);
+    }
+
+    private void configuraCampoSobrenome() {
         campoSobrenome = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_sobrenome);
+    }
+
+    private void configuraTelefone() {
         campoTelefone = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_produto_valor);
         Objects.requireNonNull(campoTelefone.getEditText()).addTextChangedListener(MaskWatcher.buildPhone());
         campoTelefone.getEditText().setOnFocusChangeListener(new FormataTelefone());
-        campoEmail = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_email);
-        campoCpf = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_cpf);
-        Objects.requireNonNull(campoCpf.getEditText()).addTextChangedListener(MaskWatcher.buildCpf());
     }
 
     private boolean implementaCliente() {
@@ -105,14 +129,14 @@ public class AdicionarClienteFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if (implementaCliente()) {
-                    clienteImplementado.clienteImplementado(cliente);
+                    clienteImplementadoListener.clienteImplementado(cliente);
                     dismiss();
                 }
             }
         });
     }
 
-    public interface ClienteImplementado {
+    public interface ClienteImplementadoListener {
         void clienteImplementado(Cliente cliente);
     }
 

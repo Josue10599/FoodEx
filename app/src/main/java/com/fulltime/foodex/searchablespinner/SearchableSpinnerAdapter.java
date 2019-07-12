@@ -40,10 +40,7 @@ public class SearchableSpinnerAdapter extends BaseAdapter implements Filterable,
 
     @Override
     public long getItemId(int position) {
-        if (mObjects == null && position > 0)
-            return mObjects.get(position).hashCode();
-        else
-            return -1;
+        return mObjects.get(position).hashCode();
     }
 
     @Override

@@ -16,7 +16,7 @@ import com.fulltime.foodex.model.Venda;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
-import static com.fulltime.foodex.ui.fragments.bottomsheet.Constantes.BOTTOM_SHEET_FRAGMENT_TAG;
+import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 
 public class MenuOpcoesFragments extends BottomSheetDialogFragment {
 
@@ -39,7 +39,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 assert getFragmentManager() != null;
-                new AdicionarVendaFragment(new AdicionarVendaFragment.OnCreateVendaListener() {
+                new ImplementaVendaFragment(new ImplementaVendaFragment.VendaImplementadaListener() {
                     @Override
                     public void vendaConcluida(Venda venda, Cliente clienteQueComprou) {
                         FirestoreAdapter.build().setCliente(clienteQueComprou);
@@ -68,7 +68,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 assert getFragmentManager() != null;
-                new AdicionarProdutoFragment(new AdicionarProdutoFragment.SalvaProdutoListener() {
+                new ImplementaProdutoFragment(new ImplementaProdutoFragment.ProdutoImplementadoListener() {
                     @Override
                     public void produtoSalvo(Produto produto) {
                         //Adicionar na Lista do RecyclerView e mandar para o Firebase
@@ -86,7 +86,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 assert getFragmentManager() != null;
-                new AdicionarClienteFragment(new AdicionarClienteFragment.ClienteImplementado() {
+                new ImplementaClienteFragment(new ImplementaClienteFragment.ClienteImplementadoListener() {
                     @Override
                     public void clienteImplementado(Cliente cliente) {
                         //Adicionar na Lista do RecyclerView e mandar para o Firebase

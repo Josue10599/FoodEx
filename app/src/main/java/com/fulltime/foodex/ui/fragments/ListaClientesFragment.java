@@ -14,8 +14,8 @@ import com.fulltime.foodex.R;
 import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
 import com.fulltime.foodex.firebase.firestore.OnQueryListener;
 import com.fulltime.foodex.model.Cliente;
-import com.fulltime.foodex.ui.fragments.bottomsheet.AdicionarClienteFragment;
-import com.fulltime.foodex.ui.recyclerview.adapter.ClientesAdapter;
+import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaClienteFragment;
+import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
 import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.fulltime.foodex.ui.fragments.bottomsheet.Constantes.BOTTOM_SHEET_FRAGMENT_TAG;
+import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 
-public class ClientesFragment extends Fragment {
+public class ListaClientesFragment extends Fragment {
 
-    private ClientesAdapter adapter;
+    private ClienteAdapter adapter;
 
     private List<Cliente> todosClientes = new ArrayList<>();
     private List<Cliente> devedores = new ArrayList<>();
@@ -38,7 +38,6 @@ public class ClientesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View clientView = inflater.inflate(R.layout.fragment_cliente, container, false);
         configuraTabMenu(clientView);
-        configuraAdapter();
         configuraRecyclerView(clientView);
         return clientView;
     }
@@ -60,9 +59,8 @@ public class ClientesFragment extends Fragment {
         tabLayoutMenuCliente.addOnTabSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (Objects.requireNonNull(tab.getText()).toString()
-                        .equals(Objects.requireNonNull(getContext())
-                                .getString(R.string.fragment_cliente_devedores)))
+                if (Objects.requireNonNull(tab.getText()).toString().equals(Objects.requireNonNull(getContext())
+                        .getString(R.string.fragment_cliente_devedores)))
                     adapter.alteraLista(devedores);
                 else adapter.alteraLista(todosClientes);
             }
@@ -80,12 +78,12 @@ public class ClientesFragment extends Fragment {
     }
 
     private void configuraAdapter() {
-        adapter = new ClientesAdapter(todosClientes);
+        adapter = new ClienteAdapter(todosClientes);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClickListener(final int posicao, Object clienteSelecionado) {
                 assert getFragmentManager() != null;
-                new AdicionarClienteFragment((Cliente) clienteSelecionado, new AdicionarClienteFragment.ClienteImplementado() {
+                new ImplementaClienteFragment((Cliente) clienteSelecionado, new ImplementaClienteFragment.ClienteImplementadoListener() {
                     @Override
                     public void clienteImplementado(Cliente cliente) {
                         adapter.alteraCliente(posicao, cliente);
@@ -97,6 +95,7 @@ public class ClientesFragment extends Fragment {
     }
 
     private void configuraRecyclerView(View clientView) {
+        configuraAdapter();
         RecyclerView listaCliente = clientView.findViewById(R.id.fragment_cliente_recycler_view);
         listaCliente.setAdapter(adapter);
     }
