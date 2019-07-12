@@ -19,12 +19,90 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner
+        android:id="@+id/bottom_sheet_add_venda_searchspinner_cliente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_5"
+        android:layout_marginBottom="@dimen/keyline_5"
+        app:BordersSize="1dp"
+        app:NoItemsFoundText="@string/nenhum_cliente_encontrado"
+        app:RevealEmptyText="@string/selecionar_cliente"
+        app:SearchHintText="@string/procurar_cliente"
+        app:ShowBorders="true"
+        app:layout_constraintBottom_toTopOf="@id/bottom_sheet_add_venda_searchspinner_produto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_title_add" />
+
+    <gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner
+        android:id="@+id/bottom_sheet_add_venda_searchspinner_produto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_5"
+        android:layout_marginBottom="@dimen/keyline_5"
+        app:BordersSize="1dp"
+        app:NoItemsFoundText="@string/nenhum_produto_encontrado"
+        app:RevealEmptyText="@string/selecionar_produto"
+        app:SearchHintText="@string/procurar_produto"
+        app:ShowBorders="true"
+        app:layout_constraintBottom_toTopOf="@id/bottom_sheet_add_venda_quantidade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_add_venda_searchspinner_cliente" />
+
+    <Button
+        android:id="@+id/bottom_sheet_add_venda_decrementar_quantidade"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subtract"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_sheet_add_venda_quantidade"
+        app:layout_constraintEnd_toStartOf="@id/bottom_sheet_add_venda_quantidade"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bottom_sheet_add_venda_quantidade" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_add_venda_quantidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_2"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_sheet_add_venda_switch_estado"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_add_venda_searchspinner_produto" />
+
+    <Button
+        android:id="@+id/bottom_sheet_add_venda_incrementar_quantidade"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/plus"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_sheet_add_venda_quantidade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/bottom_sheet_add_venda_quantidade"
+        app:layout_constraintTop_toTopOf="@id/bottom_sheet_add_venda_quantidade" />
+
+    <Switch
+        android:id="@+id/bottom_sheet_add_venda_switch_estado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_4"
+        android:text="@string/venda_paga"
+        android:textAppearance="@style/TextAppearance.MyTheme.Button"
+        app:layout_constraintBottom_toTopOf="@id/bottom_sheet_botao_cadastrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_add_venda_quantidade" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bottom_sheet_botao_cadastrar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/cadastrar_cliente"
+        android:text="@string/concluir_venda"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

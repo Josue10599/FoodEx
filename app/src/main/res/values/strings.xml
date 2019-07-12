@@ -30,7 +30,14 @@
     <string name="produto_sem_descricao">Product without description.</string>
     <string name="add_new_venda">Adding Sale</string>
     <string name="sifra">R$ %s</string>
-    <string name="zero">0</string>
-    <string name="plus">+</string>
-    <string name="subtract">-</string>
+    <string name="plus" translatable="false">+</string>
+    <string name="subtract" translatable="false">-</string>
+    <string name="nenhum_cliente_encontrado">No customer found.</string>
+    <string name="selecionar_cliente">Select customer</string>
+    <string name="procurar_cliente">Search customer</string>
+    <string name="selecionar_produto">Select product</string>
+    <string name="nenhum_produto_encontrado">No product found.</string>
+    <string name="procurar_produto">Search product</string>
+    <string name="venda_paga">Did the customer pay?</string>
+    <string name="concluir_venda">Checkout</string>
 </resources>

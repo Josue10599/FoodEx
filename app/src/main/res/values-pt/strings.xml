@@ -28,7 +28,12 @@
     <string name="produto_sem_descricao">Produto sem descrição.</string>
     <string name="add_new_venda">Adicionando Venda</string>
     <string name="sifra">R$ %s</string>
-    <string name="zero">0</string>
-    <string name="plus">+</string>
-    <string name="subtract">-</string>
+    <string name="nenhum_cliente_encontrado">Nenhum cliente encontrado.</string>
+    <string name="selecionar_cliente">Selecione o cliente</string>
+    <string name="procurar_cliente">Procurar cliente</string>
+    <string name="nenhum_produto_encontrado">Nenhum produto encontrado.</string>
+    <string name="procurar_produto">Procurar produto</string>
+    <string name="selecionar_produto">Selecione o produto</string>
+    <string name="venda_paga">O cliente pagou?</string>
+    <string name="concluir_venda">Finalizar Venda</string>
 </resources>

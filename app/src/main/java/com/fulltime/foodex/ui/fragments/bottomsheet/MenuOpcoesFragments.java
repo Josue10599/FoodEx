@@ -12,6 +12,7 @@ import com.fulltime.foodex.R;
 import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
+import com.fulltime.foodex.model.Venda;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
@@ -37,7 +38,14 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
         botaoAddVenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AdicionarVendaFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
+                assert getFragmentManager() != null;
+                new AdicionarVendaFragment(new AdicionarVendaFragment.OnCreateVendaListener() {
+                    @Override
+                    public void vendaConcluida(Venda venda, Cliente clienteQueComprou) {
+                        FirestoreAdapter.build().setCliente(clienteQueComprou);
+                        FirestoreAdapter.build().setVenda(venda);
+                    }
+                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }
@@ -48,7 +56,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
         botaoAddPagamento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Diminuir o saldo devedor dos clientes e a quantidade a pagar da venda
+                //Diminuir o saldo devedor dos clientes
             }
         });
     }
