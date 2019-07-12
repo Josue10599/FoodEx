@@ -133,4 +133,10 @@ public class Cliente implements Serializable {
     public int hashCode() {
         return id.hashCode();
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getNomeCompleto();
+    }
 }

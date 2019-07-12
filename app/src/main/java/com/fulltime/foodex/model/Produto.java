@@ -1,5 +1,7 @@
 package com.fulltime.foodex.model;
 
+import androidx.annotation.NonNull;
+
 import com.fulltime.foodex.formatter.FormataDinheiro;
 
 import java.io.Serializable;
@@ -71,5 +73,11 @@ public class Produto implements Serializable {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getNome() + " - " + getDescricao();
     }
 }
