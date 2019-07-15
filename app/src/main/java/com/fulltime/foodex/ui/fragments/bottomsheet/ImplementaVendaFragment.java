@@ -23,7 +23,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 import gr.escsoft.michaelprimez.searchablespinner.interfaces.OnItemSelectedListener;
@@ -78,9 +77,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if (clienteSelecionado != null && produtoSelecionado != null) {
-                    List<Produto> produtos = new ArrayList<>();
-                    for (int i = 0; i < quantidade; i++) produtos.add(produtoSelecionado);
-                    Venda venda = new Venda(clienteSelecionado, vendaPaga, produtos);
+                    Venda venda = new Venda(clienteSelecionado, vendaPaga, produtoSelecionado, quantidade);
                     vendaImplementadaListener.vendaConcluida(venda, clienteSelecionado);
                     dismiss();
                 }

@@ -1,89 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/keyline_2"
+    android:animateLayoutChanges="true"
+    app:cardCornerRadius="@dimen/keyline_4"
+    app:cardElevation="@dimen/keyline_1">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/keyline_4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/item_venda_nome_produto_vendido"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/keyline_2"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+            app:layout_constraintBottom_toBottomOf="@id/item_venda_descricao_produto_vendido"
+            app:layout_constraintEnd_toStartOf="@id/item_venda_descricao_produto_vendido"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item_venda_descricao_produto_vendido"
+            tools:text="Pizza" />
 
-            <ImageView
-                android:id="@+id/item_venda_estado_venda_color"
-                android:layout_width="0dp"
-                android:layout_height="15dp"
-                android:src="@color/color_nao_pago"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/item_venda_descricao_produto_vendido"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/keyline_2"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/item_venda_valor_da_venda"
+            app:layout_constraintStart_toEndOf="@id/item_venda_nome_produto_vendido"
+            app:layout_constraintTop_toBottomOf="@id/item_venda_nome_cliente_comprador"
+            tools:text="Mussarela, calabresa, tomate, cebola, azeitona, oregano." />
 
-            <TextView
-                android:id="@+id/item_venda_estado_venda"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/keyline_2"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/item_venda_nome_produto"
-                app:layout_constraintTop_toBottomOf="@id/item_venda_estado_venda_color"
-                tools:text="NÃO PAGO" />
+        <TextView
+            android:id="@+id/item_venda_valor_da_venda"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/keyline_2"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+            android:textColor="@color/color_pago"
+            app:layout_constraintBottom_toBottomOf="@id/item_venda_descricao_produto_vendido"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_venda_descricao_produto_vendido"
+            app:layout_constraintTop_toTopOf="@id/item_venda_descricao_produto_vendido"
+            tools:text="R$ 100,00" />
 
-            <TextView
-                android:id="@+id/item_venda_nome_produto"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/keyline_1"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
-                android:textAlignment="textEnd"
-                app:layout_constraintBottom_toBottomOf="@id/item_venda_estado_venda"
-                app:layout_constraintEnd_toStartOf="@+id/item_venda_valor_produto"
-                app:layout_constraintVertical_bias="0"
-                app:layout_constraintStart_toEndOf="@+id/item_venda_estado_venda"
-                app:layout_constraintTop_toTopOf="@id/item_venda_estado_venda"
-                tools:text="Pizza" />
+        <TextView
+            android:id="@+id/item_venda_nome_cliente_comprador"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/keyline_1"
+            android:layout_marginTop="@dimen/keyline_1"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+            app:layout_constraintEnd_toStartOf="@id/item_venda_data_venda"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Josue" />
 
-            <TextView
-                android:id="@+id/item_venda_valor_produto"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/keyline_2"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
-                app:layout_constraintBottom_toBottomOf="@+id/item_venda_nome_produto"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/item_venda_nome_produto"
-                app:layout_constraintTop_toTopOf="@+id/item_venda_nome_produto"
-                tools:text="R$ 100,00" />
+        <TextView
+            android:id="@+id/item_venda_data_venda"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+            app:layout_constraintBottom_toBottomOf="@id/item_venda_nome_cliente_comprador"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_venda_nome_cliente_comprador"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10/05/2018" />
 
-            <TextView
-                android:id="@+id/item_venda_nome_cliente"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/item_venda_valor_produto"
-                app:layout_constraintStart_toStartOf="@+id/item_venda_nome_produto"
-                app:layout_constraintTop_toBottomOf="@+id/item_venda_nome_produto"
-                tools:text="Josue" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
