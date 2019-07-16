@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,7 @@ import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaProdutoFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
 import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
+import com.fulltime.foodex.ui.recyclerview.callback.ItemTouchCallback;
 
 import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 
@@ -48,5 +50,7 @@ public class ListaProdutosFragment extends Fragment {
         RecyclerView recyclerViewProdutos = produtosView.findViewById(R.id.fragment_produtos_recyler_view);
         recyclerViewProdutos.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewProdutos.setAdapter(produtoAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchCallback());
+        itemTouchHelper.attachToRecyclerView(recyclerViewProdutos);
     }
 }

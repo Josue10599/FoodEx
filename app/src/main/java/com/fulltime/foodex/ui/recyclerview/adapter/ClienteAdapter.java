@@ -103,7 +103,8 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
             this.cliente = cliente;
             ColorGenerator colorGenerator = ColorGenerator.MATERIAL;
             imagemCliente.setImageDrawable(TextDrawable.builder()
-                    .buildRound(cliente.getPrimeiraLetraNome(), colorGenerator.getRandomColor()));
+                    .buildRound(cliente.getPrimeiraLetraNome()
+                            + cliente.getPrimeiraLetraSobrenome(), context.getResources().getColor(R.color.color_secondary)));
             nomeCliente.setText(cliente.getNomeCompleto());
             telefoneCliente.setText(cliente.getTelefone());
             devendoCliente.setText(context.getString(R.string.sifra, cliente.getValorEmDeficit()));

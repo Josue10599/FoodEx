@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulltime.foodex.R;
@@ -17,6 +18,7 @@ import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaClienteFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
 import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
+import com.fulltime.foodex.ui.recyclerview.callback.ItemTouchCallback;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 
@@ -98,6 +100,8 @@ public class ListaClientesFragment extends Fragment {
         configuraAdapter();
         RecyclerView listaCliente = clientView.findViewById(R.id.fragment_cliente_recycler_view);
         listaCliente.setAdapter(adapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchCallback());
+        itemTouchHelper.attachToRecyclerView(listaCliente);
     }
 
     private List<Cliente> filtraDevedores(List<Cliente> clientes) {
