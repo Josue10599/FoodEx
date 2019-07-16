@@ -57,6 +57,14 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 //Diminuir o saldo devedor dos clientes
+                assert getFragmentManager() != null;
+                new RecebePagamentoFragment(new RecebePagamentoFragment.PagementoRecebidoListener() {
+                    @Override
+                    public void pagamentoRecebido(Cliente clienteQuePagou, String valorPago) {
+                        clienteQuePagou.valorPago(valorPago);
+                        FirestoreAdapter.build().setCliente(clienteQuePagou);
+                    }
+                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }

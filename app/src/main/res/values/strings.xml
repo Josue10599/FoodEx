@@ -40,4 +40,5 @@
     <string name="procurar_produto">Search product</string>
     <string name="venda_paga">Did the customer pay?</string>
     <string name="concluir_venda">Checkout</string>
+    <string name="nao_ha_cliente_devedor">No customer is owing!</string>
 </resources>

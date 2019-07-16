@@ -36,4 +36,5 @@
     <string name="selecionar_produto">Selecione o produto</string>
     <string name="venda_paga">O cliente pagou?</string>
     <string name="concluir_venda">Finalizar Venda</string>
+    <string name="nao_ha_cliente_devedor">Nenhum cliente está lhe devendo.</string>
 </resources>
