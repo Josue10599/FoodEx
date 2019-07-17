@@ -1,5 +1,6 @@
 package com.fulltime.foodex.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulltime.foodex.R;
+import com.fulltime.foodex.helper.update.ListaVenda;
+import com.fulltime.foodex.helper.update.UpdateData;
+import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.recyclerview.adapter.VendasAdapter;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 public class ListaVendasFragment extends Fragment {
+
+    private VendasAdapter vendasAdapter = new VendasAdapter();
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        UpdateData.listaVendas();
+    }
 
     @Nullable
     @Override
@@ -24,8 +39,29 @@ public class ListaVendasFragment extends Fragment {
         return vendasView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe
+    public void onCreateVenda(Venda venda) {
+        vendasAdapter.adicionaVenda(venda);
+    }
+
+    @Subscribe
+    public void onGetListaVenda(ListaVenda listaVenda) {
+        vendasAdapter.setLista(listaVenda.getVendas());
+    }
+
     private void configurarRecyclerView(View vendasView) {
-        VendasAdapter vendasAdapter = new VendasAdapter();
         RecyclerView listaVendas = vendasView.findViewById(R.id.fragment_vendas_recycler_view);
         listaVendas.setLayoutManager(new LinearLayoutManager(getContext()));
         listaVendas.setAdapter(vendasAdapter);

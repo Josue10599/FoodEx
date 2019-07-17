@@ -11,22 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteViewHolder> {
-    private List<Cliente> listaClientes;
+    private List<Cliente> listaClientes = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private Context context;
-
-    public ClienteAdapter(List<Cliente> listaClientes) {
-        this.listaClientes = listaClientes;
-    }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -51,19 +47,24 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
         return listaClientes.size();
     }
 
-    public void adicionaCliente(Cliente novoCliente) {
+    public Cliente getCliente(int posicao) {
+        return listaClientes.get(posicao);
+    }
+
+    public void insereCliente(Cliente novoCliente) {
         if (!listaClientes.contains(novoCliente)) {
             listaClientes.add(novoCliente);
             notifyItemInserted(listaClientes.size() - 1);
-        }
+        } else alteraCliente(novoCliente);
     }
 
-    public void alteraCliente(int posicao, Cliente clienteAlterado) {
+    private void alteraCliente(Cliente clienteAlterado) {
+        int posicao = listaClientes.indexOf(clienteAlterado);
         listaClientes.set(posicao, clienteAlterado);
         notifyItemChanged(posicao);
     }
 
-    public void alteraLista(List<Cliente> clientes) {
+    public void setLista(List<Cliente> clientes) {
         listaClientes = clientes;
         notifyDataSetChanged();
     }
@@ -101,11 +102,11 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
 
         void bindView(@NonNull Cliente cliente) {
             this.cliente = cliente;
-            ColorGenerator colorGenerator = ColorGenerator.MATERIAL;
             imagemCliente.setImageDrawable(TextDrawable.builder()
-                    .buildRound(cliente.getPrimeiraLetraNome()
-                            + cliente.getPrimeiraLetraSobrenome(), context.getResources().getColor(R.color.color_secondary)));
-            nomeCliente.setText(cliente.getNomeCompleto());
+                    .buildRound(cliente.primeiraLetraNome()
+                                    + cliente.primeiraLetraSobrenome(),
+                            context.getResources().getColor(R.color.color_secondary)));
+            nomeCliente.setText(cliente.nomeCompleto());
             telefoneCliente.setText(cliente.getTelefone());
             devendoCliente.setText(context.getString(R.string.sifra, cliente.getValorEmDeficit()));
             if (cliente.estaDevendo())

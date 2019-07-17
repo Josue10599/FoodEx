@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
-import com.fulltime.foodex.firebase.firestore.OnQueryListener;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
@@ -21,24 +19,15 @@ import java.util.List;
 
 public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasViewHolder> {
 
-    private final List<Venda> vendasRealizadas = new ArrayList<>();
+    private List<Venda> vendasRealizadas = new ArrayList<>();
     private Context context;
-
-    public VendasAdapter() {
-        FirestoreAdapter.build().getVendas(new OnQueryListener() {
-            @Override
-            public void onSucessful(Object item) {
-                inserirVendaNaLista((Venda) item);
-            }
-        });
-    }
 
     @NonNull
     @Override
     public VendasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new VendasViewHolder(LayoutInflater.from(context).
-                inflate(R.layout.item_venda, parent, false));
+        return new VendasViewHolder(LayoutInflater.from(context)
+                .inflate(R.layout.item_venda, parent, false));
     }
 
     @Override
@@ -51,9 +40,16 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
         return vendasRealizadas.size();
     }
 
-    private void inserirVendaNaLista(Venda venda) {
-        vendasRealizadas.add(venda);
-        notifyItemInserted(vendasRealizadas.size() - 1);
+    public void adicionaVenda(Venda venda) {
+        if (!vendasRealizadas.contains(venda)) {
+            vendasRealizadas.add(venda);
+            notifyItemInserted(vendasRealizadas.size() - 1);
+        }
+    }
+
+    public void setLista(List<Venda> vendas) {
+        vendasRealizadas = vendas;
+        notifyDataSetChanged();
     }
 
     class VendasViewHolder extends RecyclerView.ViewHolder {
@@ -77,7 +73,7 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
             Cliente comprador = venda.getCliente();
             Produto produtoComprado = venda.getProdutoVendido();
             dataVenda.setText(venda.getDataVenda());
-            nomeClienteComprador.setText(comprador.getNomeCompleto());
+            nomeClienteComprador.setText(comprador.nomeCompleto());
             nomeProdutoVendido.setText(produtoComprado.getNome());
             descricaoProduto.setText(produtoComprado.getDescricao());
             valorDaVenda.setText(String.format(context.getString(R.string.sifra),

@@ -4,6 +4,7 @@ package com.fulltime.foodex.model;
 import androidx.annotation.NonNull;
 
 import com.fulltime.foodex.formatter.FormataDinheiro;
+import com.google.firebase.firestore.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 import static java.math.RoundingMode.HALF_UP;
 
+@IgnoreExtraProperties
 public class Cliente implements Serializable {
     private String id;
     private String nome;
@@ -85,12 +87,12 @@ public class Cliente implements Serializable {
         this.valorEmDeficit = this.valorEmDeficit.add(formataDinheiro.getBigDecimal(valorEmDeficit));
     }
 
-    public String getNomeCompleto() {
+    public String nomeCompleto() {
         return nome + " " + sobrenome;
     }
 
     @NonNull
-    public String getPrimeiraLetraNome() {
+    public String primeiraLetraNome() {
         return getNome().substring(0, 1).toUpperCase();
     }
 
@@ -102,7 +104,7 @@ public class Cliente implements Serializable {
         this.sobrenome = sobrenome;
     }
 
-    public String getPrimeiraLetraSobrenome() {
+    public String primeiraLetraSobrenome() {
         if (sobrenome != null) return getSobrenome().substring(0, 1).toUpperCase();
         return "";
     }
@@ -137,6 +139,6 @@ public class Cliente implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return getNomeCompleto();
+        return nomeCompleto();
     }
 }

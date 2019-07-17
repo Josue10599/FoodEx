@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.formatter.FormataTelefone;
+import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.mask.MaskWatcher;
 import com.fulltime.foodex.model.Cliente;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -20,9 +21,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
 public class ImplementaClienteFragment extends BottomSheetDialogFragment {
-
-    private final ClienteImplementadoListener clienteImplementadoListener;
-
     private final Cliente cliente;
 
     private View bottomSheetAdicionarCliente;
@@ -33,13 +31,11 @@ public class ImplementaClienteFragment extends BottomSheetDialogFragment {
     private TextInputLayout campoCpf;
     private MaterialButton buttonCadastrar;
 
-    public ImplementaClienteFragment(ClienteImplementadoListener clienteImplementadoListener) {
-        this.clienteImplementadoListener = clienteImplementadoListener;
+    public ImplementaClienteFragment() {
         this.cliente = new Cliente();
     }
 
-    public ImplementaClienteFragment(Cliente cliente, ClienteImplementadoListener clienteImplementadoListener) {
-        this.clienteImplementadoListener = clienteImplementadoListener;
+    public ImplementaClienteFragment(Cliente cliente) {
         this.cliente = cliente;
     }
 
@@ -129,15 +125,10 @@ public class ImplementaClienteFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 if (implementaCliente()) {
-                    clienteImplementadoListener.clienteImplementado(cliente);
+                    UpdateData.atualizaCliente(cliente);
                     dismiss();
                 }
             }
         });
     }
-
-    public interface ClienteImplementadoListener {
-        void clienteImplementado(Cliente cliente);
-    }
-
 }

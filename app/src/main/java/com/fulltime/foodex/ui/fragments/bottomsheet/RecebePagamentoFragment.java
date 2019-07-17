@@ -1,5 +1,6 @@
 package com.fulltime.foodex.ui.fragments.bottomsheet;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
-import com.fulltime.foodex.firebase.firestore.OnQueryListener;
+import com.fulltime.foodex.helper.update.ListaCliente;
+import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.mask.MoneyMaskWatcher;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.searchablespinner.SearchableSpinnerAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -26,16 +30,17 @@ import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 import gr.escsoft.michaelprimez.searchablespinner.interfaces.OnItemSelectedListener;
 
 public class RecebePagamentoFragment extends BottomSheetDialogFragment {
-
-    private PagementoRecebidoListener pagementoRecebidoListener;
-
     private Cliente clienteSelecionado;
     private String valorPago;
     private TextInputLayout textInputLayoutCampoValor;
     private EditText editTextCampoValor;
 
-    public RecebePagamentoFragment(PagementoRecebidoListener pagementoRecebidoListener) {
-        this.pagementoRecebidoListener = pagementoRecebidoListener;
+    private ArrayList<Object> clientesDevedores = new ArrayList<>();
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        UpdateData.listaClientes();
     }
 
     @Nullable
@@ -49,6 +54,25 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
         return bottomSheetRecebePagamento;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe
+    public void getListaCliente(ListaCliente listaCliente) {
+        for (Cliente cliente : listaCliente.getClientes())
+            if (cliente.estaDevendo() && !clientesDevedores.contains(cliente))
+                clientesDevedores.add(cliente);
+    }
+
     private void configuraBotaoConfirmarRecebimento(View bottomSheetRecebePagamento) {
         MaterialButton buttonReceberPagamento = bottomSheetRecebePagamento
                 .findViewById(R.id.bottom_sheet_botao_cadastrar);
@@ -56,8 +80,9 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 getValorDigitadoCampoValorRecebido();
-                if (clienteSelecionado != null && valorPago.isEmpty()) {
-                    pagementoRecebidoListener.pagamentoRecebido(clienteSelecionado, valorPago);
+                if (clienteSelecionado != null && !valorPago.isEmpty()) {
+                    clienteSelecionado.valorPago(valorPago);
+                    UpdateData.atualizaCliente(clienteSelecionado);
                     dismiss();
                 }
             }
@@ -69,7 +94,8 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
         if (!valorDigitado.equals("0,00")) {
             valorPago = valorDigitado;
         } else {
-            textInputLayoutCampoValor.setError(getContext().getText(R.string.error_campo_obrigatorio));
+            textInputLayoutCampoValor.setError(Objects.requireNonNull(getContext())
+                    .getText(R.string.error_campo_obrigatorio));
         }
     }
 
@@ -84,14 +110,7 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
     private void configuraSearchableSpinnerCliente(final View bottomSheetAdicionarVenda) {
         final SearchableSpinner spinnerCliente = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_searchspinner_cliente);
-        final ArrayList<Object> clientes = new ArrayList<>();
-        FirestoreAdapter.build().getCliente(new OnQueryListener() {
-            @Override
-            public void onSucessful(Object cliente) {
-                if (((Cliente) cliente).estaDevendo()) clientes.add(cliente);
-            }
-        });
-        spinnerCliente.setAdapter(new SearchableSpinnerAdapter(getContext(), clientes));
+        spinnerCliente.setAdapter(new SearchableSpinnerAdapter(getContext(), clientesDevedores));
         spinnerCliente.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(View view, int position, long id) {
@@ -104,9 +123,4 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
             }
         });
     }
-
-    interface PagementoRecebidoListener {
-        void pagamentoRecebido(Cliente clienteQuePagou, String valorPago);
-    }
-
 }

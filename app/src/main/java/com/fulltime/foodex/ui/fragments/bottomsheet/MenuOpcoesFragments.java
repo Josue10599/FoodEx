@@ -9,10 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
-import com.fulltime.foodex.model.Cliente;
-import com.fulltime.foodex.model.Produto;
-import com.fulltime.foodex.model.Venda;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
@@ -39,13 +35,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 assert getFragmentManager() != null;
-                new ImplementaVendaFragment(new ImplementaVendaFragment.VendaImplementadaListener() {
-                    @Override
-                    public void vendaConcluida(Venda venda, Cliente clienteQueComprou) {
-                        FirestoreAdapter.build().setCliente(clienteQueComprou);
-                        FirestoreAdapter.build().setVenda(venda);
-                    }
-                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
+                new ImplementaVendaFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }
@@ -56,15 +46,8 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
         botaoAddPagamento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Diminuir o saldo devedor dos clientes
                 assert getFragmentManager() != null;
-                new RecebePagamentoFragment(new RecebePagamentoFragment.PagementoRecebidoListener() {
-                    @Override
-                    public void pagamentoRecebido(Cliente clienteQuePagou, String valorPago) {
-                        clienteQuePagou.valorPago(valorPago);
-                        FirestoreAdapter.build().setCliente(clienteQuePagou);
-                    }
-                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
+                new RecebePagamentoFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }
@@ -76,13 +59,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 assert getFragmentManager() != null;
-                new ImplementaProdutoFragment(new ImplementaProdutoFragment.ProdutoImplementadoListener() {
-                    @Override
-                    public void produtoSalvo(Produto produto) {
-                        //Adicionar na Lista do RecyclerView e mandar para o Firebase
-                        FirestoreAdapter.build().setProduto(produto);
-                    }
-                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
+                new ImplementaProdutoFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }
@@ -94,13 +71,7 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 assert getFragmentManager() != null;
-                new ImplementaClienteFragment(new ImplementaClienteFragment.ClienteImplementadoListener() {
-                    @Override
-                    public void clienteImplementado(Cliente cliente) {
-                        //Adicionar na Lista do RecyclerView e mandar para o Firebase
-                        FirestoreAdapter.build().setCliente(cliente);
-                    }
-                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
+                new ImplementaClienteFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }

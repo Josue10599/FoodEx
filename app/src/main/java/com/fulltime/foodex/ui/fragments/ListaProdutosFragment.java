@@ -1,5 +1,6 @@
 package com.fulltime.foodex.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +14,28 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
+import com.fulltime.foodex.helper.update.ListaProduto;
+import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaProdutoFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
 import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 import com.fulltime.foodex.ui.recyclerview.callback.ItemTouchCallback;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 
 public class ListaProdutosFragment extends Fragment {
+
+    private ProdutoAdapter produtoAdapter = new ProdutoAdapter();
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        UpdateData.listaProdutos();
+    }
 
     @Nullable
     @Override
@@ -32,25 +45,51 @@ public class ListaProdutosFragment extends Fragment {
         return produtosView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe
+    public void onCreateProduto(Produto produto) {
+        produtoAdapter.insereProduto(produto);
+    }
+
+    @Subscribe
+    public void onDeleteProduto(int posicao) {
+        produtoAdapter.removeProduto(posicao);
+    }
+
+    @Subscribe
+    public void onGetListaProduto(ListaProduto listaProduto) {
+        produtoAdapter.setListaProduto(listaProduto.getProdutos());
+    }
+
     private void configuraRecyclerView(View produtosView) {
-        final ProdutoAdapter produtoAdapter = new ProdutoAdapter();
-        produtoAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClickListener(final int posicao, Object itemSelecionado) {
-                assert getFragmentManager() != null;
-                new ImplementaProdutoFragment((Produto) itemSelecionado, new ImplementaProdutoFragment.ProdutoImplementadoListener() {
-                    @Override
-                    public void produtoSalvo(Produto produto) {
-                        produtoAdapter.alteraItem(produto, posicao);
-                        FirestoreAdapter.build().setProduto(produto);
-                    }
-                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
-            }
-        });
+        configuraProdutoAdapter();
         RecyclerView recyclerViewProdutos = produtosView.findViewById(R.id.fragment_produtos_recyler_view);
         recyclerViewProdutos.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewProdutos.setAdapter(produtoAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(recyclerViewProdutos);
+    }
+
+    private void configuraProdutoAdapter() {
+        produtoAdapter = new ProdutoAdapter();
+        produtoAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClickListener(final int posicao, Object produtoSelecionado) {
+                assert getFragmentManager() != null;
+                new ImplementaProdutoFragment((Produto) produtoSelecionado)
+                        .show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
+            }
+        });
     }
 }

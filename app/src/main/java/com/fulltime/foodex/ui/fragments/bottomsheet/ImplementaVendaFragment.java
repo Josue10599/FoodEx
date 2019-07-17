@@ -1,5 +1,6 @@
 package com.fulltime.foodex.ui.fragments.bottomsheet;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
-import com.fulltime.foodex.firebase.firestore.OnQueryListener;
+import com.fulltime.foodex.helper.update.ListaCliente;
+import com.fulltime.foodex.helper.update.ListaProduto;
+import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
@@ -22,22 +24,28 @@ import com.fulltime.foodex.searchablespinner.SearchableSpinnerAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 
 import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 import gr.escsoft.michaelprimez.searchablespinner.interfaces.OnItemSelectedListener;
 
 public class ImplementaVendaFragment extends BottomSheetDialogFragment {
-
-    private final VendaImplementadaListener vendaImplementadaListener;
     private TextView textViewQuantidade;
     private Cliente clienteSelecionado;
     private Produto produtoSelecionado;
     private boolean vendaPaga;
     private int quantidade = 1;
+    private ArrayList<Produto> produtosCadastrados = new ArrayList<>();
+    private ArrayList<Cliente> clientesCadastrados = new ArrayList<>();
 
-    public ImplementaVendaFragment(VendaImplementadaListener vendaImplementadaListener) {
-        this.vendaImplementadaListener = vendaImplementadaListener;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        UpdateData.listaClientes();
+        UpdateData.listaProdutos();
     }
 
     @Nullable
@@ -49,6 +57,30 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
                 inflate(R.layout.fragment_bottom_sheet_add_venda, container, false);
         bindCampos(bottomSheetAdicionarVenda);
         return bottomSheetAdicionarVenda;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe
+    public void getListaClientes(ListaCliente listaCliente) {
+        clientesCadastrados.clear();
+        clientesCadastrados.addAll(listaCliente.getClientes());
+    }
+
+    @Subscribe
+    public void getListaProdutos(ListaProduto listaProduto) {
+        produtosCadastrados.clear();
+        produtosCadastrados.addAll(listaProduto.getProdutos());
     }
 
     private void bindCampos(View bottomSheetAdicionarVenda) {
@@ -78,7 +110,8 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
                 if (clienteSelecionado != null && produtoSelecionado != null) {
                     Venda venda = new Venda(clienteSelecionado, vendaPaga, produtoSelecionado, quantidade);
-                    vendaImplementadaListener.vendaConcluida(venda, clienteSelecionado);
+                    UpdateData.atualizaCliente(clienteSelecionado);
+                    UpdateData.atualizaVenda(venda);
                     dismiss();
                 }
             }
@@ -88,14 +121,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     private void configuraSearchableSpinnerProduto(View bottomSheetAdicionarVenda) {
         final SearchableSpinner spinnerProduto = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_searchspinner_produto);
-        final ArrayList<Object> produtos = new ArrayList<>();
-        FirestoreAdapter.build().getProdutos(new OnQueryListener() {
-            @Override
-            public void onSucessful(Object produto) {
-                produtos.add(produto);
-            }
-        });
-        spinnerProduto.setAdapter(new SearchableSpinnerAdapter(getContext(), produtos));
+        spinnerProduto.setAdapter(new SearchableSpinnerAdapter(getContext(), produtosCadastrados));
         spinnerProduto.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(View view, int position, long id) {
@@ -112,14 +138,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     private void configuraSearchableSpinnerCliente(final View bottomSheetAdicionarVenda) {
         final SearchableSpinner spinnerCliente = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_searchspinner_cliente);
-        final ArrayList<Object> clientes = new ArrayList<>();
-        FirestoreAdapter.build().getCliente(new OnQueryListener() {
-            @Override
-            public void onSucessful(Object cliente) {
-                clientes.add(cliente);
-            }
-        });
-        spinnerCliente.setAdapter(new SearchableSpinnerAdapter(getContext(), clientes));
+        spinnerCliente.setAdapter(new SearchableSpinnerAdapter(getContext(), clientesCadastrados));
         spinnerCliente.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(View view, int position, long id) {
@@ -161,9 +180,5 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
                 textViewQuantidade.setText(String.valueOf(quantidade));
             }
         });
-    }
-
-    public interface VendaImplementadaListener {
-        void vendaConcluida(Venda venda, Cliente clienteQueComprou);
     }
 }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
 import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
 
@@ -21,13 +22,8 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
             produtoAdapter = null;
             clienteAdapter = (ClienteAdapter) recyclerView.getAdapter();
         }
-        if (clienteAdapter == null) {
-            int swipeFlagEsquerdaDireita = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-            int drafFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-            return makeMovementFlags(drafFlags, swipeFlagEsquerdaDireita);
-        }
-        int swipeFlagEsquerdaDireita = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-        int drafFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+        int swipeFlagEsquerdaDireita = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+        int drafFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
         return makeMovementFlags(drafFlags, swipeFlagEsquerdaDireita);
     }
 
@@ -40,19 +36,26 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
     }
 
     private void trocaPosicaoDasNotas(int posicaoInicial, int posicaoFinal) {
-        if (produtoAdapter != null)
-            produtoAdapter.movimentaItem(posicaoInicial, posicaoFinal);
+        if (isFragmentListaProdutos())
+            produtoAdapter.movimentaProduto(posicaoInicial, posicaoFinal);
         else
             clienteAdapter.movimentaCliente(posicaoInicial, posicaoFinal);
+    }
+
+    private boolean isFragmentListaProdutos() {
+        return produtoAdapter != null;
     }
 
     @Override
     public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
         int posicaoDaNota = viewHolder.getAdapterPosition();
-        removeNota(posicaoDaNota);
+        removeItem(posicaoDaNota);
     }
 
-    private void removeNota(int posicao) {
-
+    private void removeItem(int posicao) {
+        if (isFragmentListaProdutos())
+            UpdateData.removeProduto(produtoAdapter.getProduto(posicao), posicao);
+        else
+            UpdateData.removerCliente(clienteAdapter.getCliente(posicao), posicao);
     }
 }

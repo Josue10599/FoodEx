@@ -1,5 +1,6 @@
 package com.fulltime.foodex.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,9 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
-import com.fulltime.foodex.firebase.firestore.OnQueryListener;
+import com.fulltime.foodex.helper.update.ListaCliente;
+import com.fulltime.foodex.helper.update.RemoveCliente;
+import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaClienteFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
@@ -21,6 +23,9 @@ import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 import com.fulltime.foodex.ui.recyclerview.callback.ItemTouchCallback;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +35,16 @@ import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet
 
 public class ListaClientesFragment extends Fragment {
 
-    private ClienteAdapter adapter;
+    private ClienteAdapter adapter = new ClienteAdapter();
 
     private List<Cliente> todosClientes = new ArrayList<>();
     private List<Cliente> devedores = new ArrayList<>();
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        UpdateData.listaClientes();
+    }
 
     @Nullable
     @Override
@@ -47,13 +58,31 @@ public class ListaClientesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirestoreAdapter.build().getCliente(new OnQueryListener() {
-            @Override
-            public void onSucessful(Object cliente) {
-                adapter.adicionaCliente((Cliente) cliente);
-                devedores = filtraDevedores(todosClientes);
-            }
-        });
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe
+    public void onClienteEvent(Cliente cliente) {
+        adapter.insereCliente(cliente);
+    }
+
+    @Subscribe
+    public void onClienteRemoveEvent(RemoveCliente clienteRemovido) {
+        adapter.removeCliente(clienteRemovido.getPosicao());
+    }
+
+    @Subscribe
+    public void onGetListaClientes(ListaCliente listaCliente) {
+        List<Cliente> clientes = listaCliente.getClientes();
+        adapter.setLista(clientes);
+        todosClientes = clientes;
+        devedores = filtraDevedores(todosClientes);
     }
 
     private void configuraTabMenu(View clientView) {
@@ -63,8 +92,8 @@ public class ListaClientesFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (Objects.requireNonNull(tab.getText()).toString().equals(Objects.requireNonNull(getContext())
                         .getString(R.string.fragment_cliente_devedores)))
-                    adapter.alteraLista(devedores);
-                else adapter.alteraLista(todosClientes);
+                    adapter.setLista(devedores);
+                else adapter.setLista(todosClientes);
             }
 
             @Override
@@ -80,18 +109,12 @@ public class ListaClientesFragment extends Fragment {
     }
 
     private void configuraAdapter() {
-        adapter = new ClienteAdapter(todosClientes);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClickListener(final int posicao, Object clienteSelecionado) {
                 assert getFragmentManager() != null;
-                new ImplementaClienteFragment((Cliente) clienteSelecionado, new ImplementaClienteFragment.ClienteImplementadoListener() {
-                    @Override
-                    public void clienteImplementado(Cliente cliente) {
-                        adapter.alteraCliente(posicao, cliente);
-                        FirestoreAdapter.build().setCliente(cliente);
-                    }
-                }).show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
+                new ImplementaClienteFragment((Cliente) clienteSelecionado)
+                        .show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
             }
         });
     }

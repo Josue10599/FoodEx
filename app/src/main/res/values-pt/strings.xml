@@ -37,4 +37,14 @@
     <string name="venda_paga">O cliente pagou?</string>
     <string name="concluir_venda">Finalizar Venda</string>
     <string name="nao_ha_cliente_devedor">Nenhum cliente está lhe devendo.</string>
+    <string name="alter_produto">Alterando Produto</string>
+    <string name="alter_produto_button">Alterar Produto</string>
+    <string name="add_new_pagamento">Adicinando Pagamento</string>
+    <string name="erro_delete_cliente">Erro ao deletar cliente, tente novamente mais tarde.</string>
+    <string name="erro_delete_produto">Erro ao deletar produto, tente novamente mais tarde.</string>
+    <string name="erro_falha_conexao">Erro, falha ao tentar conectar com o servidor.</string>
+    <string name="erro_add_venda">Erro ao adicionar venda, tente novamente mais tarde.</string>
+    <string name="erro_add_produto">Erro ao adicionar produto, tente novamente mais tarde.</string>
+    <string name="erro_add_pagamento">Erro ao adicionar pagamento, tente novamente mais tarde.</string>
+    <string name="erro_add_cliente">Erro ao adicionar cliente, tente novamente mais tarde.</string>
 </resources>

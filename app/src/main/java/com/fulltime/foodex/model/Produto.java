@@ -3,11 +3,13 @@ package com.fulltime.foodex.model;
 import androidx.annotation.NonNull;
 
 import com.fulltime.foodex.formatter.FormataDinheiro;
+import com.google.firebase.firestore.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@IgnoreExtraProperties
 public class Produto implements Serializable {
     private final String id;
     private String nome;

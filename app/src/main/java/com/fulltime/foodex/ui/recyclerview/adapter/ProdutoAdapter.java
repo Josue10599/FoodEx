@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
-import com.fulltime.foodex.firebase.firestore.OnQueryListener;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 
@@ -22,18 +20,9 @@ import java.util.List;
 
 public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
 
-    private final List<Produto> produtosSalvos = new ArrayList<>();
+    private List<Produto> produtosSalvos = new ArrayList<>();
     private OnItemClickListener listener;
     private Context context;
-
-    public ProdutoAdapter() {
-        FirestoreAdapter.build().getProdutos(new OnQueryListener() {
-            @Override
-            public void onSucessful(Object produto) {
-                insereItem((Produto) produto);
-            }
-        });
-    }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
@@ -52,32 +41,41 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
         holder.bindHolder(this.produtosSalvos.get(position));
     }
 
-
     @Override
     public int getItemCount() {
         return this.produtosSalvos.size();
     }
 
-    public void insereItem(Produto novoProduto) {
+    public Produto getProduto(int posicao) {
+        return produtosSalvos.get(posicao);
+    }
+
+    public void insereProduto(Produto novoProduto) {
         if (!this.produtosSalvos.contains(novoProduto)) {
             this.produtosSalvos.add(novoProduto);
             notifyItemInserted(this.produtosSalvos.size() - 1);
-        }
+        } else alteraProduto(novoProduto);
     }
 
-    public void alteraItem(Produto produtoAlterado, int posicao) {
+    private void alteraProduto(Produto produtoAlterado) {
+        int posicao = produtosSalvos.indexOf(produtoAlterado);
         this.produtosSalvos.set(posicao, produtoAlterado);
         notifyItemChanged(posicao);
     }
 
-    public void removeItem(int posicao) {
+    public void removeProduto(int posicao) {
         this.produtosSalvos.remove(posicao);
         notifyItemRemoved(posicao);
     }
 
-    public void movimentaItem(int posicaoInicial, int posicaoFinal) {
+    public void movimentaProduto(int posicaoInicial, int posicaoFinal) {
         Collections.swap(produtosSalvos, posicaoInicial, posicaoFinal);
         notifyItemMoved(posicaoInicial, posicaoFinal);
+    }
+
+    public void setListaProduto(List<Produto> produtos) {
+        produtosSalvos = produtos;
+        notifyDataSetChanged();
     }
 
     class ProdutoViewHolder extends ViewHolder {

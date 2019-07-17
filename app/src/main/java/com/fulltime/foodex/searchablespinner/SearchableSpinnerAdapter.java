@@ -18,11 +18,11 @@ import gr.escsoft.michaelprimez.searchablespinner.interfaces.ISpinnerSelectedVie
 public class SearchableSpinnerAdapter extends BaseAdapter implements Filterable, ISpinnerSelectedView {
 
     private Context mContext;
-    private ArrayList<Object> mBackupObjects;
-    private ArrayList<Object> mObjects;
+    private ArrayList<?> mBackupObjects;
+    private ArrayList<?> mObjects;
     private StringFilter mStringFilter = new StringFilter();
 
-    public SearchableSpinnerAdapter(Context context, ArrayList<Object> objects) {
+    public SearchableSpinnerAdapter(Context context, ArrayList<?> objects) {
         mContext = context;
         mObjects = objects;
         mBackupObjects = objects;

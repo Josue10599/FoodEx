@@ -13,13 +13,13 @@ public class ClienteTest {
     @Test
     public void deve_DevolverAPrimeiraLetraDoNomeDoCliente_QuandoSeuNomeEhCadastrado() {
         cliente.setNome("Josue");
-        Assert.assertThat(cliente.getPrimeiraLetraNome(), is(equalTo("J")));
+        Assert.assertThat(cliente.primeiraLetraNome(), is(equalTo("J")));
     }
 
     @Test
     public void deve_DevolverAPrimeiraLetraDoSobrenomeDoCliente_QuandoSeuSobrenomeEhCadastrado() {
         cliente.setSobrenome("Lopes");
-        Assert.assertThat(cliente.getPrimeiraLetraSobrenome(), is(equalTo("L")));
+        Assert.assertThat(cliente.primeiraLetraSobrenome(), is(equalTo("L")));
     }
 
     @Test

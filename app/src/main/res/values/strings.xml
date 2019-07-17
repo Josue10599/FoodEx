@@ -41,4 +41,14 @@
     <string name="venda_paga">Did the customer pay?</string>
     <string name="concluir_venda">Checkout</string>
     <string name="nao_ha_cliente_devedor">No customer is owing!</string>
+    <string name="alter_produto">Changing Product</string>
+    <string name="alter_produto_button">Change Product</string>
+    <string name="add_new_pagamento">Add Payment</string>
+    <string name="erro_delete_cliente">Error deleting client, please try again later.</string>
+    <string name="erro_delete_produto">Error deleting product, please try again later.</string>
+    <string name="erro_add_produto">Error adding product, please try again later.</string>
+    <string name="erro_add_pagamento">Error adding payment, please try again later.</string>
+    <string name="erro_add_cliente">Error adding client, please try again later.</string>
+    <string name="erro_add_venda">Error adding sales, please try again later.</string>
+    <string name="erro_falha_conexao">Error, failed to connect to server.</string>
 </resources>

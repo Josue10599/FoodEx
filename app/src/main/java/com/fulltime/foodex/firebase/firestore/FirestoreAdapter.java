@@ -1,32 +1,26 @@
 package com.fulltime.foodex.firebase.firestore;
 
-import android.util.Log;
-
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
-import com.google.firebase.firestore.DocumentChange;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 public class FirestoreAdapter {
-
-    private static final String TAG_FIRESTONE = "Firestone";
     private static final String CLIENTES = "clientes";
     private static final String PRODUTOS = "produtos";
     private static final String VENDAS = "vendas";
+    private static final String VENDAS_CAMPO_DATA_VENDA = "dataVenda";
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public FirestoreAdapter() {
+    private FirestoreAdapter() {
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder().
                 setPersistenceEnabled(true).
                 build();
@@ -37,63 +31,63 @@ public class FirestoreAdapter {
         return new FirestoreAdapter();
     }
 
-    public List<Cliente> getCliente(final OnQueryListener onQueryListener) {
-        final List<Cliente> clientes = new ArrayList<>();
-        db.collection(CLIENTES).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                getItens(queryDocumentSnapshots, clientes, Cliente.class, onQueryListener, e);
-            }
-        });
-        return clientes;
+    public void getCliente(EventListener<QuerySnapshot> eventListener) {
+        db.collection(CLIENTES).addSnapshotListener(eventListener);
     }
 
-    public List<Produto> getProdutos(final OnQueryListener onQueryListener) {
-        final List<Produto> produtos = new ArrayList<>();
-        db.collection(PRODUTOS).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                getItens(queryDocumentSnapshots, produtos, Produto.class, onQueryListener, e);
-            }
-        });
-        return produtos;
+    public void getProdutos(EventListener<QuerySnapshot> eventListener) {
+        db.collection(PRODUTOS).addSnapshotListener(eventListener);
     }
 
-    public List<Venda> getVendas(final OnQueryListener onQueryListener) {
-        final List<Venda> vendas = new ArrayList<>();
-        db.collection(VENDAS).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                getItens(queryDocumentSnapshots, vendas, Venda.class, onQueryListener, e);
-            }
-        });
-        return vendas;
+    public void getVendas(EventListener<QuerySnapshot> eventListener) {
+        db.collection(VENDAS).orderBy(VENDAS_CAMPO_DATA_VENDA, Query.Direction.DESCENDING)
+                .addSnapshotListener(eventListener);
     }
 
-    public void setCliente(Cliente cliente) {
-        db.collection(CLIENTES).document(cliente.getId()).set(cliente);
+    public void setCliente(Cliente cliente,
+                           OnSuccessListener<Void> onSuccessListener,
+                           OnFailureListener onFailureListener) {
+        getDocument(CLIENTES, cliente.getId())
+                .set(cliente)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
     }
 
-    public void setProduto(Produto produto) {
-        db.collection(PRODUTOS).document(produto.getId()).set(produto);
+    public void setProduto(Produto produto,
+                           OnSuccessListener<Void> onSuccessListener,
+                           OnFailureListener onFailureListener) {
+        getDocument(PRODUTOS, produto.getId()).set(produto)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
     }
 
-    public void setVenda(Venda venda) {
-        db.collection(VENDAS).document(venda.getId()).set(venda);
+    public void setVenda(Venda venda,
+                         OnSuccessListener<Void> onSuccessListener,
+                         OnFailureListener onFailureListener) {
+        getDocument(VENDAS, venda.getId()).set(venda)
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
     }
 
-    private void getItens(QuerySnapshot documentSnapshots,
-                          List list,
-                          Class _class,
-                          OnQueryListener onQueryListener,
-                          FirebaseFirestoreException e) {
-        if (documentSnapshots != null) {
-            for (DocumentChange document : documentSnapshots.getDocumentChanges()) {
-                Object object = document.getDocument().toObject(_class);
-                list.add(object);
-                onQueryListener.onSucessful(object);
-                Log.d(TAG_FIRESTONE, document.getDocument().getId() + " => " + document.getDocument().getData());
-            }
-        } else Log.e(TAG_FIRESTONE, e.getLocalizedMessage());
+    public void removeCliente(Cliente cliente,
+                              OnSuccessListener<Void> onSuccessListener,
+                              OnFailureListener onFailureListener) {
+        getDocument(CLIENTES, cliente.getId())
+                .delete()
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    public void removeProduto(Produto produto,
+                              OnSuccessListener<Void> onSuccessListener,
+                              OnFailureListener onFailureListener) {
+        getDocument(PRODUTOS, produto.getId())
+                .delete()
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    private DocumentReference getDocument(String collection, String id) {
+        return db.collection(collection).document(id);
     }
 }

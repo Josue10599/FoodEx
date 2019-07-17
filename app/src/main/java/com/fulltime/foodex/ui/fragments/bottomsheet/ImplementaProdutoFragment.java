@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
+import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.mask.MoneyMaskWatcher;
 import com.fulltime.foodex.model.Produto;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -20,19 +22,17 @@ import java.util.Objects;
 public class ImplementaProdutoFragment extends BottomSheetDialogFragment {
 
     private final Produto produto;
-    private final ProdutoImplementadoListener listener;
     private TextInputLayout textInputLayoutProdutoValor;
     private TextInputLayout textInputLayoutProdutoNome;
     private TextInputLayout textInputLayoutProdutoDescricao;
+    private MaterialButton buttonCadastrarProduto;
 
-    public ImplementaProdutoFragment(Produto produto, ProdutoImplementadoListener listener) {
+    public ImplementaProdutoFragment(Produto produto) {
         this.produto = produto;
-        this.listener = listener;
     }
 
-    public ImplementaProdutoFragment(ProdutoImplementadoListener listener) {
+    public ImplementaProdutoFragment() {
         this.produto = new Produto();
-        this.listener = listener;
     }
 
     @Nullable
@@ -45,6 +45,9 @@ public class ImplementaProdutoFragment extends BottomSheetDialogFragment {
         configuraBotaoCadastrar(bottomSheetAddProduto);
         if (produto.produtoPreenchido()) {
             preencheCampos();
+            TextView titulo = bottomSheetAddProduto.findViewById(R.id.bottom_sheet_title_add);
+            titulo.setText(R.string.alter_produto);
+            buttonCadastrarProduto.setText(R.string.alter_produto_button);
         }
         return bottomSheetAddProduto;
     }
@@ -56,7 +59,7 @@ public class ImplementaProdutoFragment extends BottomSheetDialogFragment {
     }
 
     private void configuraBotaoCadastrar(View bottomSheetAddProduto) {
-        MaterialButton buttonCadastrarProduto = bottomSheetAddProduto
+        buttonCadastrarProduto = bottomSheetAddProduto
                 .findViewById(R.id.bottom_sheet_botao_cadastrar_produto);
         buttonCadastrarProduto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,31 +68,29 @@ public class ImplementaProdutoFragment extends BottomSheetDialogFragment {
                 getCampoValorProduto();
                 getCampoDescricaoProduto();
                 if (produto.produtoPreenchido()) {
-                    listener.produtoSalvo(produto);
+                    UpdateData.atualizaProduto(produto);
                     dismiss();
                 }
             }
         });
     }
 
-    private boolean getCampoValorProduto() {
+    private void getCampoValorProduto() {
         String textProdutoValor = Objects.requireNonNull(textInputLayoutProdutoValor.getEditText()).getText().toString();
         if (textProdutoValor.isEmpty()) {
             textInputLayoutProdutoValor.setError(getString(R.string.error_campo_obrigatorio));
-            return false;
+            return;
         }
         produto.setValor(textProdutoValor);
-        return true;
     }
 
-    private boolean getCampoNomeProduto() {
+    private void getCampoNomeProduto() {
         String textProdutoNome = Objects.requireNonNull(textInputLayoutProdutoNome.getEditText()).getText().toString();
         if (textProdutoNome.isEmpty()) {
             textInputLayoutProdutoNome.setError(getString(R.string.error_campo_obrigatorio));
-            return false;
+            return;
         }
         produto.setNome(textProdutoNome);
-        return true;
     }
 
     private void getCampoDescricaoProduto() {
@@ -118,9 +119,5 @@ public class ImplementaProdutoFragment extends BottomSheetDialogFragment {
     private void configuraCampoDescricao(View bottomSheetAddProduto) {
         textInputLayoutProdutoDescricao = bottomSheetAddProduto
                 .findViewById(R.id.bottom_sheet_produto_descricao);
-    }
-
-    public interface ProdutoImplementadoListener {
-        void produtoSalvo(Produto produto);
     }
 }
