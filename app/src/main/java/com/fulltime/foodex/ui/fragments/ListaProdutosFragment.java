@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.update.ListaProduto;
+import com.fulltime.foodex.helper.update.RemoveProduto;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaProdutoFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
-import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 import com.fulltime.foodex.ui.recyclerview.callback.ItemTouchCallback;
 
 import org.greenrobot.eventbus.EventBus;
@@ -63,8 +63,8 @@ public class ListaProdutosFragment extends Fragment {
     }
 
     @Subscribe
-    public void onDeleteProduto(int posicao) {
-        produtoAdapter.removeProduto(posicao);
+    public void onDeleteProduto(RemoveProduto removeProduto) {
+        produtoAdapter.removeProduto(removeProduto.getPosicao());
     }
 
     @Subscribe
@@ -83,13 +83,10 @@ public class ListaProdutosFragment extends Fragment {
 
     private void configuraProdutoAdapter() {
         produtoAdapter = new ProdutoAdapter();
-        produtoAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClickListener(final int posicao, Object produtoSelecionado) {
-                assert getFragmentManager() != null;
-                new ImplementaProdutoFragment((Produto) produtoSelecionado)
-                        .show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
-            }
+        produtoAdapter.setOnItemClickListener((posicao, produtoSelecionado) -> {
+            assert getFragmentManager() != null;
+            new ImplementaProdutoFragment((Produto) produtoSelecionado)
+                    .show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
         });
     }
 }

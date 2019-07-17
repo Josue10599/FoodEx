@@ -121,13 +121,10 @@ public class ImplementaClienteFragment extends BottomSheetDialogFragment {
 
     private void configuraBotao() {
         buttonCadastrar = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_botao_cadastrar);
-        buttonCadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (implementaCliente()) {
-                    UpdateData.atualizaCliente(cliente);
-                    dismiss();
-                }
+        buttonCadastrar.setOnClickListener(v -> {
+            if (implementaCliente()) {
+                UpdateData.atualizaCliente(cliente);
+                dismiss();
             }
         });
     }

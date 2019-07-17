@@ -23,7 +23,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 public class ListaVendasFragment extends Fragment {
 
-    private VendasAdapter vendasAdapter = new VendasAdapter();
+    private final VendasAdapter vendasAdapter = new VendasAdapter();
 
     @Override
     public void onAttach(@NonNull Context context) {

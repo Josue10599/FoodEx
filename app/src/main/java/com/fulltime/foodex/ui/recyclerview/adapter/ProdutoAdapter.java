@@ -89,12 +89,7 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
             nomeProduto = itemView.findViewById(R.id.item_produto_nome_do_produto);
             descricaoProduto = itemView.findViewById(R.id.item_produto_descricao_produto);
             valorProduto = itemView.findViewById(R.id.item_produto_valor);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClickListener(getAdapterPosition(), produto);
-                }
-            });
+            itemView.setOnClickListener(v -> listener.onItemClickListener(getAdapterPosition(), produto));
         }
 
         void bindHolder(Produto produto) {

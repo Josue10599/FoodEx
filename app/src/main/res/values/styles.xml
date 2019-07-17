@@ -43,13 +43,4 @@
     <!--Toolbar-->
     <style name="Widget.MyTheme.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary" />
 
-    <style name="MyTheme.DayNight.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="MyTheme.DayNight.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="MyTheme.DayNight.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 </resources>

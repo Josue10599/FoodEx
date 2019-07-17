@@ -3,6 +3,7 @@ package com.fulltime.foodex.formatter;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.util.Objects;
 
 import static java.math.RoundingMode.HALF_UP;
 
@@ -21,7 +22,7 @@ public class FormataDinheiro {
 
     public BigDecimal getBigDecimal(String valor) {
         try {
-            return ((BigDecimal) decimalFormat.parse(valor)).setScale(2, HALF_UP);
+            return ((BigDecimal) Objects.requireNonNull(decimalFormat.parse(valor))).setScale(2, HALF_UP);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -19,7 +19,7 @@ public class Venda implements Serializable {
     private BigDecimal valorDaCompra;
     private int quantidade;
 
-    private FormataDinheiro formataDinheiro = new FormataDinheiro();
+    private final FormataDinheiro formataDinheiro = new FormataDinheiro();
 
     public Venda() {
         this.id = UUID.randomUUID().toString();

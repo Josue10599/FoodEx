@@ -4,15 +4,18 @@ import android.view.View;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
 public class FormataTelefone implements View.OnFocusChangeListener {
 
     private void formataTelefone(TextInputEditText v) {
-        String telefoneDigitado = v.getText().toString();
+        String telefoneDigitado = Objects.requireNonNull(v.getText()).toString();
         String telefoneDigitadoFormatado = telefoneDigitado;
         if (!telefoneDigitado.isEmpty()) {
-            if (telefoneDigitado.matches("\\(([0-9]{2})\\) ([0-9]{4})-([0-9]{1})([0-9]{4})")) {
+            String regex = "\\(([0-9]{2})\\) ([0-9]{4})-([0-9])([0-9]{4})";
+            if (telefoneDigitado.matches(regex)) {
                 telefoneDigitadoFormatado = telefoneDigitado
-                        .replaceAll("\\(([0-9]{2})\\) ([0-9]{4})-([0-9]{1})([0-9]{4})", "($1) $2$3-$4");
+                        .replaceAll(regex, "($1) $2$3-$4");
             }
         }
         v.setText(telefoneDigitadoFormatado);

@@ -61,16 +61,13 @@ public class ImplementaProdutoFragment extends BottomSheetDialogFragment {
     private void configuraBotaoCadastrar(View bottomSheetAddProduto) {
         buttonCadastrarProduto = bottomSheetAddProduto
                 .findViewById(R.id.bottom_sheet_botao_cadastrar_produto);
-        buttonCadastrarProduto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getCampoNomeProduto();
-                getCampoValorProduto();
-                getCampoDescricaoProduto();
-                if (produto.produtoPreenchido()) {
-                    UpdateData.atualizaProduto(produto);
-                    dismiss();
-                }
+        buttonCadastrarProduto.setOnClickListener(v -> {
+            getCampoNomeProduto();
+            getCampoValorProduto();
+            getCampoDescricaoProduto();
+            if (produto.produtoPreenchido()) {
+                UpdateData.atualizaProduto(produto);
+                dismiss();
             }
         });
     }

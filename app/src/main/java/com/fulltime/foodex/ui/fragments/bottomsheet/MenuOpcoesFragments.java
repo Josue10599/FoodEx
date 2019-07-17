@@ -31,48 +31,36 @@ public class MenuOpcoesFragments extends BottomSheetDialogFragment {
     private void getConfigurarBotaoAddVenda(View bottomSheetMenuOpcoes) {
         MaterialButton botaoAddVenda = bottomSheetMenuOpcoes
                 .findViewById(R.id.bottom_sheet_menu_options_botao_vender_produto);
-        botaoAddVenda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                assert getFragmentManager() != null;
-                new ImplementaVendaFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
-            }
+        botaoAddVenda.setOnClickListener(v -> {
+            assert getFragmentManager() != null;
+            new ImplementaVendaFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
         });
     }
 
     private void configurarBotaoAddPagamento(View bottomSheetMenuOpcoes) {
         MaterialButton botaoAddPagamento = bottomSheetMenuOpcoes
                 .findViewById(R.id.bottom_sheet_menu_options_botao_add_pagamento);
-        botaoAddPagamento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                assert getFragmentManager() != null;
-                new RecebePagamentoFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
-            }
+        botaoAddPagamento.setOnClickListener(v -> {
+            assert getFragmentManager() != null;
+            new RecebePagamentoFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
         });
     }
 
     private void configurarBotaoAddProduto(View bottomSheetMenuOpcoes) {
         MaterialButton botaoAddProduto = bottomSheetMenuOpcoes
                 .findViewById(R.id.bottom_sheet_menu_options_botao_add_produto);
-        botaoAddProduto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                assert getFragmentManager() != null;
-                new ImplementaProdutoFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
-            }
+        botaoAddProduto.setOnClickListener(v -> {
+            assert getFragmentManager() != null;
+            new ImplementaProdutoFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
         });
     }
 
     private void configurarBotaoAddCliente(View bottomSheetMenuOpcoes) {
         MaterialButton botaoAddCliente = bottomSheetMenuOpcoes
                 .findViewById(R.id.bottom_sheet_menu_options_botao_add_cliente);
-        botaoAddCliente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                assert getFragmentManager() != null;
-                new ImplementaClienteFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
-            }
+        botaoAddCliente.setOnClickListener(v -> {
+            assert getFragmentManager() != null;
+            new ImplementaClienteFragment().show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
         });
     }
 }

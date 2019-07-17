@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="#F9FBE7"
         android:padding="@dimen/keyline_2"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -19,6 +18,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:src="@android:color/black" />
+        android:src="@android:color/black"
+        tools:ignore="ContentDescription" />
 
 </LinearLayout>

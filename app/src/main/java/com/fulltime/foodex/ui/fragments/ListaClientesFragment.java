@@ -19,7 +19,6 @@ import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaClienteFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
-import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 import com.fulltime.foodex.ui.recyclerview.callback.ItemTouchCallback;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
@@ -35,7 +34,7 @@ import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet
 
 public class ListaClientesFragment extends Fragment {
 
-    private ClienteAdapter adapter = new ClienteAdapter();
+    private final ClienteAdapter clienteAdapter = new ClienteAdapter();
 
     private List<Cliente> todosClientes = new ArrayList<>();
     private List<Cliente> devedores = new ArrayList<>();
@@ -68,19 +67,19 @@ public class ListaClientesFragment extends Fragment {
     }
 
     @Subscribe
-    public void onClienteEvent(Cliente cliente) {
-        adapter.insereCliente(cliente);
+    public void onCreateCliente(Cliente cliente) {
+        clienteAdapter.insereCliente(cliente);
     }
 
     @Subscribe
-    public void onClienteRemoveEvent(RemoveCliente clienteRemovido) {
-        adapter.removeCliente(clienteRemovido.getPosicao());
+    public void onDeleteCliente(RemoveCliente clienteRemovido) {
+        clienteAdapter.removeCliente(clienteRemovido.getPosicao());
     }
 
     @Subscribe
     public void onGetListaClientes(ListaCliente listaCliente) {
         List<Cliente> clientes = listaCliente.getClientes();
-        adapter.setLista(clientes);
+        clienteAdapter.setLista(clientes);
         todosClientes = clientes;
         devedores = filtraDevedores(todosClientes);
     }
@@ -92,8 +91,8 @@ public class ListaClientesFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (Objects.requireNonNull(tab.getText()).toString().equals(Objects.requireNonNull(getContext())
                         .getString(R.string.fragment_cliente_devedores)))
-                    adapter.setLista(devedores);
-                else adapter.setLista(todosClientes);
+                    clienteAdapter.setLista(devedores);
+                else clienteAdapter.setLista(todosClientes);
             }
 
             @Override
@@ -109,20 +108,17 @@ public class ListaClientesFragment extends Fragment {
     }
 
     private void configuraAdapter() {
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClickListener(final int posicao, Object clienteSelecionado) {
-                assert getFragmentManager() != null;
-                new ImplementaClienteFragment((Cliente) clienteSelecionado)
-                        .show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
-            }
+        clienteAdapter.setOnItemClickListener((posicao, clienteSelecionado) -> {
+            assert getFragmentManager() != null;
+            new ImplementaClienteFragment((Cliente) clienteSelecionado)
+                    .show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
         });
     }
 
     private void configuraRecyclerView(View clientView) {
         configuraAdapter();
         RecyclerView listaCliente = clientView.findViewById(R.id.fragment_cliente_recycler_view);
-        listaCliente.setAdapter(adapter);
+        listaCliente.setAdapter(clienteAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(listaCliente);
     }

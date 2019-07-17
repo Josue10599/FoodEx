@@ -35,7 +35,7 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
     private TextInputLayout textInputLayoutCampoValor;
     private EditText editTextCampoValor;
 
-    private ArrayList<Object> clientesDevedores = new ArrayList<>();
+    private final ArrayList<Object> clientesDevedores = new ArrayList<>();
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -76,15 +76,12 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
     private void configuraBotaoConfirmarRecebimento(View bottomSheetRecebePagamento) {
         MaterialButton buttonReceberPagamento = bottomSheetRecebePagamento
                 .findViewById(R.id.bottom_sheet_botao_cadastrar);
-        buttonReceberPagamento.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getValorDigitadoCampoValorRecebido();
-                if (clienteSelecionado != null && !valorPago.isEmpty()) {
-                    clienteSelecionado.valorPago(valorPago);
-                    UpdateData.atualizaCliente(clienteSelecionado);
-                    dismiss();
-                }
+        buttonReceberPagamento.setOnClickListener(v -> {
+            getValorDigitadoCampoValorRecebido();
+            if (clienteSelecionado != null && !valorPago.isEmpty()) {
+                clienteSelecionado.valorPago(valorPago);
+                UpdateData.atualizaCliente(clienteSelecionado);
+                dismiss();
             }
         });
     }

@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.is;
 
 public class ClienteTest {
 
-    private Cliente cliente = new Cliente();
+    private final Cliente cliente = new Cliente();
 
     @Test
     public void deve_DevolverAPrimeiraLetraDoNomeDoCliente_QuandoSeuNomeEhCadastrado() {

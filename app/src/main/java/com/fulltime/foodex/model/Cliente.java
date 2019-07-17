@@ -14,14 +14,14 @@ import static java.math.RoundingMode.HALF_UP;
 
 @IgnoreExtraProperties
 public class Cliente implements Serializable {
-    private String id;
+    private final String id;
     private String nome;
     private String sobrenome;
     private String telefone;
     private String email;
     private String cpf;
     private BigDecimal valorEmDeficit;
-    private FormataDinheiro formataDinheiro = new FormataDinheiro();
+    private final FormataDinheiro formataDinheiro = new FormataDinheiro();
 
     public Cliente() {
         id = UUID.randomUUID().toString();

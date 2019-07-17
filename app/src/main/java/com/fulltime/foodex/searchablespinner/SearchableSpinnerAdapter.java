@@ -17,10 +17,10 @@ import gr.escsoft.michaelprimez.searchablespinner.interfaces.ISpinnerSelectedVie
 
 public class SearchableSpinnerAdapter extends BaseAdapter implements Filterable, ISpinnerSelectedView {
 
-    private Context mContext;
-    private ArrayList<?> mBackupObjects;
+    private final Context mContext;
+    private final ArrayList<?> mBackupObjects;
     private ArrayList<?> mObjects;
-    private StringFilter mStringFilter = new StringFilter();
+    private final StringFilter mStringFilter = new StringFilter();
 
     public SearchableSpinnerAdapter(Context context, ArrayList<?> objects) {
         mContext = context;
@@ -69,7 +69,7 @@ public class SearchableSpinnerAdapter extends BaseAdapter implements Filterable,
         return mStringFilter;
     }
 
-    public class StringFilter extends Filter {
+    class StringFilter extends Filter {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {

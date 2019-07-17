@@ -92,12 +92,8 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
             nomeCliente = itemView.findViewById(R.id.item_cliente_nome);
             telefoneCliente = itemView.findViewById(R.id.item_cliente_telefone);
             devendoCliente = itemView.findViewById(R.id.item_cliente_valor);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.onItemClickListener(getAdapterPosition(), cliente);
-                }
-            });
+            itemView.setOnClickListener(v ->
+                    onItemClickListener.onItemClickListener(getAdapterPosition(), cliente));
         }
 
         void bindView(@NonNull Cliente cliente) {

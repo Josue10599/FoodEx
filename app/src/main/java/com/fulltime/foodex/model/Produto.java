@@ -15,7 +15,7 @@ public class Produto implements Serializable {
     private String nome;
     private String descricao;
     private BigDecimal valor;
-    private FormataDinheiro formataDinheiro = new FormataDinheiro();
+    private final FormataDinheiro formataDinheiro = new FormataDinheiro();
 
     public Produto() {
         this.id = UUID.randomUUID().toString();

@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -38,8 +37,8 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     private Produto produtoSelecionado;
     private boolean vendaPaga;
     private int quantidade = 1;
-    private ArrayList<Produto> produtosCadastrados = new ArrayList<>();
-    private ArrayList<Cliente> clientesCadastrados = new ArrayList<>();
+    private final ArrayList<Produto> produtosCadastrados = new ArrayList<>();
+    private final ArrayList<Cliente> clientesCadastrados = new ArrayList<>();
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -95,25 +94,17 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
 
     private void configuraSwitchEstadoVenda(View bottomSheetAdicionarVenda) {
         Switch switchEstadoVenda = bottomSheetAdicionarVenda.findViewById(R.id.bottom_sheet_add_venda_switch_estado);
-        switchEstadoVenda.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                vendaPaga = isChecked;
-            }
-        });
+        switchEstadoVenda.setOnCheckedChangeListener((buttonView, isChecked) -> vendaPaga = isChecked);
     }
 
     private void configuraBotaoCadastrar(View bottomSheetAdicionarVenda) {
         MaterialButton buttonCadastrar = bottomSheetAdicionarVenda.findViewById(R.id.bottom_sheet_botao_cadastrar);
-        buttonCadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (clienteSelecionado != null && produtoSelecionado != null) {
-                    Venda venda = new Venda(clienteSelecionado, vendaPaga, produtoSelecionado, quantidade);
-                    UpdateData.atualizaCliente(clienteSelecionado);
-                    UpdateData.atualizaVenda(venda);
-                    dismiss();
-                }
+        buttonCadastrar.setOnClickListener(v -> {
+            if (clienteSelecionado != null && produtoSelecionado != null) {
+                Venda venda = new Venda(clienteSelecionado, vendaPaga, produtoSelecionado, quantidade);
+                UpdateData.atualizaCliente(clienteSelecionado);
+                UpdateData.atualizaVenda(venda);
+                dismiss();
             }
         });
     }
@@ -161,24 +152,18 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     private void configuraBotaoIncrementa(View bottomSheetAdicionarVenda) {
         Button botaoIncrementa = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_incrementar_quantidade);
-        botaoIncrementa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (quantidade < 1000) quantidade++;
-                textViewQuantidade.setText(String.valueOf(quantidade));
-            }
+        botaoIncrementa.setOnClickListener(v -> {
+            if (quantidade < 1000) quantidade++;
+            textViewQuantidade.setText(String.valueOf(quantidade));
         });
     }
 
     private void configuraBotaoDecrementa(View bottomSheetAdicionarVenda) {
         Button botaoDecrementa = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_decrementar_quantidade);
-        botaoDecrementa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (quantidade > 1) quantidade--;
-                textViewQuantidade.setText(String.valueOf(quantidade));
-            }
+        botaoDecrementa.setOnClickListener(v -> {
+            if (quantidade > 1) quantidade--;
+            textViewQuantidade.setText(String.valueOf(quantidade));
         });
     }
 }

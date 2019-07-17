@@ -1,6 +1,6 @@
 package com.fulltime.foodex.helper.update;
 
-class RemoveProduto {
+public class RemoveProduto {
     private final int posicao;
 
     public RemoveProduto(int posicao) {

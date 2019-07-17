@@ -1,10 +1,7 @@
 package com.fulltime.foodex.ui.activity;
 
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,7 +20,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import static android.view.View.OnClickListener;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_ADICIONAR_CLIENTE;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_ADICIONAR_PAGAMENTO;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_ADICIONAR_PRODUTO;
@@ -32,7 +28,6 @@ import static com.fulltime.foodex.error.CodigoDeErro.ERRO_DELETAR_CLIENTE;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_DELETAR_PRODUTO;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_FALHA_CONEXAO;
 import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
-import static com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
 
 public class GerenciarActivity extends AppCompatActivity {
 
@@ -93,22 +88,15 @@ public class GerenciarActivity extends AppCompatActivity {
 
     private void configuraFloatingActionButton() {
         FloatingActionButton fab = findViewById(R.id.activity_main_fab);
-        fab.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MenuOpcoesFragments().show(getSupportFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
-            }
-        });
+        fab.setOnClickListener(v ->
+                new MenuOpcoesFragments().show(getSupportFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG));
     }
 
     private void configuraBottomNavigation() {
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                setFragment(item.getItemId());
-                return true;
-            }
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            setFragment(item.getItemId());
+            return true;
         });
         setFragment(itemSelectedBottonNavigation);
     }
