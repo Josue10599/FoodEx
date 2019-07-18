@@ -8,7 +8,7 @@
     android:paddingEnd="@dimen/keyline_5"
     android:paddingBottom="@dimen/keyline_5">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/bottom_sheet_title_add"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -25,7 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/keyline_5"
         android:layout_marginBottom="@dimen/keyline_5"
-        app:BordersSize="1dp"
+        app:BoarderColor="@color/color_primary"
+        app:BordersSize="0.5dp"
+        app:DividerHeight="@dimen/keyline_5"
         app:NoItemsFoundText="@string/nenhum_cliente_encontrado"
         app:RevealEmptyText="@string/selecionar_cliente"
         app:SearchHintText="@string/procurar_cliente"
@@ -41,11 +43,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/keyline_5"
         android:layout_marginBottom="@dimen/keyline_5"
-        app:BordersSize="1dp"
+        app:BoarderColor="@color/color_primary"
+        app:BordersSize="0.5dp"
+        app:DividerHeight="@dimen/keyline_5"
         app:NoItemsFoundText="@string/nenhum_produto_encontrado"
         app:RevealEmptyText="@string/selecionar_produto"
         app:SearchHintText="@string/procurar_produto"
         app:ShowBorders="true"
+
         app:layout_constraintBottom_toTopOf="@id/bottom_sheet_add_venda_quantidade"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +68,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/bottom_sheet_add_venda_quantidade" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/bottom_sheet_add_venda_quantidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
