@@ -1,7 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/fragment_perfil_fundo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="175dp"
+        android:src="@drawable/fundo_retangulo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fragment_perfil_foto_usuario"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="100dp"
+        android:contentDescription="@string/photo_perfil_usuario"
+        android:elevation="3dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_perfil_nome_usuario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/keyline_2"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="@dimen/keyline_2"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
+        android:textColor="@color/color_on_primary"
+        app:layout_constraintEnd_toEndOf="@id/fragment_perfil_fundo"
+        app:layout_constraintStart_toStartOf="@id/fragment_perfil_fundo"
+        app:layout_constraintTop_toBottomOf="@id/fragment_perfil_foto_usuario"
+        tools:text="Nome do Usuário" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

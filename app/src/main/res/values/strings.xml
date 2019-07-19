@@ -51,4 +51,5 @@
     <string name="erro_add_cliente">Error adding client, please try again later.</string>
     <string name="erro_add_venda">Error adding sales, please try again later.</string>
     <string name="erro_falha_conexao">Error, failed to connect to server.</string>
+    <string name="photo_perfil_usuario">Profile picture.</string>
 </resources>

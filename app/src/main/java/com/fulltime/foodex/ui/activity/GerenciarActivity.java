@@ -1,5 +1,6 @@
 package com.fulltime.foodex.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.fulltime.foodex.R;
+import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.ui.fragments.ListaClientesFragment;
 import com.fulltime.foodex.ui.fragments.ListaProdutosFragment;
 import com.fulltime.foodex.ui.fragments.ListaVendasFragment;
@@ -33,6 +35,7 @@ public class GerenciarActivity extends AppCompatActivity {
 
     private static int itemSelectedBottonNavigation = R.id.bottom_nav_clients_cliente;
     private BottomNavigationView bottomNavigationView;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,10 @@ public class GerenciarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         configuraFloatingActionButton();
         configuraBottomNavigation();
+        Intent dadosRecebidos = getIntent();
+        if (dadosRecebidos != null) {
+            usuario = (Usuario) dadosRecebidos.getSerializableExtra("user");
+        }
     }
 
     @Override
@@ -113,7 +120,7 @@ public class GerenciarActivity extends AppCompatActivity {
                 populaFragment(new ListaVendasFragment());
                 break;
             case R.id.bottom_nav_user_perfil:
-                populaFragment(new PerfilUsuarioFragment());
+                populaFragment(new PerfilUsuarioFragment(usuario));
                 break;
         }
     }
