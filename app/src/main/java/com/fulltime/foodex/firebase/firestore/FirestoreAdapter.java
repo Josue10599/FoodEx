@@ -5,6 +5,7 @@ import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -12,11 +13,14 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Objects;
+
 public class FirestoreAdapter {
     private static final String CLIENTES = "clientes";
     private static final String PRODUTOS = "produtos";
     private static final String VENDAS = "vendas";
     private static final String VENDAS_CAMPO_DATA_VENDA = "dataVenda";
+    private static final String USUARIO = "usuario";
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -89,5 +93,10 @@ public class FirestoreAdapter {
 
     private DocumentReference getDocument(String collection, String id) {
         return db.collection(collection).document(id);
+    }
+
+    private DocumentReference getUser() {
+        String uidUser = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        return db.collection(USUARIO).document(uidUser);
     }
 }
