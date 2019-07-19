@@ -32,19 +32,23 @@ import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 import gr.escsoft.michaelprimez.searchablespinner.interfaces.OnItemSelectedListener;
 
 public class ImplementaVendaFragment extends BottomSheetDialogFragment {
+    private final ArrayList<Produto> produtosCadastrados = new ArrayList<>();
+    private final ArrayList<Cliente> clientesCadastrados = new ArrayList<>();
+    private boolean vendaPaga;
+    private int quantidade = 1;
     private TextView textViewQuantidade;
     private Cliente clienteSelecionado;
     private Produto produtoSelecionado;
-    private boolean vendaPaga;
-    private int quantidade = 1;
-    private final ArrayList<Produto> produtosCadastrados = new ArrayList<>();
-    private final ArrayList<Cliente> clientesCadastrados = new ArrayList<>();
+    private SearchableSpinnerAdapter adapterProdutos;
+    private SearchableSpinnerAdapter adapterClientes;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         UpdateData.listaClientes();
         UpdateData.listaProdutos();
+        adapterClientes = new SearchableSpinnerAdapter(context, clientesCadastrados);
+        adapterProdutos = new SearchableSpinnerAdapter(context, produtosCadastrados);
     }
 
     @Nullable
@@ -74,12 +78,14 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     public void getListaClientes(ListaCliente listaCliente) {
         clientesCadastrados.clear();
         clientesCadastrados.addAll(listaCliente.getClientes());
+        adapterClientes.setList(clientesCadastrados);
     }
 
     @Subscribe
     public void getListaProdutos(ListaProduto listaProduto) {
         produtosCadastrados.clear();
         produtosCadastrados.addAll(listaProduto.getProdutos());
+        adapterProdutos.setList(produtosCadastrados);
     }
 
     private void bindCampos(View bottomSheetAdicionarVenda) {
@@ -112,7 +118,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     private void configuraSearchableSpinnerProduto(View bottomSheetAdicionarVenda) {
         final SearchableSpinner spinnerProduto = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_searchspinner_produto);
-        spinnerProduto.setAdapter(new SearchableSpinnerAdapter(getContext(), produtosCadastrados));
+        spinnerProduto.setAdapter(adapterProdutos);
         spinnerProduto.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(View view, int position, long id) {
@@ -129,7 +135,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     private void configuraSearchableSpinnerCliente(final View bottomSheetAdicionarVenda) {
         final SearchableSpinner spinnerCliente = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_searchspinner_cliente);
-        spinnerCliente.setAdapter(new SearchableSpinnerAdapter(getContext(), clientesCadastrados));
+        spinnerCliente.setAdapter(adapterClientes);
         spinnerCliente.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(View view, int position, long id) {

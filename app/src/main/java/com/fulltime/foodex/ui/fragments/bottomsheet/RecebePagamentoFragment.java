@@ -30,16 +30,17 @@ import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
 import gr.escsoft.michaelprimez.searchablespinner.interfaces.OnItemSelectedListener;
 
 public class RecebePagamentoFragment extends BottomSheetDialogFragment {
+    private final ArrayList<Object> clientesDevedores = new ArrayList<>();
     private Cliente clienteSelecionado;
     private String valorPago;
     private TextInputLayout textInputLayoutCampoValor;
     private EditText editTextCampoValor;
-
-    private final ArrayList<Object> clientesDevedores = new ArrayList<>();
+    private SearchableSpinnerAdapter adapterClientes;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        adapterClientes = new SearchableSpinnerAdapter(context, clientesDevedores);
         UpdateData.listaClientes();
     }
 
@@ -71,6 +72,7 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
         for (Cliente cliente : listaCliente.getClientes())
             if (cliente.estaDevendo() && !clientesDevedores.contains(cliente))
                 clientesDevedores.add(cliente);
+        adapterClientes.setList(clientesDevedores);
     }
 
     private void configuraBotaoConfirmarRecebimento(View bottomSheetRecebePagamento) {
@@ -107,7 +109,7 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
     private void configuraSearchableSpinnerCliente(final View bottomSheetAdicionarVenda) {
         final SearchableSpinner spinnerCliente = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_searchspinner_cliente);
-        spinnerCliente.setAdapter(new SearchableSpinnerAdapter(getContext(), clientesDevedores));
+        spinnerCliente.setAdapter(adapterClientes);
         spinnerCliente.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(View view, int position, long id) {

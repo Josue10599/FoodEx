@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/keyline_5"
         android:layout_marginBottom="@dimen/keyline_5"
+        android:elevation="2dp"
         app:BoarderColor="@color/color_primary"
         app:BordersSize="0.5dp"
         app:DividerHeight="@dimen/keyline_5"
@@ -43,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/keyline_5"
         android:layout_marginBottom="@dimen/keyline_5"
+        android:elevation="2dp"
         app:BoarderColor="@color/color_primary"
         app:BordersSize="0.5dp"
         app:DividerHeight="@dimen/keyline_5"
@@ -50,7 +52,6 @@
         app:RevealEmptyText="@string/selecionar_produto"
         app:SearchHintText="@string/procurar_produto"
         app:ShowBorders="true"
-
         app:layout_constraintBottom_toTopOf="@id/bottom_sheet_add_venda_quantidade"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

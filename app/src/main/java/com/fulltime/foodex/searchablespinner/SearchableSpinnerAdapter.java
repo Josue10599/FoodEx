@@ -18,7 +18,7 @@ import gr.escsoft.michaelprimez.searchablespinner.interfaces.ISpinnerSelectedVie
 public class SearchableSpinnerAdapter extends BaseAdapter implements Filterable, ISpinnerSelectedView {
 
     private final Context mContext;
-    private final ArrayList<?> mBackupObjects;
+    private ArrayList<?> mBackupObjects;
     private ArrayList<?> mObjects;
     private final StringFilter mStringFilter = new StringFilter();
 
@@ -30,7 +30,7 @@ public class SearchableSpinnerAdapter extends BaseAdapter implements Filterable,
 
     @Override
     public int getCount() {
-        return mObjects == null ? 0 : mObjects.size();
+        return mObjects.size();
     }
 
     @Override
@@ -67,6 +67,12 @@ public class SearchableSpinnerAdapter extends BaseAdapter implements Filterable,
     @Override
     public Filter getFilter() {
         return mStringFilter;
+    }
+
+    public void setList(ArrayList<?> objects) {
+        mObjects = objects;
+        mBackupObjects = objects;
+        notifyDataSetChanged();
     }
 
     class StringFilter extends Filter {
