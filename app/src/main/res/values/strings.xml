@@ -52,4 +52,5 @@
     <string name="erro_add_venda">Error adding sales, please try again later.</string>
     <string name="erro_falha_conexao">Error, failed to connect to server.</string>
     <string name="photo_perfil_usuario">Profile picture.</string>
+    <string name="entre_e_gerencie">Manage Your Sales</string>
 </resources>

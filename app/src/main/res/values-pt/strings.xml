@@ -48,4 +48,5 @@
     <string name="erro_add_pagamento">Erro ao adicionar pagamento, tente novamente mais tarde.</string>
     <string name="erro_add_cliente">Erro ao adicionar cliente, tente novamente mais tarde.</string>
     <string name="photo_perfil_usuario">Foto de Perfil</string>
+    <string name="entre_e_gerencie">Gerencie Suas Vendas</string>
 </resources>

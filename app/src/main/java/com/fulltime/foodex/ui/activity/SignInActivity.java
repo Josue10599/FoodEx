@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,8 +29,9 @@ public class SignInActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
     private static final String TAG_AUTH = "Auth";
 
+    private ProgressBar carregando;
+
     private FirebaseAuth auth;
-    private GoogleSignInOptions gso;
     private GoogleSignInClient gsa;
 
     @Override
@@ -36,12 +39,21 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         auth = FirebaseAuth.getInstance();
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        configuraProgressBar();
+        configuraBotaoSignInGoogle();
+    }
+
+    private void configuraProgressBar() {
+        carregando = findViewById(R.id.activity_sign_in_progress);
+        carregando.setActivated(true);
+    }
+
+    private void configuraBotaoSignInGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         gsa = GoogleSignIn.getClient(this, gso);
-
         SignInButton signInButton = findViewById(R.id.activity_sign_in_button);
         signInButton.setOnClickListener((view -> openGoogleSignIn()));
     }
@@ -59,16 +71,19 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void signIn(GoogleSignInAccount currentUser) {
+        carregando.setVisibility(View.VISIBLE);
         AuthCredential credential = GoogleAuthProvider.getCredential(currentUser.getIdToken(), null);
         auth.signInWithCredential(credential)
                 .addOnSuccessListener((authResult -> proximaTela(authResult.getUser())))
-                .addOnFailureListener((e -> Log.e(TAG_AUTH, "signIn: ", e)));
+                .addOnFailureListener((e -> {
+                    carregando.setVisibility(View.GONE);
+                    Log.e(TAG_AUTH, "signIn: ", e);
+                }));
     }
 
     private void proximaTela(FirebaseUser currentUser) {
         Intent gerenciarActivity = new Intent(SignInActivity.this, GerenciarActivity.class);
-        Usuario usuario = new Usuario(currentUser);
-        gerenciarActivity.putExtra(USER, usuario);
+        gerenciarActivity.putExtra(USER, new Usuario(currentUser));
         startActivity(gerenciarActivity);
         finish();
     }
@@ -79,7 +94,7 @@ public class SignInActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == Activity.RESULT_OK)
                 GoogleSignIn.getSignedInAccountFromIntent(data)
-                        .addOnSuccessListener(this::signIn)
+                        .addOnSuccessListener(SignInActivity.this::signIn)
                         .addOnFailureListener(e -> e.getMessage());
         }
     }

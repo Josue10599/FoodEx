@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.firebase.authentication.Usuario;
+import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.ui.fragments.ListaClientesFragment;
 import com.fulltime.foodex.ui.fragments.ListaProdutosFragment;
 import com.fulltime.foodex.ui.fragments.ListaVendasFragment;
@@ -29,6 +30,7 @@ import static com.fulltime.foodex.error.CodigoDeErro.ERRO_ADICIONAR_VENDA;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_DELETAR_CLIENTE;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_DELETAR_PRODUTO;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_FALHA_CONEXAO;
+import static com.fulltime.foodex.firebase.authentication.Usuario.USER;
 import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 
 public class GerenciarActivity extends AppCompatActivity {
@@ -41,12 +43,13 @@ public class GerenciarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        configuraFloatingActionButton();
-        configuraBottomNavigation();
         Intent dadosRecebidos = getIntent();
         if (dadosRecebidos != null) {
-            usuario = (Usuario) dadosRecebidos.getSerializableExtra("user");
+            usuario = (Usuario) dadosRecebidos.getSerializableExtra(USER);
+            UpdateData.usuario(usuario);
         }
+        configuraBottomNavigation();
+        configuraFloatingActionButton();
     }
 
     @Override
@@ -105,6 +108,7 @@ public class GerenciarActivity extends AppCompatActivity {
             setFragment(item.getItemId());
             return true;
         });
+        bottomNavigationView.setSelectedItemId(itemSelectedBottonNavigation);
         setFragment(itemSelectedBottonNavigation);
     }
 
