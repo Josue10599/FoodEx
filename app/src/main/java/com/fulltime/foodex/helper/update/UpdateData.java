@@ -1,5 +1,6 @@
 package com.fulltime.foodex.helper.update;
 
+import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
@@ -20,6 +21,10 @@ public class UpdateData {
 
     private final static FirestoreAdapter firestoreAdapter = FirestoreAdapter.build();
     private final static EventBus eventBus = EventBus.getDefault();
+
+    public static void usuario(Usuario usuario) {
+        firestoreAdapter.adicionaUsuario(usuario);
+    }
 
     public static void listaClientes() {
         firestoreAdapter.getCliente((queryDocumentSnapshots, e) -> {
@@ -78,7 +83,6 @@ public class UpdateData {
     }
 
     private static boolean requisicaoNaoEstiverVazia(@Nullable QuerySnapshot queryDocumentSnapshots) {
-        assert queryDocumentSnapshots != null;
-        return !queryDocumentSnapshots.isEmpty();
+        return queryDocumentSnapshots != null;
     }
 }

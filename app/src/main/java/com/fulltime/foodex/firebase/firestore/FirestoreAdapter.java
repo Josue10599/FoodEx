@@ -1,5 +1,6 @@
 package com.fulltime.foodex.firebase.firestore;
 
+import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
@@ -36,15 +37,15 @@ public class FirestoreAdapter {
     }
 
     public void getCliente(EventListener<QuerySnapshot> eventListener) {
-        db.collection(CLIENTES).addSnapshotListener(eventListener);
+        getUser().collection(CLIENTES).addSnapshotListener(eventListener);
     }
 
     public void getProdutos(EventListener<QuerySnapshot> eventListener) {
-        db.collection(PRODUTOS).addSnapshotListener(eventListener);
+        getUser().collection(PRODUTOS).addSnapshotListener(eventListener);
     }
 
     public void getVendas(EventListener<QuerySnapshot> eventListener) {
-        db.collection(VENDAS).orderBy(VENDAS_CAMPO_DATA_VENDA, Query.Direction.DESCENDING)
+        getUser().collection(VENDAS).orderBy(VENDAS_CAMPO_DATA_VENDA, Query.Direction.DESCENDING)
                 .addSnapshotListener(eventListener);
     }
 
@@ -91,8 +92,12 @@ public class FirestoreAdapter {
                 .addOnFailureListener(onFailureListener);
     }
 
+    public void adicionaUsuario(Usuario usuario) {
+        getUser().set(usuario);
+    }
+
     private DocumentReference getDocument(String collection, String id) {
-        return db.collection(collection).document(id);
+        return getUser().collection(collection).document(id);
     }
 
     private DocumentReference getUser() {
