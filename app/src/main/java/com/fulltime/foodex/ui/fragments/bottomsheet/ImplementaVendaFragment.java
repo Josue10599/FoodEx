@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
+import com.fulltime.foodex.formatter.FormataDinheiro;
 import com.fulltime.foodex.helper.update.ListaCliente;
 import com.fulltime.foodex.helper.update.ListaProduto;
 import com.fulltime.foodex.helper.update.UpdateData;
@@ -22,10 +22,12 @@ import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.searchablespinner.SearchableSpinnerAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
@@ -36,7 +38,8 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     private final ArrayList<Cliente> clientesCadastrados = new ArrayList<>();
     private boolean vendaPaga;
     private int quantidade = 1;
-    private TextView textViewQuantidade;
+    private MaterialTextView textViewQuantidade;
+    private MaterialTextView textViewValorVenda;
     private Cliente clienteSelecionado;
     private Produto produtoSelecionado;
     private SearchableSpinnerAdapter adapterProdutos;
@@ -92,10 +95,16 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
         configuraSearchableSpinnerCliente(bottomSheetAdicionarVenda);
         configuraSearchableSpinnerProduto(bottomSheetAdicionarVenda);
         configuraTextViewQuantidade(bottomSheetAdicionarVenda);
+        configuraTextViewValor(bottomSheetAdicionarVenda);
         configuraBotaoIncrementa(bottomSheetAdicionarVenda);
         configuraBotaoDecrementa(bottomSheetAdicionarVenda);
         configuraSwitchEstadoVenda(bottomSheetAdicionarVenda);
         configuraBotaoCadastrar(bottomSheetAdicionarVenda);
+    }
+
+    private void configuraTextViewValor(View bottomSheetAdicionarVenda) {
+        textViewValorVenda = bottomSheetAdicionarVenda.findViewById(R.id.bottom_sheet_add_venda_valor);
+        calculaValor();
     }
 
     private void configuraSwitchEstadoVenda(View bottomSheetAdicionarVenda) {
@@ -123,6 +132,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
             @Override
             public void onItemSelected(View view, int position, long id) {
                 produtoSelecionado = (Produto) spinnerProduto.getSelectedItem();
+                calculaValor();
             }
 
             @Override
@@ -130,6 +140,17 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
 
             }
         });
+    }
+
+    private void calculaValor() {
+        FormataDinheiro formataDinheiro = new FormataDinheiro();
+        BigDecimal valor;
+        if (produtoSelecionado != null)
+            valor = formataDinheiro.getBigDecimal(produtoSelecionado.getValor());
+        else valor = formataDinheiro.getBigDecimal("0");
+        valor = valor.multiply(BigDecimal.valueOf(quantidade));
+        textViewValorVenda.setText(
+                String.format(getString(R.string.sifra), formataDinheiro.formataValor(valor)));
     }
 
     private void configuraSearchableSpinnerCliente(final View bottomSheetAdicionarVenda) {
@@ -161,6 +182,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
         botaoIncrementa.setOnClickListener(v -> {
             if (quantidade < 1000) quantidade++;
             textViewQuantidade.setText(String.valueOf(quantidade));
+            calculaValor();
         });
     }
 
@@ -170,6 +192,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
         botaoDecrementa.setOnClickListener(v -> {
             if (quantidade > 1) quantidade--;
             textViewQuantidade.setText(String.valueOf(quantidade));
+            calculaValor();
         });
     }
 }
