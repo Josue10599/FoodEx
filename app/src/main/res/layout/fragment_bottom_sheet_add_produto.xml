@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:alpha="?alphaEmphasisHigh"
         android:text="@string/add_new_produto"
-        android:textAppearance="?textAppearanceHeadline6"
+        android:textAppearance="?textAppearanceHeadline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

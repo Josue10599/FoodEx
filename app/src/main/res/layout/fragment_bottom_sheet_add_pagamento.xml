@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:alpha="?alphaEmphasisHigh"
         android:text="@string/add_new_pagamento"
-        android:textAppearance="?textAppearanceHeadline6"
+        android:textAppearance="?textAppearanceHeadline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -56,6 +56,8 @@
         android:id="@+id/bottom_sheet_botao_cadastrar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_2"
+        android:padding="@dimen/keyline_2"
         android:text="@string/receber_pagamento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

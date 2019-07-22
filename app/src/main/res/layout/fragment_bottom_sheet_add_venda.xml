@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:alpha="?alphaEmphasisHigh"
         android:text="@string/add_new_venda"
-        android:textAppearance="?textAppearanceHeadline6"
+        android:textAppearance="?textAppearanceHeadline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -92,25 +92,40 @@
         app:layout_constraintStart_toEndOf="@id/bottom_sheet_add_venda_quantidade"
         app:layout_constraintTop_toTopOf="@id/bottom_sheet_add_venda_quantidade" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/bottom_sheet_add_venda_valor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sifra"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
+        android:textColor="@color/color_pago"
+        app:layout_constraintBottom_toTopOf="@id/bottom_sheet_botao_cadastrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_add_venda_quantidade" />
+
     <Switch
         android:id="@+id/bottom_sheet_add_venda_switch_estado"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_margin="@dimen/keyline_4"
         android:text="@string/venda_paga"
         android:textAppearance="@style/TextAppearance.MyTheme.Button"
         app:layout_constraintBottom_toTopOf="@id/bottom_sheet_botao_cadastrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_add_venda_quantidade" />
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_add_venda_valor" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bottom_sheet_botao_cadastrar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_2"
+        android:padding="@dimen/keyline_2"
         android:text="@string/concluir_venda"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_add_venda_switch_estado" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
