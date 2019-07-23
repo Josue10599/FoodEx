@@ -3,7 +3,6 @@ package com.fulltime.foodex.firebase.authentication;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Usuario implements Serializable {
     public static final String USER = "user";
@@ -19,7 +18,9 @@ public class Usuario implements Serializable {
         displayName = user.getDisplayName();
         email = user.getEmail();
         phoneNumber = user.getPhoneNumber();
-        photoUrl = Objects.requireNonNull(user.getPhotoUrl()).toString();
+        if (user.getPhotoUrl() != null)
+            photoUrl = user.getPhotoUrl().toString();
+        else photoUrl = "";
     }
 
     public String getDisplayName() {

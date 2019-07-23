@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.firebase.ui.auth.AuthUI;
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.ui.activity.SignInActivity;
@@ -51,11 +52,12 @@ public class PerfilUsuarioFragment extends Fragment {
     }
 
     private void logoutApp() {
-
+        AuthUI.getInstance().signOut(getContext()).addOnSuccessListener(aVoid -> {
+            Intent telaLogin = new Intent(getContext(), SignInActivity.class);
+            startActivity(telaLogin);
+            Objects.requireNonNull(getActivity()).finish();
+        });
         FirebaseAuth.getInstance().signOut();
-        Intent telaLogin = new Intent(getContext(), SignInActivity.class);
-        startActivity(telaLogin);
-        Objects.requireNonNull(getActivity()).finish();
     }
 
     private void configuraNomeUsuario(View perfilUsuarioFragment) {
@@ -86,7 +88,6 @@ public class PerfilUsuarioFragment extends Fragment {
                 .showImageOnFail(drawablePadrao)
                 .showImageOnLoading(drawableLoading)
                 .build();
-        if (!usuario.getPhotoUrl().isEmpty())
-            ImageLoader.getInstance().displayImage(usuario.getPhotoUrl(), fotoPerfil, imageOptions);
+        ImageLoader.getInstance().displayImage(usuario.getPhotoUrl(), fotoPerfil, imageOptions);
     }
 }
