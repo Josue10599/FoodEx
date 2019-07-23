@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.update.ListaCliente;
-import com.fulltime.foodex.helper.update.RemoveCliente;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaClienteFragment;
@@ -69,11 +68,6 @@ public class ListaClientesFragment extends Fragment {
     @Subscribe
     public void onCreateCliente(Cliente cliente) {
         clienteAdapter.insereCliente(cliente);
-    }
-
-    @Subscribe
-    public void onDeleteCliente(RemoveCliente clienteRemovido) {
-        clienteAdapter.removeCliente(clienteRemovido.getPosicao());
     }
 
     @Subscribe

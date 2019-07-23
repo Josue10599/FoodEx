@@ -2,6 +2,7 @@ package com.fulltime.foodex.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.firebase.authentication.Usuario;
+import com.fulltime.foodex.helper.update.RemoveCliente;
+import com.fulltime.foodex.helper.update.RemoveProduto;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.ui.fragments.ListaClientesFragment;
 import com.fulltime.foodex.ui.fragments.ListaProdutosFragment;
@@ -16,6 +19,7 @@ import com.fulltime.foodex.ui.fragments.ListaVendasFragment;
 import com.fulltime.foodex.ui.fragments.PerfilUsuarioFragment;
 import com.fulltime.foodex.ui.fragments.bottomsheet.MenuOpcoesFragments;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -38,6 +42,7 @@ public class GerenciarActivity extends AppCompatActivity {
     private static int itemSelectedBottonNavigation = R.id.bottom_nav_clients_cliente;
     private BottomNavigationView bottomNavigationView;
     private Usuario usuario;
+    private View coordinatorLayoutForSnackBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,7 @@ public class GerenciarActivity extends AppCompatActivity {
             usuario = (Usuario) dadosRecebidos.getSerializableExtra(USER);
             UpdateData.usuario(usuario);
         }
+        coordinatorLayoutForSnackBar = findViewById(R.id.activity_main_coordinator_layout);
         configuraBottomNavigation();
         configuraFloatingActionButton();
     }
@@ -92,8 +98,40 @@ public class GerenciarActivity extends AppCompatActivity {
         }
     }
 
+    @Subscribe
+    public void onDeleteProduto(RemoveProduto removeProduto) {
+        String dadosProduto = removeProduto.getProduto().getNome() + " (" + removeProduto.getProduto().getDescricao() + ")";
+        String textoFormatado = String.format(getString(R.string.deseja_apagar), dadosProduto);
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.apagar_produto)
+                .setMessage(textoFormatado)
+                .setPositiveButton(R.string.apagar, (dialogInterface, i) -> {
+                    UpdateData.removeProduto(removeProduto.getProduto(),
+                            removeProduto.getAdapter(),
+                            removeProduto.getPosicao());
+                })
+                .setNegativeButton(R.string.cancelar, null)
+                .show();
+    }
+
+    @Subscribe
+    public void onDeleteCliente(RemoveCliente removeCliente) {
+        String textoFormatado = String.format(getString(R.string.deseja_apagar),
+                removeCliente.getCliente().nomeCompleto());
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.apagar_cliente)
+                .setMessage(textoFormatado)
+                .setPositiveButton(R.string.apagar, (dialogInterface, i) -> {
+                    UpdateData.removerCliente(removeCliente.getCliente(),
+                            removeCliente.getAdapter(),
+                            removeCliente.getPosicao());
+                })
+                .setNegativeButton(R.string.cancelar, null)
+                .show();
+    }
+
     private void showSnackbar(int erro) {
-        Snackbar.make(findViewById(R.id.activity_main_coordinator_layout), erro, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayoutForSnackBar, erro, Snackbar.LENGTH_SHORT).show();
     }
 
     private void configuraFloatingActionButton() {

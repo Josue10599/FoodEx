@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.update.ListaProduto;
-import com.fulltime.foodex.helper.update.RemoveProduto;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaProdutoFragment;
@@ -60,11 +59,6 @@ public class ListaProdutosFragment extends Fragment {
     @Subscribe
     public void onCreateProduto(Produto produto) {
         produtoAdapter.insereProduto(produto);
-    }
-
-    @Subscribe
-    public void onDeleteProduto(RemoveProduto removeProduto) {
-        produtoAdapter.removeProduto(removeProduto.getPosicao());
     }
 
     @Subscribe

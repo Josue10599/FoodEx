@@ -49,4 +49,9 @@
     <string name="erro_add_cliente">Erro ao adicionar cliente, tente novamente mais tarde.</string>
     <string name="photo_perfil_usuario">Foto de Perfil</string>
     <string name="entre_e_gerencie">Gerencie Suas Vendas</string>
+    <string name="apagar">Apagar</string>
+    <string name="deseja_apagar">Deseja apagar: %s</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="apagar_produto">Apagar Produto</string>
+    <string name="apagar_cliente">Apagar Cliente</string>
 </resources>

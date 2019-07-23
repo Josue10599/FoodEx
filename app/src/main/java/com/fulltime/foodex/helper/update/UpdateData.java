@@ -5,6 +5,8 @@ import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
+import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
+import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,15 +72,15 @@ public class UpdateData {
                 e -> eventBus.post(ERRO_ADICIONAR_CLIENTE));
     }
 
-    public static void removerCliente(Cliente cliente, final int posicao) {
+    public static void removerCliente(Cliente cliente, ClienteAdapter adapter, final int posicao) {
         firestoreAdapter.removeCliente(cliente,
-                aVoid -> eventBus.post(new RemoveCliente(posicao)),
+                aVoid -> adapter.removeCliente(posicao),
                 e -> eventBus.post(ERRO_DELETAR_CLIENTE));
     }
 
-    public static void removeProduto(Produto produto, final int posicao) {
+    public static void removeProduto(Produto produto, ProdutoAdapter adapter, final int posicao) {
         firestoreAdapter.removeProduto(produto,
-                aVoid -> eventBus.post(new RemoveProduto(posicao)),
+                aVoid -> adapter.removeProduto(posicao),
                 e -> eventBus.post(ERRO_DELETAR_PRODUTO));
     }
 

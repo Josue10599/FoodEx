@@ -53,4 +53,9 @@
     <string name="erro_falha_conexao">Error, failed to connect to server.</string>
     <string name="photo_perfil_usuario">Profile picture.</string>
     <string name="entre_e_gerencie">Manage Your Sales</string>
+    <string name="deseja_apagar">Want to delete: %s</string>
+    <string name="apagar">Delete</string>
+    <string name="cancelar">Cancel</string>
+    <string name="apagar_produto">Delete Product</string>
+    <string name="apagar_cliente">Delete Client</string>
 </resources>

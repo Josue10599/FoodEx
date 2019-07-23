@@ -4,9 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fulltime.foodex.helper.update.UpdateData;
+import com.fulltime.foodex.helper.update.RemoveCliente;
+import com.fulltime.foodex.helper.update.RemoveProduto;
+import com.fulltime.foodex.model.Cliente;
+import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
 import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class ItemTouchCallback extends ItemTouchHelper.Callback {
 
@@ -48,14 +53,19 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
-        int posicaoDaNota = viewHolder.getAdapterPosition();
-        removeItem(posicaoDaNota);
+        int posicao = viewHolder.getAdapterPosition();
+        removeItem(posicao);
     }
 
     private void removeItem(int posicao) {
-        if (isFragmentListaProdutos())
-            UpdateData.removeProduto(produtoAdapter.getProduto(posicao), posicao);
-        else
-            UpdateData.removerCliente(clienteAdapter.getCliente(posicao), posicao);
+        if (isFragmentListaProdutos()) {
+            Produto produtoDeletado = produtoAdapter.getProduto(posicao);
+            produtoAdapter.insereProduto(produtoDeletado);
+            EventBus.getDefault().post(new RemoveProduto(produtoDeletado, produtoAdapter, posicao));
+        } else {
+            Cliente clienteDeletado = clienteAdapter.getCliente(posicao);
+            clienteAdapter.insereCliente(clienteDeletado);
+            EventBus.getDefault().post(new RemoveCliente(clienteDeletado, clienteAdapter, posicao));
+        }
     }
 }
