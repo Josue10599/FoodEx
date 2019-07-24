@@ -31,19 +31,31 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner;
+import gr.escsoft.michaelprimez.searchablespinner.interfaces.IStatusListener;
 import gr.escsoft.michaelprimez.searchablespinner.interfaces.OnItemSelectedListener;
+
+import static android.view.View.VISIBLE;
 
 public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     private final ArrayList<Produto> produtosCadastrados = new ArrayList<>();
     private final ArrayList<Cliente> clientesCadastrados = new ArrayList<>();
+
     private boolean vendaPaga;
     private int quantidade = 1;
-    private MaterialTextView textViewQuantidade;
-    private MaterialTextView textViewValorVenda;
+
     private Cliente clienteSelecionado;
     private Produto produtoSelecionado;
+
+    private SearchableSpinner spinnerCliente;
+    private SearchableSpinner spinnerProduto;
     private SearchableSpinnerAdapter adapterProdutos;
     private SearchableSpinnerAdapter adapterClientes;
+    private Button botaoIncrementa;
+    private MaterialTextView textViewQuantidade;
+    private Button botaoDecrementa;
+    private MaterialTextView textViewValorVenda;
+    private Switch switchEstadoVenda;
+    private MaterialButton buttonCadastrar;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -56,11 +68,8 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View bottomSheetAdicionarVenda = inflater.
-                inflate(R.layout.fragment_bottom_sheet_add_venda, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View bottomSheetAdicionarVenda = inflater.inflate(R.layout.fragment_bottom_sheet_add_venda, container, false);
         bindCampos(bottomSheetAdicionarVenda);
         return bottomSheetAdicionarVenda;
     }
@@ -102,37 +111,65 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
         configuraBotaoCadastrar(bottomSheetAdicionarVenda);
     }
 
+    private void configuraBotaoCadastrar(View bottomSheetAdicionarVenda) {
+        buttonCadastrar = bottomSheetAdicionarVenda.findViewById(R.id.bottom_sheet_botao_cadastrar);
+        buttonCadastrar.setOnClickListener(v -> {
+            if (clienteEProdutoSelecionado()) {
+                UpdateData.atualizaVenda(new Venda(clienteSelecionado, vendaPaga, produtoSelecionado, quantidade));
+                UpdateData.atualizaCliente(clienteSelecionado);
+                dismiss();
+            }
+        });
+    }
+
     private void configuraTextViewValor(View bottomSheetAdicionarVenda) {
         textViewValorVenda = bottomSheetAdicionarVenda.findViewById(R.id.bottom_sheet_add_venda_valor);
         calculaValor();
     }
 
     private void configuraSwitchEstadoVenda(View bottomSheetAdicionarVenda) {
-        Switch switchEstadoVenda = bottomSheetAdicionarVenda.findViewById(R.id.bottom_sheet_add_venda_switch_estado);
+        switchEstadoVenda = bottomSheetAdicionarVenda.findViewById(R.id.bottom_sheet_add_venda_switch_estado);
         switchEstadoVenda.setOnCheckedChangeListener((buttonView, isChecked) -> vendaPaga = isChecked);
     }
 
-    private void configuraBotaoCadastrar(View bottomSheetAdicionarVenda) {
-        MaterialButton buttonCadastrar = bottomSheetAdicionarVenda.findViewById(R.id.bottom_sheet_botao_cadastrar);
-        buttonCadastrar.setOnClickListener(v -> {
-            if (clienteSelecionado != null && produtoSelecionado != null) {
-                Venda venda = new Venda(clienteSelecionado, vendaPaga, produtoSelecionado, quantidade);
-                UpdateData.atualizaCliente(clienteSelecionado);
-                UpdateData.atualizaVenda(venda);
-                dismiss();
-            }
-        });
-    }
-
     private void configuraSearchableSpinnerProduto(View bottomSheetAdicionarVenda) {
-        final SearchableSpinner spinnerProduto = bottomSheetAdicionarVenda.
+        spinnerProduto = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_searchspinner_produto);
         spinnerProduto.setAdapter(adapterProdutos);
         spinnerProduto.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(View view, int position, long id) {
                 produtoSelecionado = (Produto) spinnerProduto.getSelectedItem();
+                clienteEProdutoSelecionado();
                 calculaValor();
+            }
+
+            @Override
+            public void onNothingSelected() {
+            }
+        });
+        spinnerProduto.setStatusListener(new IStatusListener() {
+            @Override
+            public void spinnerIsOpening() {
+                spinnerCliente.hideEdit();
+            }
+
+            @Override
+            public void spinnerIsClosing() {
+
+            }
+        });
+    }
+
+    private void configuraSearchableSpinnerCliente(final View bottomSheetAdicionarVenda) {
+        spinnerCliente = bottomSheetAdicionarVenda.
+                findViewById(R.id.bottom_sheet_add_venda_searchspinner_cliente);
+        spinnerCliente.setAdapter(adapterClientes);
+        spinnerCliente.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(View view, int position, long id) {
+                clienteSelecionado = (Cliente) spinnerCliente.getSelectedItem();
+                clienteEProdutoSelecionado();
             }
 
             @Override
@@ -140,31 +177,14 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
 
             }
         });
-    }
-
-    private void calculaValor() {
-        FormataDinheiro formataDinheiro = new FormataDinheiro();
-        BigDecimal valor;
-        if (produtoSelecionado != null)
-            valor = formataDinheiro.getBigDecimal(produtoSelecionado.getValor());
-        else valor = formataDinheiro.getBigDecimal("0");
-        valor = valor.multiply(BigDecimal.valueOf(quantidade));
-        textViewValorVenda.setText(
-                String.format(getString(R.string.sifra), formataDinheiro.formataValor(valor)));
-    }
-
-    private void configuraSearchableSpinnerCliente(final View bottomSheetAdicionarVenda) {
-        final SearchableSpinner spinnerCliente = bottomSheetAdicionarVenda.
-                findViewById(R.id.bottom_sheet_add_venda_searchspinner_cliente);
-        spinnerCliente.setAdapter(adapterClientes);
-        spinnerCliente.setOnItemSelectedListener(new OnItemSelectedListener() {
+        spinnerCliente.setStatusListener(new IStatusListener() {
             @Override
-            public void onItemSelected(View view, int position, long id) {
-                clienteSelecionado = (Cliente) spinnerCliente.getSelectedItem();
+            public void spinnerIsOpening() {
+                spinnerProduto.hideEdit();
             }
 
             @Override
-            public void onNothingSelected() {
+            public void spinnerIsClosing() {
 
             }
         });
@@ -177,7 +197,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     }
 
     private void configuraBotaoIncrementa(View bottomSheetAdicionarVenda) {
-        Button botaoIncrementa = bottomSheetAdicionarVenda.
+        botaoIncrementa = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_incrementar_quantidade);
         botaoIncrementa.setOnClickListener(v -> {
             if (quantidade < 1000) quantidade++;
@@ -187,12 +207,36 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     }
 
     private void configuraBotaoDecrementa(View bottomSheetAdicionarVenda) {
-        Button botaoDecrementa = bottomSheetAdicionarVenda.
+        botaoDecrementa = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_decrementar_quantidade);
         botaoDecrementa.setOnClickListener(v -> {
             if (quantidade > 1) quantidade--;
             textViewQuantidade.setText(String.valueOf(quantidade));
             calculaValor();
         });
+    }
+
+    private void calculaValor() {
+        FormataDinheiro formataDinheiro = new FormataDinheiro();
+        BigDecimal valor;
+        if (produtoSelecionado != null)
+            valor = formataDinheiro.getBigDecimal(produtoSelecionado.getValor());
+        else valor = formataDinheiro.getBigDecimal("0");
+        valor = valor.multiply(BigDecimal.valueOf(quantidade));
+        String textoFormatado = String.format(getString(R.string.sifra), formataDinheiro.formataValor(valor));
+        textViewValorVenda.setText(textoFormatado);
+    }
+
+    private boolean clienteEProdutoSelecionado() {
+        if (clienteSelecionado != null && produtoSelecionado != null) {
+            botaoIncrementa.setVisibility(VISIBLE);
+            textViewQuantidade.setVisibility(VISIBLE);
+            botaoDecrementa.setVisibility(VISIBLE);
+            textViewValorVenda.setVisibility(VISIBLE);
+            switchEstadoVenda.setVisibility(VISIBLE);
+            buttonCadastrar.setEnabled(true);
+            return true;
+        }
+        return false;
     }
 }

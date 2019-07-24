@@ -49,7 +49,7 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
 
     public void setLista(List<Venda> vendas) {
         vendasRealizadas = vendas;
-        notifyItemRangeInserted(0, vendas.size());
+        notifyDataSetChanged();
     }
 
     class VendasViewHolder extends RecyclerView.ViewHolder {
@@ -72,7 +72,7 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
         void bindViewHolder(Venda venda) {
             Cliente comprador = venda.getCliente();
             Produto produtoComprado = venda.getProdutoVendido();
-            dataVenda.setText(venda.getDataVenda());
+            dataVenda.setText(venda.dataVendaFormatada());
             nomeClienteComprador.setText(comprador.nomeCompleto());
             nomeProdutoVendido.setText(produtoComprado.getNome());
             descricaoProduto.setText(produtoComprado.getDescricao());
