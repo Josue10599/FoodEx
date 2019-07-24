@@ -80,7 +80,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void signIn(IdpResponse response) {
-        auth.signInWithCredential(Objects.requireNonNull(response.getCredentialForLinking()))
+        auth.signInWithCustomToken(Objects.requireNonNull(response.getIdpToken()))
                 .addOnSuccessListener((authResult -> proximaTela(authResult.getUser())))
                 .addOnFailureListener(this::errorSignIn);
     }
