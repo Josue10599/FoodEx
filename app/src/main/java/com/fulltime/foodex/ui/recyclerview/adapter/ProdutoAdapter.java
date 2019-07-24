@@ -51,21 +51,21 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
     }
 
     public void insereProduto(Produto novoProduto) {
-        if (!this.produtosSalvos.contains(novoProduto)) {
-            this.produtosSalvos.add(novoProduto);
-            notifyItemInserted(this.produtosSalvos.size() - 1);
+        if (!produtosSalvos.contains(novoProduto)) {
+            produtosSalvos.add(novoProduto);
+            notifyItemInserted(produtosSalvos.size() - 1);
         } else alteraProduto(novoProduto);
     }
 
     private void alteraProduto(Produto produtoAlterado) {
         int posicao = produtosSalvos.indexOf(produtoAlterado);
-        this.produtosSalvos.set(posicao, produtoAlterado);
+        produtosSalvos.set(posicao, produtoAlterado);
         notifyItemChanged(posicao);
     }
 
     public void removeProduto(int posicao) {
-        this.produtosSalvos.remove(posicao);
         notifyItemRemoved(posicao);
+        produtosSalvos.remove(posicao);
     }
 
     public void movimentaProduto(int posicaoInicial, int posicaoFinal) {
@@ -76,6 +76,11 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
     public void setListaProduto(List<Produto> produtos) {
         produtosSalvos = produtos;
         notifyDataSetChanged();
+    }
+
+    public void insereProdutoNaPosicao(Produto produto, int posicao) {
+        produtosSalvos.add(posicao, produto);
+        notifyItemInserted(posicao);
     }
 
     class ProdutoViewHolder extends ViewHolder {

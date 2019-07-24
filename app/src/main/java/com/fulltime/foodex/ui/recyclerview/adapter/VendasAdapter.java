@@ -49,7 +49,7 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
 
     public void setLista(List<Venda> vendas) {
         vendasRealizadas = vendas;
-        notifyDataSetChanged();
+        notifyItemRangeInserted(0, vendas.size());
     }
 
     class VendasViewHolder extends RecyclerView.ViewHolder {

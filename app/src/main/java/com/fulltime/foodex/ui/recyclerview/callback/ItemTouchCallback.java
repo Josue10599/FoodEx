@@ -60,11 +60,13 @@ public class ItemTouchCallback extends ItemTouchHelper.Callback {
     private void removeItem(int posicao) {
         if (isFragmentListaProdutos()) {
             Produto produtoDeletado = produtoAdapter.getProduto(posicao);
-            produtoAdapter.insereProduto(produtoDeletado);
+            produtoAdapter.removeProduto(posicao);
+            produtoAdapter.insereProdutoNaPosicao(produtoDeletado, posicao);
             EventBus.getDefault().post(new RemoveProduto(produtoDeletado, produtoAdapter, posicao));
         } else {
             Cliente clienteDeletado = clienteAdapter.getCliente(posicao);
-            clienteAdapter.insereCliente(clienteDeletado);
+            clienteAdapter.removeCliente(posicao);
+            clienteAdapter.insereCliente(clienteDeletado, posicao);
             EventBus.getDefault().post(new RemoveCliente(clienteDeletado, clienteAdapter, posicao));
         }
     }

@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteViewHolder> {
-    private List<Cliente> listaClientes = new ArrayList<>();
+    private List<Cliente> clientesSalvos = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private Context context;
 
@@ -39,44 +39,49 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
 
     @Override
     public void onBindViewHolder(@NonNull ClienteViewHolder holder, int position) {
-        holder.bindView(listaClientes.get(position));
+        holder.bindView(clientesSalvos.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return listaClientes.size();
+        return clientesSalvos.size();
     }
 
     public Cliente getCliente(int posicao) {
-        return listaClientes.get(posicao);
+        return clientesSalvos.get(posicao);
     }
 
     public void insereCliente(Cliente novoCliente) {
-        if (!listaClientes.contains(novoCliente)) {
-            listaClientes.add(novoCliente);
-            notifyItemInserted(listaClientes.size() - 1);
+        if (!clientesSalvos.contains(novoCliente)) {
+            clientesSalvos.add(novoCliente);
+            notifyItemInserted(clientesSalvos.size() - 1);
         } else alteraCliente(novoCliente);
     }
 
     private void alteraCliente(Cliente clienteAlterado) {
-        int posicao = listaClientes.indexOf(clienteAlterado);
-        listaClientes.set(posicao, clienteAlterado);
-        notifyItemChanged(posicao);
+        int posicao = clientesSalvos.indexOf(clienteAlterado);
+        clientesSalvos.set(posicao, clienteAlterado);
+        notifyItemChanged(posicao, clienteAlterado);
     }
 
     public void setLista(List<Cliente> clientes) {
-        listaClientes = clientes;
+        clientesSalvos = clientes;
         notifyDataSetChanged();
     }
 
     public void removeCliente(int posicao) {
-        listaClientes.remove(posicao);
         notifyItemRemoved(posicao);
+        clientesSalvos.remove(posicao);
     }
 
     public void movimentaCliente(int posicaoInicial, int posicaoFinal) {
-        Collections.swap(listaClientes, posicaoInicial, posicaoFinal);
+        Collections.swap(clientesSalvos, posicaoInicial, posicaoFinal);
         notifyItemMoved(posicaoInicial, posicaoFinal);
+    }
+
+    public void insereCliente(Cliente cliente, int posicao) {
+        clientesSalvos.add(posicao, cliente);
+        notifyItemInserted(posicao);
     }
 
     class ClienteViewHolder extends RecyclerView.ViewHolder {
