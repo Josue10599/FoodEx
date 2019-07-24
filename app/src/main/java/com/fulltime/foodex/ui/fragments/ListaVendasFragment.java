@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.update.ListaVenda;
@@ -24,6 +25,7 @@ import org.greenrobot.eventbus.Subscribe;
 public class ListaVendasFragment extends Fragment {
 
     private final VendasAdapter vendasAdapter = new VendasAdapter();
+    private SwipeRefreshLayout swipe;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -35,6 +37,7 @@ public class ListaVendasFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vendasView = inflater.inflate(R.layout.fragment_vendas, container, false);
+        configuraSwipe(vendasView);
         configurarRecyclerView(vendasView);
         return vendasView;
     }
@@ -53,12 +56,20 @@ public class ListaVendasFragment extends Fragment {
 
     @Subscribe
     public void onCreateVenda(Venda venda) {
+        swipe.setRefreshing(false);
         vendasAdapter.adicionaVenda(venda);
     }
 
     @Subscribe
     public void onGetListaVenda(ListaVenda listaVenda) {
+        swipe.setRefreshing(false);
         vendasAdapter.setLista(listaVenda.getVendas());
+    }
+
+    private void configuraSwipe(View view) {
+        swipe = view.findViewById(R.id.swipe_refresh);
+        swipe.setRefreshing(true);
+        swipe.setOnRefreshListener(UpdateData::listaVendas);
     }
 
     private void configurarRecyclerView(View vendasView) {

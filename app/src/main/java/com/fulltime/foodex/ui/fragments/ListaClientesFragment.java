@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.update.ListaCliente;
@@ -35,6 +36,8 @@ public class ListaClientesFragment extends Fragment {
 
     private final ClienteAdapter clienteAdapter = new ClienteAdapter();
 
+    private SwipeRefreshLayout swipe;
+
     private List<Cliente> todosClientes = new ArrayList<>();
     private List<Cliente> devedores = new ArrayList<>();
 
@@ -48,6 +51,7 @@ public class ListaClientesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View clientView = inflater.inflate(R.layout.fragment_cliente, container, false);
+        configuraSwipe(clientView);
         configuraTabMenu(clientView);
         configuraRecyclerView(clientView);
         return clientView;
@@ -67,15 +71,27 @@ public class ListaClientesFragment extends Fragment {
 
     @Subscribe
     public void onCreateCliente(Cliente cliente) {
+        swipe.setRefreshing(false);
         clienteAdapter.insereCliente(cliente);
     }
 
     @Subscribe
     public void onGetListaClientes(ListaCliente listaCliente) {
+        swipe.setRefreshing(false);
+        atualizaListas(listaCliente);
+    }
+
+    private void atualizaListas(ListaCliente listaCliente) {
         List<Cliente> clientes = listaCliente.getClientes();
         clienteAdapter.setLista(clientes);
         todosClientes = clientes;
         devedores = filtraDevedores(todosClientes);
+    }
+
+    private void configuraSwipe(View view) {
+        swipe = view.findViewById(R.id.swipe_refresh);
+        swipe.setRefreshing(true);
+        swipe.setOnRefreshListener(UpdateData::listaClientes);
     }
 
     private void configuraTabMenu(View clientView) {

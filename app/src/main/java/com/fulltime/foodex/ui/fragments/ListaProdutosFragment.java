@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.update.ListaProduto;
@@ -29,6 +30,7 @@ import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet
 public class ListaProdutosFragment extends Fragment {
 
     private ProdutoAdapter produtoAdapter = new ProdutoAdapter();
+    private SwipeRefreshLayout swipe;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -40,6 +42,7 @@ public class ListaProdutosFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View produtosView = inflater.inflate(R.layout.fragment_produtos, container, false);
+        configuraSwipe(produtosView);
         configuraRecyclerView(produtosView);
         return produtosView;
     }
@@ -58,12 +61,20 @@ public class ListaProdutosFragment extends Fragment {
 
     @Subscribe
     public void onCreateProduto(Produto produto) {
+        swipe.setRefreshing(false);
         produtoAdapter.insereProduto(produto);
     }
 
     @Subscribe
     public void onGetListaProduto(ListaProduto listaProduto) {
+        swipe.setRefreshing(false);
         produtoAdapter.setListaProduto(listaProduto.getProdutos());
+    }
+
+    private void configuraSwipe(View clientView) {
+        swipe = clientView.findViewById(R.id.swipe_refresh);
+        swipe.setRefreshing(true);
+        swipe.setOnRefreshListener(UpdateData::listaProdutos);
     }
 
     private void configuraRecyclerView(View produtosView) {
