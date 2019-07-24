@@ -54,4 +54,5 @@
     <string name="cancelar">Cancelar</string>
     <string name="apagar_produto">Apagar Produto</string>
     <string name="apagar_cliente">Apagar Cliente</string>
+    <string name="valor_em_deficit">O cliente está devendo</string>
 </resources>

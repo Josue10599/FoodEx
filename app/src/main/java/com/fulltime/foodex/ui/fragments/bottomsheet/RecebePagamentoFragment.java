@@ -19,6 +19,7 @@ import com.fulltime.foodex.searchablespinner.SearchableSpinnerAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textview.MaterialTextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,6 +37,9 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
     private TextInputLayout textInputLayoutCampoValor;
     private EditText editTextCampoValor;
     private SearchableSpinnerAdapter adapterClientes;
+    private MaterialButton buttonReceberPagamento;
+    private MaterialTextView textViewValorEmDeficit;
+    private MaterialTextView textViewMensagemValorEmDeficit;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -51,8 +55,16 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
                 inflate(R.layout.fragment_bottom_sheet_add_pagamento, container, false);
         configuraSearchableSpinnerCliente(bottomSheetRecebePagamento);
         configuraCampoValorRecebido(bottomSheetRecebePagamento);
+        configuraCampoValorEmDeficit(bottomSheetRecebePagamento);
         configuraBotaoConfirmarRecebimento(bottomSheetRecebePagamento);
         return bottomSheetRecebePagamento;
+    }
+
+    private void configuraCampoValorEmDeficit(View bottomSheetRecebePagamento) {
+        textViewMensagemValorEmDeficit =
+                bottomSheetRecebePagamento.findViewById(R.id.bottom_sheet_add_pagamento_mensagem_valor);
+        textViewValorEmDeficit =
+                bottomSheetRecebePagamento.findViewById(R.id.bottom_sheet_add_pagamento_valor_devido_cliente);
     }
 
     @Override
@@ -76,7 +88,7 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
     }
 
     private void configuraBotaoConfirmarRecebimento(View bottomSheetRecebePagamento) {
-        MaterialButton buttonReceberPagamento = bottomSheetRecebePagamento
+        buttonReceberPagamento = bottomSheetRecebePagamento
                 .findViewById(R.id.bottom_sheet_botao_cadastrar);
         buttonReceberPagamento.setOnClickListener(v -> {
             getValorDigitadoCampoValorRecebido();
@@ -113,7 +125,12 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
         spinnerCliente.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(View view, int position, long id) {
+                buttonReceberPagamento.setEnabled(true);
                 clienteSelecionado = (Cliente) spinnerCliente.getSelectedItem();
+                textViewMensagemValorEmDeficit.setVisibility(View.VISIBLE);
+                textViewValorEmDeficit.setVisibility(View.VISIBLE);
+                textViewValorEmDeficit.setText(String.format(getString(R.string.sifra),
+                        clienteSelecionado.getValorEmDeficit()));
             }
 
             @Override

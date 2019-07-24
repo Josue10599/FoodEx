@@ -16,6 +16,10 @@ public class FormataDinheiro {
         this.decimalFormat.setParseBigDecimal(true);
     }
 
+    public static String valorZero() {
+        return new FormataDinheiro().formataValor(new BigDecimal("0"));
+    }
+
     public String formataValor(BigDecimal valor) {
         return decimalFormat.format(valor);
     }
