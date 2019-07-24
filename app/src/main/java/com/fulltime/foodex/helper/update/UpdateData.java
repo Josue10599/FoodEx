@@ -30,7 +30,6 @@ public class UpdateData {
 
     public static void listaClientes() {
         firestoreAdapter.getCliente((queryDocumentSnapshots, e) -> {
-            assert queryDocumentSnapshots != null;
             if (requisicaoNaoEstiverVazia(queryDocumentSnapshots)) {
                 eventBus.post(new ListaCliente(queryDocumentSnapshots.toObjects(Cliente.class)));
             }
@@ -39,7 +38,6 @@ public class UpdateData {
 
     public static void listaProdutos() {
         firestoreAdapter.getProdutos((queryDocumentSnapshots, e) -> {
-            assert queryDocumentSnapshots != null;
             if (requisicaoNaoEstiverVazia(queryDocumentSnapshots)) {
                 eventBus.post(new ListaProduto(queryDocumentSnapshots.toObjects(Produto.class)));
             }
@@ -48,7 +46,6 @@ public class UpdateData {
 
     public static void listaVendas() {
         firestoreAdapter.getVendas((queryDocumentSnapshots, e) -> {
-            assert queryDocumentSnapshots != null;
             if (requisicaoNaoEstiverVazia(queryDocumentSnapshots))
                 eventBus.post(new ListaVenda(queryDocumentSnapshots.toObjects(Venda.class)));
         });

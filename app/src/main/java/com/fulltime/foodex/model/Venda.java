@@ -5,7 +5,6 @@ import com.fulltime.foodex.formatter.FormataDinheiro;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -13,13 +12,12 @@ import java.util.UUID;
 
 public class Venda implements Serializable {
     private final String id;
+    private final FormataDinheiro formataDinheiro = new FormataDinheiro();
     private Date dataVenda;
     private Cliente cliente;
     private Produto produtoVendido;
     private BigDecimal valorDaCompra;
     private int quantidade;
-
-    private final FormataDinheiro formataDinheiro = new FormataDinheiro();
 
     public Venda() {
         this.id = UUID.randomUUID().toString();
@@ -48,16 +46,16 @@ public class Venda implements Serializable {
         }
     }
 
-    public String getDataVenda() {
+    public String dataVendaFormatada() {
         return DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).format(dataVenda);
     }
 
-    public void setDataVenda(String dataVenda) {
-        try {
-            this.dataVenda = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()).parse(dataVenda);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public Date getDataVenda() {
+        return this.dataVenda;
+    }
+
+    public void setDataVenda(Date dataVenda) {
+        this.dataVenda = dataVenda;
     }
 
     public Cliente getCliente() {
@@ -94,5 +92,20 @@ public class Venda implements Serializable {
 
     public String getId() {
         return this.id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Venda)) return false;
+
+        Venda venda = (Venda) o;
+
+        return getId() != null ? getId().equals(venda.getId()) : venda.getId() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
     }
 }
