@@ -1,79 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="@dimen/keyline_5"
-    android:paddingTop="@dimen/keyline_2"
-    android:paddingEnd="@dimen/keyline_5"
-    android:paddingBottom="@dimen/keyline_5">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/bottom_sheet_menu_options_titulo"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_2"
-        android:alpha="?alphaEmphasisHigh"
-        android:text="@string/tarefas"
-        android:textAppearance="?textAppearanceHeadline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingStart="@dimen/keyline_5"
+        android:paddingTop="@dimen/keyline_2"
+        android:paddingEnd="@dimen/keyline_5"
+        android:paddingBottom="@dimen/keyline_5">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottom_sheet_menu_options_botao_add_cliente"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_2"
-        android:padding="@dimen/keyline_2"
-        android:text="@string/adicionar_cliente"
-        app:icon="@drawable/ic_person_add_black_24dp"
-        app:iconGravity="textStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_menu_options_titulo" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/bottom_sheet_menu_options_titulo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/keyline_2"
+            android:alpha="?alphaEmphasisHigh"
+            android:text="@string/tarefas"
+            android:textAppearance="?textAppearanceHeadline5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottom_sheet_menu_options_botao_add_produto"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_2"
-        android:padding="@dimen/keyline_2"
-        android:text="@string/adicionar_produtos"
-        app:icon="@drawable/ic_room_service_black_24dp"
-        app:iconGravity="textStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_menu_options_botao_add_cliente" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottom_sheet_menu_options_botao_add_cliente"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/keyline_2"
+            android:padding="@dimen/keyline_2"
+            android:text="@string/adicionar_cliente"
+            app:icon="@drawable/ic_person_add_black_24dp"
+            app:iconGravity="textStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_menu_options_titulo" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottom_sheet_menu_options_botao_add_pagamento"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_2"
-        android:padding="@dimen/keyline_2"
-        android:text="@string/receber_pagamento"
-        app:icon="@drawable/ic_monetization_on_black_24dp"
-        app:iconGravity="textStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_menu_options_botao_add_produto" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottom_sheet_menu_options_botao_add_produto"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/keyline_2"
+            android:padding="@dimen/keyline_2"
+            android:text="@string/adicionar_produtos"
+            app:icon="@drawable/ic_room_service_black_24dp"
+            app:iconGravity="textStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_menu_options_botao_add_cliente" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bottom_sheet_menu_options_botao_vender_produto"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/keyline_2"
-        android:padding="@dimen/keyline_2"
-        android:text="@string/vender_produto"
-        app:icon="@drawable/ic_store_black_24dp"
-        app:iconGravity="textStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_menu_options_botao_add_pagamento" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottom_sheet_menu_options_botao_add_pagamento"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/keyline_2"
+            android:padding="@dimen/keyline_2"
+            android:text="@string/receber_pagamento"
+            app:icon="@drawable/ic_monetization_on_black_24dp"
+            app:iconGravity="textStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_menu_options_botao_add_produto" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottom_sheet_menu_options_botao_vender_produto"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/keyline_2"
+            android:padding="@dimen/keyline_2"
+            android:text="@string/vender_produto"
+            app:icon="@drawable/ic_store_black_24dp"
+            app:iconGravity="textStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_menu_options_botao_add_pagamento" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
