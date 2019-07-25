@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:padding="@dimen/keyline_2"
-        android:textAppearance="@style/TextAppearance.MyTheme.Button"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+        android:textSize="20sp"
         tools:text="Josue" />
 
 </LinearLayout>
