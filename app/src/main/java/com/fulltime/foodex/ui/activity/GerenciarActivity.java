@@ -13,11 +13,15 @@ import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.helper.update.RemoveCliente;
 import com.fulltime.foodex.helper.update.RemoveProduto;
 import com.fulltime.foodex.helper.update.UpdateData;
+import com.fulltime.foodex.model.Cliente;
+import com.fulltime.foodex.model.Produto;
+import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.fragments.ListaClientesFragment;
 import com.fulltime.foodex.ui.fragments.ListaProdutosFragment;
 import com.fulltime.foodex.ui.fragments.ListaVendasFragment;
 import com.fulltime.foodex.ui.fragments.PerfilUsuarioFragment;
 import com.fulltime.foodex.ui.fragments.bottomsheet.MenuOpcoesFragments;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -43,6 +47,9 @@ public class GerenciarActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private Usuario usuario;
     private View coordinatorLayoutForSnackBar;
+    private BadgeDrawable badgeCliente;
+    private BadgeDrawable badgeProdutos;
+    private BadgeDrawable badgeVendas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +61,8 @@ public class GerenciarActivity extends AppCompatActivity {
             UpdateData.usuario(usuario);
         }
         coordinatorLayoutForSnackBar = findViewById(R.id.activity_main_coordinator_layout);
-        configuraBottomNavigation();
         configuraFloatingActionButton();
+        configuraBottomNavigation();
     }
 
     @Override
@@ -105,11 +112,10 @@ public class GerenciarActivity extends AppCompatActivity {
         new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.apagar_produto)
                 .setMessage(textoFormatado)
-                .setPositiveButton(R.string.apagar, (dialogInterface, i) -> {
-                    UpdateData.removeProduto(removeProduto.getProduto(),
-                            removeProduto.getAdapter(),
-                            removeProduto.getPosicao());
-                })
+                .setPositiveButton(R.string.apagar, (dialogInterface, i) ->
+                        UpdateData.removeProduto(removeProduto.getProduto(),
+                                removeProduto.getAdapter(),
+                                removeProduto.getPosicao()))
                 .setNegativeButton(R.string.cancelar, null)
                 .show();
     }
@@ -121,13 +127,34 @@ public class GerenciarActivity extends AppCompatActivity {
         new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.apagar_cliente)
                 .setMessage(textoFormatado)
-                .setPositiveButton(R.string.apagar, (dialogInterface, i) -> {
-                    UpdateData.removerCliente(removeCliente.getCliente(),
-                            removeCliente.getAdapter(),
-                            removeCliente.getPosicao());
-                })
+                .setPositiveButton(R.string.apagar, (dialogInterface, i) ->
+                        UpdateData.removerCliente(removeCliente.getCliente(),
+                                removeCliente.getAdapter(),
+                                removeCliente.getPosicao()))
                 .setNegativeButton(R.string.cancelar, null)
                 .show();
+    }
+
+    @Subscribe
+    public void onCreateCliente(Cliente cliente) {
+        setBadge(R.id.bottom_nav_clients_cliente, badgeCliente);
+    }
+
+    @Subscribe
+    public void onCreateProduto(Produto produto) {
+        setBadge(R.id.bottom_nav_products_produto, badgeProdutos);
+    }
+
+    @Subscribe
+    public void onCreateVenda(Venda venda) {
+        setBadge(R.id.bottom_nav_sales_venda, badgeVendas);
+    }
+
+    private void setBadge(int p, BadgeDrawable badgeCliente) {
+        if (bottomNavigationView.getSelectedItemId() != p) {
+            badgeCliente.setVisible(true);
+            badgeCliente.setNumber(badgeCliente.getNumber() + 1);
+        }
     }
 
     private void showSnackbar(int erro) {
@@ -142,29 +169,47 @@ public class GerenciarActivity extends AppCompatActivity {
 
     private void configuraBottomNavigation() {
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        configuraBadge();
+        bottomNavigationView.setSelectedItemId(itemSelectedBottonNavigation);
+        setFragment(itemSelectedBottonNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             setFragment(item.getItemId());
             return true;
         });
-        bottomNavigationView.setSelectedItemId(itemSelectedBottonNavigation);
-        setFragment(itemSelectedBottonNavigation);
     }
 
     private void setFragment(int id) {
         switch (id) {
             case R.id.bottom_nav_clients_cliente:
                 populaFragment(new ListaClientesFragment());
+                clearBadge(badgeCliente);
                 break;
             case R.id.bottom_nav_products_produto:
                 populaFragment(new ListaProdutosFragment());
+                clearBadge(badgeProdutos);
                 break;
             case R.id.bottom_nav_sales_venda:
                 populaFragment(new ListaVendasFragment());
+                clearBadge(badgeVendas);
                 break;
             case R.id.bottom_nav_user_perfil:
                 populaFragment(new PerfilUsuarioFragment(usuario));
                 break;
         }
+    }
+
+    private void configuraBadge() {
+        badgeCliente = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_clients_cliente);
+        badgeProdutos = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_products_produto);
+        badgeVendas = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_sales_venda);
+        clearBadge(badgeCliente);
+        clearBadge(badgeProdutos);
+        clearBadge(badgeVendas);
+    }
+
+    private void clearBadge(BadgeDrawable badgeCliente) {
+        badgeCliente.clearNumber();
+        badgeCliente.setVisible(false);
     }
 
     private void populaFragment(Fragment fragment) {
