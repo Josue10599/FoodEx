@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.model.Cliente;
+import com.fulltime.foodex.ui.image.ImageLoader;
 import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -103,10 +103,7 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
 
         void bindView(@NonNull Cliente cliente) {
             this.cliente = cliente;
-            imagemCliente.setImageDrawable(TextDrawable.builder()
-                    .buildRound(cliente.primeiraLetraNome()
-                                    + cliente.primeiraLetraSobrenome(),
-                            context.getResources().getColor(R.color.color_secondary)));
+            imagemCliente.setImageDrawable(new ImageLoader(context).getDrawableCliente(cliente));
             nomeCliente.setText(cliente.nomeCompleto());
             telefoneCliente.setText(cliente.getTelefone());
             devendoCliente.setText(context.getString(R.string.sifra, cliente.getValorEmDeficit()));

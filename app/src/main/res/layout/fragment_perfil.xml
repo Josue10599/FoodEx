@@ -7,13 +7,13 @@
 
     <ImageButton
         android:id="@+id/fragment_perfil_config_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="@dimen/keyline_4"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="@color/color_background"
-        android:src="@drawable/ic_settings_black_48dp"
+        android:src="@drawable/ic_more_vert_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/fragment_perfil_foto_usuario"
@@ -22,7 +22,6 @@
         android:layout_margin="25dp"
         android:contentDescription="@string/photo_perfil_usuario"
         android:elevation="33dp"
-        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,15 +42,95 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/fragment_perfil_foto_usuario">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/fragment_perfil_nome_usuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
-            android:layout_marginTop="75dp"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
-            tools:text="Nome do Usuário" />
-    </com.google.android.material.card.MaterialCardView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_perfil_nome_usuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center"
+                android:layout_marginTop="75dp"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Nome do Usuário" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fragment_perfil_dados_empresa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/keyline_2"
+                android:text="@string/dados_da_empresa"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_perfil_nome_usuario" />
+
+            <ScrollView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_perfil_dados_empresa">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/keyline_2"
+                    android:orientation="vertical">
+
+                    <ProgressBar
+                        android:id="@+id/fragment_perfil_loading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:padding="@dimen/keyline_5" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fragment_perfil_dados_empresa_nome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/keyline_2"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+                        android:textSize="20sp"
+                        android:visibility="gone"
+                        tools:text="Nome: " />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fragment_perfil_dados_empresa_telefone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/keyline_2"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+                        android:textSize="20sp"
+                        android:visibility="gone"
+                        tools:text="Telefone: " />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fragment_perfil_dados_empresa_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/keyline_2"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+                        android:textSize="20sp"
+                        android:visibility="gone"
+                        tools:text="E-mail: " />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fragment_perfil_dados_empresa_endereco"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/keyline_2"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+                        android:textSize="20sp"
+                        android:visibility="gone"
+                        tools:text="Endereço: " />
+                </LinearLayout>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
