@@ -59,4 +59,9 @@
     <string name="apagar_produto">Delete Product</string>
     <string name="apagar_cliente">Delete Client</string>
     <string name="valor_em_deficit">The customer is due</string>
+    <string name="dados_da_empresa">Company Data</string>
+    <string name="nome_da_empresa">Name: %s</string>
+    <string name="telefone_da_empresa">Phone: %s</string>
+    <string name="email_da_empresa">E-mail: %s</string>
+    <string name="endereco_da_empresa">Address: %s</string>
 </resources>
