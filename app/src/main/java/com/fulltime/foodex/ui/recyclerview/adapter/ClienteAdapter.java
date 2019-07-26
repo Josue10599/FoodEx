@@ -105,7 +105,9 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
             this.cliente = cliente;
             imagemCliente.setImageDrawable(new ImageLoader(context).getDrawableCliente(cliente));
             nomeCliente.setText(cliente.nomeCompleto());
-            telefoneCliente.setText(cliente.getTelefone());
+            String telefone = cliente.getTelefone();
+            if (telefone.isEmpty()) telefoneCliente.setVisibility(View.GONE);
+            else telefoneCliente.setText(telefone);
             devendoCliente.setText(context.getString(R.string.sifra, cliente.getValorEmDeficit()));
             if (cliente.estaDevendo())
                 devendoCliente.setTextColor(context.getResources().getColor(R.color.color_nao_pago));

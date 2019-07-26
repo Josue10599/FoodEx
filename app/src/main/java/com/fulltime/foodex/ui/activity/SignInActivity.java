@@ -34,6 +34,11 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         auth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) proximaTela(user);
         else initLogin();
@@ -55,7 +60,8 @@ public class SignInActivity extends AppCompatActivity {
 
     private void proximaTela(FirebaseUser currentUser) {
         Intent gerenciarActivity = new Intent(getApplicationContext(), GerenciarActivity.class);
-        gerenciarActivity.putExtra(USER, new Usuario(currentUser));
+        Usuario user = new Usuario(currentUser);
+        gerenciarActivity.putExtra(USER, user);
         startActivity(gerenciarActivity);
         finish();
     }

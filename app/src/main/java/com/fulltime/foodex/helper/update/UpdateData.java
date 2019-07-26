@@ -3,6 +3,7 @@ package com.fulltime.foodex.helper.update;
 import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
 import com.fulltime.foodex.model.Cliente;
+import com.fulltime.foodex.model.Empresa;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
@@ -18,6 +19,7 @@ import static com.fulltime.foodex.error.CodigoDeErro.ERRO_ADICIONAR_PRODUTO;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_ADICIONAR_VENDA;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_DELETAR_CLIENTE;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_DELETAR_PRODUTO;
+import static com.fulltime.foodex.error.CodigoDeErro.ERRO_FALHA_CONEXAO;
 
 public class UpdateData {
 
@@ -28,26 +30,40 @@ public class UpdateData {
         firestoreAdapter.adicionaUsuario(usuario);
     }
 
+    public static void getEmpresa() {
+        firestoreAdapter.getEmpresa(documentSnapshot -> {
+            Empresa empresa = documentSnapshot.toObject(Empresa.class);
+            eventBus.post(empresa);
+        }, e -> eventBus.post(ERRO_FALHA_CONEXAO));
+    }
+
     public static void listaClientes() {
         firestoreAdapter.getCliente((queryDocumentSnapshots, e) -> {
             if (requisicaoNaoEstiverVazia(queryDocumentSnapshots)) {
-                eventBus.post(new ListaCliente(queryDocumentSnapshots.toObjects(Cliente.class)));
-            }
+                ListaCliente listaCliente;
+                listaCliente = new ListaCliente(queryDocumentSnapshots.toObjects(Cliente.class));
+                eventBus.post(listaCliente);
+            } else eventBus.post(ERRO_FALHA_CONEXAO);
         });
     }
 
     public static void listaProdutos() {
         firestoreAdapter.getProdutos((queryDocumentSnapshots, e) -> {
             if (requisicaoNaoEstiverVazia(queryDocumentSnapshots)) {
-                eventBus.post(new ListaProduto(queryDocumentSnapshots.toObjects(Produto.class)));
-            }
+                ListaProduto listaProduto;
+                listaProduto = new ListaProduto(queryDocumentSnapshots.toObjects(Produto.class));
+                eventBus.post(listaProduto);
+            } else eventBus.post(ERRO_FALHA_CONEXAO);
         });
     }
 
     public static void listaVendas() {
         firestoreAdapter.getVendas((queryDocumentSnapshots, e) -> {
-            if (requisicaoNaoEstiverVazia(queryDocumentSnapshots))
-                eventBus.post(new ListaVenda(queryDocumentSnapshots.toObjects(Venda.class)));
+            if (requisicaoNaoEstiverVazia(queryDocumentSnapshots)) {
+                ListaVenda listaVenda;
+                listaVenda = new ListaVenda(queryDocumentSnapshots.toObjects(Venda.class));
+                eventBus.post(listaVenda);
+            } else eventBus.post(ERRO_FALHA_CONEXAO);
         });
     }
 

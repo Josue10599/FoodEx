@@ -105,7 +105,7 @@ public class Cliente implements Serializable {
     }
 
     public String primeiraLetraSobrenome() {
-        if (sobrenome != null) return getSobrenome().substring(0, 1).toUpperCase();
+        if (!sobrenome.isEmpty()) return getSobrenome().substring(0, 1).toUpperCase();
         return "";
     }
 

@@ -46,8 +46,8 @@ public class ImplementaProdutoFragment extends BottomSheetDialogFragment {
         if (produto.produtoPreenchido()) {
             preencheCampos();
             TextView titulo = bottomSheetAddProduto.findViewById(R.id.bottom_sheet_title_add);
-            titulo.setText(R.string.alter_produto);
-            buttonCadastrarProduto.setText(R.string.alter_produto_button);
+            titulo.setText(R.string.changing_product);
+            buttonCadastrarProduto.setText(R.string.change_product);
         }
         return bottomSheetAddProduto;
     }

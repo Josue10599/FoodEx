@@ -8,20 +8,25 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
+import static com.google.firebase.firestore.Query.Direction.DESCENDING;
+
 public class FirestoreAdapter {
     private static final String CLIENTES = "clientes";
+    private static final String CLIENTES_CAMPO_NOME = "nome";
+    private static final String CLIENTES_CAMPO_SOBRENOME = "sobrenome";
     private static final String PRODUTOS = "produtos";
     private static final String VENDAS = "vendas";
     private static final String VENDAS_CAMPO_DATA_VENDA = "dataVenda";
     private static final String USUARIO = "usuario";
+    private static final String EMPRESA = "empresa";
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -36,8 +41,15 @@ public class FirestoreAdapter {
         return new FirestoreAdapter();
     }
 
+    public void getEmpresa(OnSuccessListener<DocumentSnapshot> onSuccessListener, OnFailureListener onFailureListener) {
+        getUser().collection(EMPRESA).document().get().addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener);
+    }
+
     public void getCliente(EventListener<QuerySnapshot> eventListener) {
-        getUser().collection(CLIENTES).addSnapshotListener(eventListener);
+        getUser().collection(CLIENTES)
+                .orderBy(CLIENTES_CAMPO_NOME, DESCENDING)
+                .orderBy(CLIENTES_CAMPO_SOBRENOME, DESCENDING)
+                .addSnapshotListener(eventListener);
     }
 
     public void getProdutos(EventListener<QuerySnapshot> eventListener) {
@@ -45,7 +57,8 @@ public class FirestoreAdapter {
     }
 
     public void getVendas(EventListener<QuerySnapshot> eventListener) {
-        getUser().collection(VENDAS).orderBy(VENDAS_CAMPO_DATA_VENDA, Query.Direction.DESCENDING)
+        getUser().collection(VENDAS)
+                .orderBy(VENDAS_CAMPO_DATA_VENDA, DESCENDING)
                 .addSnapshotListener(eventListener);
     }
 

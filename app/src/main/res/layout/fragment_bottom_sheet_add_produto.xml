@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:alpha="?alphaEmphasisHigh"
-            android:text="@string/add_new_produto"
+            android:text="@string/add_new_product"
             android:textAppearance="?textAppearanceHeadline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/add_produto_nome"
+                android:hint="@string/add_product_name"
                 android:inputType="textCapWords|textAutoComplete" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +53,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/add_produto_preco"
+                android:hint="@string/add_product_value"
                 android:inputType="text|number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +70,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/add_produto_descricao"
+                android:hint="@string/description"
                 android:inputType="textAutoComplete|text|textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/keyline_2"
             android:padding="@dimen/keyline_2"
-            android:text="@string/cadastrar_produto"
+            android:text="@string/register_product"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bottom_sheet_produto_descricao" />

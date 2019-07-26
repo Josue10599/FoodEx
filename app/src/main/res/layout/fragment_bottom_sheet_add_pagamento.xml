@@ -31,8 +31,8 @@
             android:layout_marginBottom="@dimen/keyline_5"
             app:BordersSize="1dp"
             app:NoItemsFoundText="@string/nao_ha_cliente_devedor"
-            app:RevealEmptyText="@string/selecionar_cliente"
-            app:SearchHintText="@string/procurar_cliente"
+            app:RevealEmptyText="@string/select_client"
+            app:SearchHintText="@string/search_client"
             app:ShowBorders="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/add_produto_preco"
+                android:hint="@string/add_product_value"
                 android:inputType="text|number" />
 
         </com.google.android.material.textfield.TextInputLayout>

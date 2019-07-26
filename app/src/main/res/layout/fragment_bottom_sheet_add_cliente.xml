@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:alpha="?alphaEmphasisHigh"
-            android:text="@string/add_new_cliente"
+            android:text="@string/add_new_client"
             android:textAppearance="?textAppearanceHeadline5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/add_cliente_nome"
+                android:hint="@string/name"
                 android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +53,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/add_cliente_sobrenome"
+                android:hint="@string/last_name"
                 android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +70,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/add_cliente_telefone"
+                android:hint="@string/phone"
+                android:maxLength="15"
                 android:inputType="number|text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,7 +88,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/add_cliente_email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -105,7 +106,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/add_cliente_cpf"
+                android:hint="@string/cpf"
+                android:maxLength="14"
                 android:inputType="number|text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -116,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/keyline_2"
             android:padding="@dimen/keyline_2"
-            android:text="@string/cadastrar_cliente"
+            android:text="@string/register_client"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bottom_sheet_cpf" />

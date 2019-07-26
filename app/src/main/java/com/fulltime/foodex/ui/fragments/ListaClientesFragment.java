@@ -100,7 +100,7 @@ public class ListaClientesFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (Objects.requireNonNull(tab.getText()).toString().equals(Objects.requireNonNull(getContext())
-                        .getString(R.string.fragment_cliente_devedores)))
+                        .getString(R.string.debtors)))
                     clienteAdapter.setLista(devedores);
                 else clienteAdapter.setLista(todosClientes);
             }

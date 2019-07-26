@@ -19,22 +19,22 @@
 
     <item
         android:id="@+id/bottom_nav_clients_cliente"
-        android:title="@string/bottom_nav_titulo_clientes"
+        android:title="@string/customers"
         android:icon="@drawable/ic_group_person_clientes"/>
 
     <item
         android:id="@+id/bottom_nav_products_produto"
-        android:title="@string/bottom_nav_titulo_produtos"
+        android:title="@string/products"
         android:icon="@drawable/ic_bandeija_fechada"/>
 
     <item
         android:id="@+id/bottom_nav_sales_venda"
-        android:title="@string/bottom_nav_titulo_vendas"
+        android:title="@string/sales"
         android:icon="@drawable/ic_sifrao_dinheiro"/>
 
     <item
         android:id="@+id/bottom_nav_user_perfil"
-        android:title="@string/bottom_nav_titulo_perfil"
+        android:title="@string/profile"
         android:icon="@drawable/ic_perfil_usuario"/>
 
 </menu>

@@ -54,8 +54,8 @@ public class ImplementaClienteFragment extends BottomSheetDialogFragment {
 
     private void alteraInformacoesParaAlterarCliente() {
         TextView titulo = bottomSheetAdicionarCliente.findViewById(R.id.bottom_sheet_title_add);
-        titulo.setText(R.string.alter_cliente);
-        buttonCadastrar.setText(R.string.alter_cliente_button);
+        titulo.setText(R.string.changing_client);
+        buttonCadastrar.setText(R.string.change_client);
     }
 
     private void preencheCampos() {

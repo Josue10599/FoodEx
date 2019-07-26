@@ -1,6 +1,6 @@
 package com.fulltime.foodex.ui.fragments;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.firebase.ui.auth.AuthUI;
 import com.fulltime.foodex.firebase.authentication.Usuario;
+import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Empresa;
-import com.fulltime.foodex.ui.activity.SignInActivity;
+import com.fulltime.foodex.ui.fragments.dialog.EditaEmpresaFragment;
 import com.fulltime.foodex.ui.image.ImageLoader;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.Objects;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -42,16 +39,26 @@ public class PerfilUsuarioFragment extends Fragment {
         this.usuario = usuario;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        UpdateData.getEmpresa();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         perfilUsuarioFragment = inflater.inflate(layout.fragment_perfil, container, false);
-        loading = perfilUsuarioFragment.findViewById(id.fragment_perfil_loading);
-        loading.setActivated(true);
+        configuraLoading();
         configuraFotoPerfil();
         configuraNomeUsuario();
         configuraBotaoLogout();
         return perfilUsuarioFragment;
+    }
+
+    private void configuraLoading() {
+        loading = perfilUsuarioFragment.findViewById(id.fragment_perfil_loading);
+        loading.setActivated(true);
     }
 
     @Override
@@ -74,16 +81,12 @@ public class PerfilUsuarioFragment extends Fragment {
 
     private void configuraBotaoLogout() {
         ImageButton logout = perfilUsuarioFragment.findViewById(id.fragment_perfil_config_button);
-        logout.setOnClickListener(view -> logoutApp());
+        logout.setOnClickListener(view -> openDialogConfig());
     }
 
-    private void logoutApp() {
-        AuthUI.getInstance().signOut(Objects.requireNonNull(getContext())).addOnSuccessListener(aVoid -> {
-            Intent telaLogin = new Intent(getContext(), SignInActivity.class);
-            startActivity(telaLogin);
-            Objects.requireNonNull(getActivity()).finish();
-        });
-        FirebaseAuth.getInstance().signOut();
+    private void openDialogConfig() {
+        EditaEmpresaFragment editaEmpresaFragment = new EditaEmpresaFragment();
+        editaEmpresaFragment.show(getFragmentManager(), "DIALOG");
     }
 
     private void configuraNomeUsuario() {
@@ -106,10 +109,10 @@ public class PerfilUsuarioFragment extends Fragment {
         textViewEmpresaTelefone.setVisibility(VISIBLE);
         textViewEmpresaEmail.setVisibility(VISIBLE);
         textViewEmpresaEndereco.setVisibility(VISIBLE);
-        textViewEmpresaNome.setText(formataTexto(string.nome_da_empresa, empresa.getNomeEmpresa()));
-        textViewEmpresaTelefone.setText(formataTexto(string.telefone_da_empresa, empresa.getTelefoneEmpresa()));
-        textViewEmpresaEmail.setText(formataTexto(string.email_da_empresa, empresa.getEmailEmpresa()));
-        textViewEmpresaEndereco.setText(formataTexto(string.endereco_da_empresa, empresa.getEnderecoEmpresa()));
+        textViewEmpresaNome.setText(formataTexto(string.company_name, empresa.getNomeEmpresa()));
+        textViewEmpresaTelefone.setText(formataTexto(string.company_phone, empresa.getTelefoneEmpresa()));
+        textViewEmpresaEmail.setText(formataTexto(string.company_email, empresa.getEmailEmpresa()));
+        textViewEmpresaEndereco.setText(formataTexto(string.company_address, empresa.getEnderecoEmpresa()));
     }
 
     private String formataTexto(int p, String nomeEmpresa) {

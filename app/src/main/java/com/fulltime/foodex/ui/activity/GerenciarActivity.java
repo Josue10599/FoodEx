@@ -72,35 +72,35 @@ public class GerenciarActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    protected void onDestroy() {
         EventBus.getDefault().unregister(this);
-        super.onStop();
         itemSelectedBottonNavigation = bottomNavigationView.getSelectedItemId();
+        super.onDestroy();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onErroListener(int erro) {
         switch (erro) {
             case ERRO_DELETAR_CLIENTE:
-                showSnackbar(R.string.erro_delete_cliente);
+                showSnackbar(R.string.error_delete_client);
                 break;
             case ERRO_DELETAR_PRODUTO:
-                showSnackbar(R.string.erro_delete_produto);
+                showSnackbar(R.string.error_delete_product);
                 break;
             case ERRO_ADICIONAR_CLIENTE:
-                showSnackbar(R.string.erro_add_cliente);
+                showSnackbar(R.string.error_add_client);
                 break;
             case ERRO_ADICIONAR_PAGAMENTO:
-                showSnackbar(R.string.erro_add_pagamento);
+                showSnackbar(R.string.error_add_pay);
                 break;
             case ERRO_ADICIONAR_PRODUTO:
-                showSnackbar(R.string.erro_add_produto);
+                showSnackbar(R.string.error_add_product);
                 break;
             case ERRO_ADICIONAR_VENDA:
-                showSnackbar(R.string.erro_add_venda);
+                showSnackbar(R.string.error_add_sale);
                 break;
             case ERRO_FALHA_CONEXAO:
-                showSnackbar(R.string.erro_falha_conexao);
+                showSnackbar(R.string.error_connect);
                 break;
         }
     }
@@ -110,13 +110,13 @@ public class GerenciarActivity extends AppCompatActivity {
         String dadosProduto = removeProduto.getProduto().getNome() + " (" + removeProduto.getProduto().getDescricao() + ")";
         String textoFormatado = String.format(getString(R.string.deseja_apagar), dadosProduto);
         new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.apagar_produto)
+                .setTitle(R.string.delete_product)
                 .setMessage(textoFormatado)
-                .setPositiveButton(R.string.apagar, (dialogInterface, i) ->
+                .setPositiveButton(R.string.delete, (dialogInterface, i) ->
                         UpdateData.removeProduto(removeProduto.getProduto(),
                                 removeProduto.getAdapter(),
                                 removeProduto.getPosicao()))
-                .setNegativeButton(R.string.cancelar, null)
+                .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 
@@ -125,13 +125,13 @@ public class GerenciarActivity extends AppCompatActivity {
         String textoFormatado = String.format(getString(R.string.deseja_apagar),
                 removeCliente.getCliente().nomeCompleto());
         new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.apagar_cliente)
+                .setTitle(R.string.delete_client)
                 .setMessage(textoFormatado)
-                .setPositiveButton(R.string.apagar, (dialogInterface, i) ->
+                .setPositiveButton(R.string.delete, (dialogInterface, i) ->
                         UpdateData.removerCliente(removeCliente.getCliente(),
                                 removeCliente.getAdapter(),
                                 removeCliente.getPosicao()))
-                .setNegativeButton(R.string.cancelar, null)
+                .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 

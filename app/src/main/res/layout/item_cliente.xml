@@ -18,7 +18,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="@dimen/keyline_4"
-            android:contentDescription="@string/item_cliente_foto"
+            android:contentDescription="@string/client_photo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintCircleRadius="@dimen/keyline_5"
             app:layout_constraintStart_toStartOf="parent"
