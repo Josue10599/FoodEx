@@ -1,67 +1,100 @@
 <resources>
+
+    <!--All-->
+
     <string name="app_name" translatable="false">FoodEx</string>
-    <string name="bottom_nav_titulo_clientes">Customers</string>
-    <string name="bottom_nav_titulo_produtos">Products</string>
-    <string name="bottom_nav_titulo_vendas">Sales</string>
-    <string name="bottom_nav_titulo_perfil">Profile</string>
-    <string name="fragment_cliente_todos">All</string>
-    <string name="fragment_cliente_devedores">Debtors</string>
-    <string name="item_cliente_foto">User photo.</string>
-    <string name="adicionar_cliente">Add Client</string>
-    <string name="adicionar_produtos">Add Product</string>
-    <string name="add_new_cliente">Adding Client</string>
-    <string name="add_cliente_nome">Name</string>
-    <string name="add_cliente_telefone">Phone</string>
-    <string name="add_cliente_cpf" translatable="false">CPF</string>
-    <string name="add_cliente_sobrenome">Last Name</string>
-    <string name="add_cliente_email" translatable="false">E-mail</string>
-    <string name="cadastrar_cliente">Register customer</string>
-    <string name="alter_cliente">Changing Client</string>
-    <string name="alter_cliente_button">Change Client</string>
-    <string name="vender_produto">Make a sale</string>
-    <string name="receber_pagamento">Receive money</string>
-    <string name="tarefas">Tasks</string>
-    <string name="add_new_produto">Adding Product</string>
-    <string name="add_produto_nome">Product\'s name</string>
-    <string name="add_produto_preco">Product value</string>
-    <string name="error_campo_obrigatorio">Required field</string>
-    <string name="cadastrar_produto">Register Product</string>
-    <string name="add_produto_descricao">Description</string>
-    <string name="produto_sem_descricao">Product without description.</string>
-    <string name="add_new_venda">Adding Sale</string>
+    <string name="all">All</string>
+    <string name="debtors">Debtors</string>
+    <string name="settings">Settings</string>
+    <string name="tasks">Tasks</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="checkout">Checkout</string>
     <string name="sifra">R$ %s</string>
     <string name="plus" translatable="false">+</string>
     <string name="subtract" translatable="false">-</string>
-    <string name="nenhum_cliente_encontrado">No customer found.</string>
-    <string name="selecionar_cliente">Select customer</string>
-    <string name="procurar_cliente">Search customer</string>
-    <string name="selecionar_produto">Select product</string>
-    <string name="nenhum_produto_encontrado">No product found.</string>
-    <string name="procurar_produto">Search product</string>
-    <string name="venda_paga">Did the customer pay?</string>
-    <string name="concluir_venda">Checkout</string>
-    <string name="nao_ha_cliente_devedor">No customer is owing!</string>
-    <string name="alter_produto">Changing Product</string>
-    <string name="alter_produto_button">Change Product</string>
+
+    <!--Bottom Navigation-->
+
+    <string name="customers">Customers</string>
+    <string name="products">Products</string>
+    <string name="sales">Sales</string>
+    <string name="profile">Profile</string>
+
+    <!--Customer-->
+
+    <string name="client_photo">Customer photo.</string>
+    <string name="add_client">Add Client</string>
+    <string name="add_new_client">Adding Client</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="cpf" translatable="false">CPF</string>
+    <string name="last_name">Last Name</string>
+    <string name="email" translatable="false">E-mail</string>
+    <string name="register_client">Register customer</string>
+    <string name="changing_client">Changing Client</string>
+    <string name="delete_client">Delete Client</string>
+    <string name="change_client">Change Client</string>
+
+    <!--Product-->
+
+    <string name="delete_product">Delete Product</string>
+    <string name="add_product">Add Product</string>
+    <string name="add_product_name">Product\'s name</string>
+    <string name="add_new_product">Adding Product</string>
+    <string name="add_product_value">Product value</string>
+    <string name="register_product">Register Product</string>
+    <string name="description">Description</string>
+    <string name="produto_sem_descricao">Product without description.</string>
+    <string name="changing_product">Changing Product</string>
+    <string name="change_product">Change Product</string>
+
+    <!--Sale-->
+
+    <string name="vender_produto">Make a sale</string>
+    <string name="add_new_sale">Adding Sale</string>
+    <string name="no_client_found">No customer found.</string>
+    <string name="select_client">Select customer</string>
+    <string name="search_client">Search customer</string>
+    <string name="no_product_found">No product found.</string>
+    <string name="select_product">Select product</string>
+    <string name="search_product">Search product</string>
+
+    <!--Payment-->
+
     <string name="add_new_pagamento">Add Payment</string>
-    <string name="erro_delete_cliente">Error deleting client, please try again later.</string>
-    <string name="erro_delete_produto">Error deleting product, please try again later.</string>
-    <string name="erro_add_produto">Error adding product, please try again later.</string>
-    <string name="erro_add_pagamento">Error adding payment, please try again later.</string>
-    <string name="erro_add_cliente">Error adding client, please try again later.</string>
-    <string name="erro_add_venda">Error adding sales, please try again later.</string>
-    <string name="erro_falha_conexao">Error, failed to connect to server.</string>
-    <string name="photo_perfil_usuario">Profile picture.</string>
-    <string name="entre_e_gerencie">Manage Your Sales</string>
+    <string name="receber_pagamento">Receive money</string>
+    <string name="venda_paga">Did the customer pay?</string>
+    <string name="nao_ha_cliente_devedor">No customer is owing!</string>
+
+    <!--Error-->
+
+    <string name="error_campo_obrigatorio">Required field</string>
+    <string name="error_delete_client">Error deleting client, please try again later.</string>
+    <string name="error_delete_product">Error deleting product, please try again later.</string>
+    <string name="error_add_product">Error adding product, please try again later.</string>
+    <string name="error_add_pay">Error adding payment, please try again later.</string>
+    <string name="error_add_client">Error adding client, please try again later.</string>
+    <string name="error_add_sale">Error adding sales, please try again later.</string>
+    <string name="error_connect">Error, failed to connect to server.</string>
+
+    <!--Profile-->
+
+    <string name="profile_picture">Profile picture.</string>
+    <string name="manage_your_sales">Manage Your Sales</string>
     <string name="deseja_apagar">Want to delete: %s</string>
-    <string name="apagar">Delete</string>
-    <string name="cancelar">Cancel</string>
-    <string name="apagar_produto">Delete Product</string>
-    <string name="apagar_cliente">Delete Client</string>
     <string name="valor_em_deficit">The customer is due</string>
-    <string name="dados_da_empresa">Company Data</string>
-    <string name="nome_da_empresa">Name: %s</string>
-    <string name="telefone_da_empresa">Phone: %s</string>
-    <string name="email_da_empresa">E-mail: %s</string>
-    <string name="endereco_da_empresa">Address: %s</string>
+    <string name="company_data">Company Data</string>
+    <string name="company_name">Name: %s</string>
+    <string name="company_phone">Phone: %s</string>
+    <string name="company_email">E-mail: %s</string>
+    <string name="company_address">Address: %s</string>
+    <string name="change_endereco">Change Address</string>
+    <string name="change_email">Change E-mail</string>
+    <string name="change_name">Change Name</string>
+    <string name="change_phone">Change Phone</string>
+    <string name="endereco">Address</string>
+    <string name="logout">Logout</string>
+    <string name="save">Save</string>
+
 </resources>
