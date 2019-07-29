@@ -96,5 +96,6 @@
     <string name="endereco">Address</string>
     <string name="logout">Logout</string>
     <string name="save">Save</string>
+    <string name="required_field">This field must not start with the space and must be filled in.</string>
 
 </resources>

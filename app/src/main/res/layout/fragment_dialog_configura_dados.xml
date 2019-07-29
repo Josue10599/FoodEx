@@ -142,7 +142,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragment_dialog_salvar"
+            android:id="@+id/fragment_dialog_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/keyline_4"
@@ -164,7 +164,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_dialog_salvar" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_dialog_save" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

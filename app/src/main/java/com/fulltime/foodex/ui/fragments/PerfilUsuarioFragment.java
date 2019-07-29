@@ -1,6 +1,5 @@
 package com.fulltime.foodex.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,15 +33,10 @@ public class PerfilUsuarioFragment extends Fragment {
     private final Usuario usuario;
     private View perfilUsuarioFragment;
     private ProgressBar loading;
+    private Empresa empresa = new Empresa();
 
     public PerfilUsuarioFragment(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        UpdateData.getEmpresa();
     }
 
     @Nullable
@@ -53,6 +47,7 @@ public class PerfilUsuarioFragment extends Fragment {
         configuraFotoPerfil();
         configuraNomeUsuario();
         configuraBotaoLogout();
+        UpdateData.getEmpresa();
         return perfilUsuarioFragment;
     }
 
@@ -75,7 +70,8 @@ public class PerfilUsuarioFragment extends Fragment {
 
     @Subscribe
     public void getDadosEmpresa(Empresa empresa) {
-        configuraDadosDaEmpresa(empresa);
+        this.empresa = empresa;
+        configuraDadosDaEmpresa();
         loading.setVisibility(GONE);
     }
 
@@ -85,7 +81,7 @@ public class PerfilUsuarioFragment extends Fragment {
     }
 
     private void openDialogConfig() {
-        EditaEmpresaFragment editaEmpresaFragment = new EditaEmpresaFragment();
+        EditaEmpresaFragment editaEmpresaFragment = new EditaEmpresaFragment(empresa);
         editaEmpresaFragment.show(getFragmentManager(), "DIALOG");
     }
 
@@ -100,7 +96,7 @@ public class PerfilUsuarioFragment extends Fragment {
         new ImageLoader(getContext()).getPhotoUsuario(usuario, fotoPerfil);
     }
 
-    private void configuraDadosDaEmpresa(Empresa empresa) {
+    private void configuraDadosDaEmpresa() {
         MaterialTextView textViewEmpresaNome = perfilUsuarioFragment.findViewById(id.fragment_perfil_dados_empresa_nome);
         MaterialTextView textViewEmpresaTelefone = perfilUsuarioFragment.findViewById(id.fragment_perfil_dados_empresa_telefone);
         MaterialTextView textViewEmpresaEmail = perfilUsuarioFragment.findViewById(id.fragment_perfil_dados_empresa_email);
