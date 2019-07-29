@@ -1,6 +1,5 @@
 package com.fulltime.foodex.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 
@@ -40,12 +38,7 @@ public class ListaClientesFragment extends Fragment {
 
     private List<Cliente> todosClientes = new ArrayList<>();
     private List<Cliente> devedores = new ArrayList<>();
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        UpdateData.listaClientes();
-    }
+    private TabLayout tabLayoutMenuCliente;
 
     @Nullable
     @Override
@@ -54,6 +47,7 @@ public class ListaClientesFragment extends Fragment {
         configuraSwipe(clientView);
         configuraTabMenu(clientView);
         configuraRecyclerView(clientView);
+        UpdateData.listaTodosClientes();
         return clientView;
     }
 
@@ -72,35 +66,42 @@ public class ListaClientesFragment extends Fragment {
     @Subscribe
     public void onCreateCliente(Cliente cliente) {
         swipe.setRefreshing(false);
-        clienteAdapter.insereCliente(cliente);
+        if (allClients()) {
+            todosClientes.add(cliente);
+            clienteAdapter.insereCliente(cliente);
+        }
     }
 
     @Subscribe
     public void onGetListaClientes(ListaCliente listaCliente) {
-        swipe.setRefreshing(false);
         atualizaListas(listaCliente);
     }
 
-    private void atualizaListas(ListaCliente listaCliente) {
+    private void atualizaListas(@NonNull ListaCliente listaCliente) {
         List<Cliente> clientes = listaCliente.getClientes();
-        clienteAdapter.setLista(clientes);
+        if (clientes.size() != 0) swipe.setRefreshing(false);
         todosClientes = clientes;
         devedores = filtraDevedores(todosClientes);
+        if (allClients()) clienteAdapter.setLista(todosClientes);
+        else clienteAdapter.setLista(devedores);
+    }
+
+    private boolean allClients() {
+        return tabLayoutMenuCliente.getSelectedTabPosition() == 0;
     }
 
     private void configuraSwipe(View view) {
         swipe = view.findViewById(R.id.swipe_refresh);
         swipe.setRefreshing(true);
-        swipe.setOnRefreshListener(UpdateData::listaClientes);
+        swipe.setOnRefreshListener(UpdateData::listaTodosClientes);
     }
 
     private void configuraTabMenu(View clientView) {
-        TabLayout tabLayoutMenuCliente = clientView.findViewById(R.id.fragment_cliente_tab_menu);
+        tabLayoutMenuCliente = clientView.findViewById(R.id.fragment_cliente_tab_menu);
         tabLayoutMenuCliente.addOnTabSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (Objects.requireNonNull(tab.getText()).toString().equals(Objects.requireNonNull(getContext())
-                        .getString(R.string.debtors)))
+                if (tab.getPosition() == 1)
                     clienteAdapter.setLista(devedores);
                 else clienteAdapter.setLista(todosClientes);
             }

@@ -1,6 +1,5 @@
 package com.fulltime.foodex.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,8 @@ import com.fulltime.foodex.ui.recyclerview.callback.ItemTouchCallback;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
+
 import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 
 public class ListaProdutosFragment extends Fragment {
@@ -32,18 +33,13 @@ public class ListaProdutosFragment extends Fragment {
     private ProdutoAdapter produtoAdapter = new ProdutoAdapter();
     private SwipeRefreshLayout swipe;
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        UpdateData.listaProdutos();
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View produtosView = inflater.inflate(R.layout.fragment_produtos, container, false);
         configuraSwipe(produtosView);
         configuraRecyclerView(produtosView);
+        UpdateData.listaProdutos();
         return produtosView;
     }
 
@@ -67,8 +63,9 @@ public class ListaProdutosFragment extends Fragment {
 
     @Subscribe
     public void onGetListaProduto(ListaProduto listaProduto) {
-        swipe.setRefreshing(false);
-        produtoAdapter.setListaProduto(listaProduto.getProdutos());
+        List<Produto> produtos = listaProduto.getProdutos();
+        if (produtos.size() > 0) swipe.setRefreshing(false);
+        produtoAdapter.setListaProduto(produtos);
     }
 
     private void configuraSwipe(View clientView) {

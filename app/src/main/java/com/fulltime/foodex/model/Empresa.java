@@ -1,5 +1,7 @@
 package com.fulltime.foodex.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -9,7 +11,8 @@ import java.util.UUID;
 
 public class Empresa implements Serializable {
 
-    private final String uid;
+    public static final String VAZIO = "...";
+    private final String id;
     private Date dataCriacaoEmpresa;
     private String nomeEmpresa;
     private String telefoneEmpresa;
@@ -17,12 +20,16 @@ public class Empresa implements Serializable {
     private String enderecoEmpresa;
 
     public Empresa() {
-        this.uid = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         this.dataCriacaoEmpresa = Calendar.getInstance().getTime();
+        nomeEmpresa = VAZIO;
+        telefoneEmpresa = VAZIO;
+        emailEmpresa = VAZIO;
+        enderecoEmpresa = VAZIO;
     }
 
-    public String getUid() {
-        return uid;
+    public String getId() {
+        return id;
     }
 
     public String getNomeEmpresa() {
@@ -71,5 +78,9 @@ public class Empresa implements Serializable {
 
     public String anoCriacaoEmpresa() {
         return DateFormat.getDateInstance(DateFormat.YEAR_FIELD).format(dataCriacaoEmpresa);
+    }
+
+    private boolean isNotEmpty(@NonNull String string) {
+        return !string.equals(VAZIO) && !string.equals("");
     }
 }

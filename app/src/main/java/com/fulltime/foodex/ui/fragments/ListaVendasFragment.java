@@ -1,6 +1,5 @@
 package com.fulltime.foodex.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,16 +21,12 @@ import com.fulltime.foodex.ui.recyclerview.adapter.VendasAdapter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
+
 public class ListaVendasFragment extends Fragment {
 
     private final VendasAdapter vendasAdapter = new VendasAdapter();
     private SwipeRefreshLayout swipe;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        UpdateData.listaVendas();
-    }
 
     @Nullable
     @Override
@@ -39,6 +34,7 @@ public class ListaVendasFragment extends Fragment {
         View vendasView = inflater.inflate(R.layout.fragment_vendas, container, false);
         configuraSwipe(vendasView);
         configurarRecyclerView(vendasView);
+        UpdateData.listaVendas();
         return vendasView;
     }
 
@@ -58,12 +54,14 @@ public class ListaVendasFragment extends Fragment {
     public void onCreateVenda(Venda venda) {
         swipe.setRefreshing(false);
         vendasAdapter.adicionaVenda(venda);
+        UpdateData.listaVendas();
     }
 
     @Subscribe
     public void onGetListaVenda(ListaVenda listaVenda) {
-        swipe.setRefreshing(false);
-        vendasAdapter.setLista(listaVenda.getVendas());
+        List<Venda> vendas = listaVenda.getVendas();
+        if (vendas.size() > 0) swipe.setRefreshing(false);
+        vendasAdapter.setLista(vendas);
     }
 
     private void configuraSwipe(View view) {

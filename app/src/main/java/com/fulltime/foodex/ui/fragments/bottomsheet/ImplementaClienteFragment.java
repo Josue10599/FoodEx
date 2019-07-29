@@ -113,10 +113,11 @@ public class ImplementaClienteFragment extends BottomSheetDialogFragment {
 
     private void getTextoNome() {
         String textoNome = Objects.requireNonNull(campoNome.getEditText()).getText().toString();
-        if (textoNome.matches("([A-Z])\\w+.+")) {
+        if (textoNome.matches("\\w+")) {
             cliente.setNome(textoNome);
-        }
-        campoNome.setError("Campo Obrigatório");
+            campoNome.setErrorEnabled(false);
+        } else campoNome.setErrorEnabled(true);
+        campoNome.setError(getString(R.string.required_field));
     }
 
     private void configuraBotao() {

@@ -2,13 +2,13 @@ package com.fulltime.foodex.firebase.firestore;
 
 import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.model.Cliente;
+import com.fulltime.foodex.model.Empresa;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -16,6 +16,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
+import static com.google.firebase.firestore.Query.Direction.ASCENDING;
 import static com.google.firebase.firestore.Query.Direction.DESCENDING;
 
 public class FirestoreAdapter {
@@ -41,14 +42,14 @@ public class FirestoreAdapter {
         return new FirestoreAdapter();
     }
 
-    public void getEmpresa(OnSuccessListener<DocumentSnapshot> onSuccessListener, OnFailureListener onFailureListener) {
-        getUser().collection(EMPRESA).document().get().addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener);
+    public void getEmpresa(EventListener<QuerySnapshot> eventListener) {
+        getUser().collection(EMPRESA).addSnapshotListener(eventListener);
     }
 
-    public void getCliente(EventListener<QuerySnapshot> eventListener) {
+    public void getAllCliente(EventListener<QuerySnapshot> eventListener) {
         getUser().collection(CLIENTES)
-                .orderBy(CLIENTES_CAMPO_NOME, DESCENDING)
-                .orderBy(CLIENTES_CAMPO_SOBRENOME, DESCENDING)
+                .orderBy(CLIENTES_CAMPO_NOME, ASCENDING)
+                .orderBy(CLIENTES_CAMPO_SOBRENOME, ASCENDING)
                 .addSnapshotListener(eventListener);
     }
 
@@ -63,26 +64,28 @@ public class FirestoreAdapter {
     }
 
     public void setCliente(Cliente cliente,
-                           OnSuccessListener<Void> onSuccessListener,
                            OnFailureListener onFailureListener) {
         getDocument(CLIENTES, cliente.getId())
                 .set(cliente)
-                .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
 
     public void setProduto(Produto produto,
-                           OnSuccessListener<Void> onSuccessListener,
                            OnFailureListener onFailureListener) {
         getDocument(PRODUTOS, produto.getId()).set(produto)
-                .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
 
     public void setVenda(Venda venda,
-                         OnSuccessListener<Void> onSuccessListener,
                          OnFailureListener onFailureListener) {
         getDocument(VENDAS, venda.getId()).set(venda)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    public void setEmpresa(Empresa empresa,
+                           OnSuccessListener<Void> onSuccessListener,
+                           OnFailureListener onFailureListener) {
+        getDocument(EMPRESA, empresa.getId()).set(empresa)
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }

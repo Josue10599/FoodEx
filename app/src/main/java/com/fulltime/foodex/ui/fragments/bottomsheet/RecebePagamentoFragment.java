@@ -45,7 +45,7 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         adapterClientes = new SearchableSpinnerAdapter(context, clientesDevedores);
-        UpdateData.listaClientes();
+        UpdateData.listaTodosClientes();
     }
 
     @Nullable

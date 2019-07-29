@@ -8,9 +8,15 @@ import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
 import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nullable;
 
@@ -30,59 +36,107 @@ public class UpdateData {
         firestoreAdapter.adicionaUsuario(usuario);
     }
 
-    public static void getEmpresa() {
-        firestoreAdapter.getEmpresa(documentSnapshot -> {
-            Empresa empresa = documentSnapshot.toObject(Empresa.class);
-            eventBus.post(empresa);
-        }, e -> eventBus.post(ERRO_FALHA_CONEXAO));
+    public static void setEmpresa(Empresa empresa, OnSuccessListener<Empresa> onSuccessListener) {
+        firestoreAdapter.setEmpresa(empresa,
+                aVoid -> {
+                    eventBus.post(empresa);
+                    onSuccessListener.onSuccess(empresa);
+                }, e -> eventBus.post(ERRO_FALHA_CONEXAO));
     }
 
-    public static void listaClientes() {
-        firestoreAdapter.getCliente((queryDocumentSnapshots, e) -> {
-            if (requisicaoNaoEstiverVazia(queryDocumentSnapshots)) {
-                ListaCliente listaCliente;
-                listaCliente = new ListaCliente(queryDocumentSnapshots.toObjects(Cliente.class));
+    public static void setEmpresa(Empresa empresa) {
+        firestoreAdapter.setEmpresa(empresa,
+                aVoid -> eventBus.post(empresa),
+                e -> eventBus.post(ERRO_FALHA_CONEXAO));
+    }
+
+    public static void getEmpresa() {
+        firestoreAdapter.getEmpresa((queryDocumentSnapshots, e) -> {
+            if (e != null) {
+                eventBus.post(ERRO_FALHA_CONEXAO);
+                return;
+            }
+            if (requisicaoNaoEstiverVazia(queryDocumentSnapshots))
+                for (Empresa empresa : queryDocumentSnapshots.toObjects(Empresa.class))
+                    eventBus.post(empresa);
+        });
+    }
+
+    public static void listaTodosClientes() {
+        firestoreAdapter.getAllCliente((querySnapshot, e) -> {
+            if (e != null) {
+                eventBus.post(ERRO_FALHA_CONEXAO);
+                return;
+            }
+            if (requisicaoNaoEstiverVazia(querySnapshot)) {
+                List<Cliente> list = new ArrayList<>();
+                for (DocumentSnapshot doc : querySnapshot) {
+                    if (doc.exists()) {
+                        Cliente cliente = doc.toObject(Cliente.class);
+                        list.add(cliente);
+                    }
+                }
+                ListaCliente listaCliente = new ListaCliente(list);
                 eventBus.post(listaCliente);
-            } else eventBus.post(ERRO_FALHA_CONEXAO);
+            }
         });
     }
 
     public static void listaProdutos() {
-        firestoreAdapter.getProdutos((queryDocumentSnapshots, e) -> {
-            if (requisicaoNaoEstiverVazia(queryDocumentSnapshots)) {
-                ListaProduto listaProduto;
-                listaProduto = new ListaProduto(queryDocumentSnapshots.toObjects(Produto.class));
+        firestoreAdapter.getProdutos((querySnapshot, e) -> {
+            if (e != null) {
+                eventBus.post(ERRO_FALHA_CONEXAO);
+                return;
+            }
+            if (requisicaoNaoEstiverVazia(querySnapshot)) {
+                List<Produto> list = new ArrayList<>();
+                for (DocumentSnapshot doc : querySnapshot) {
+                    if (doc.exists()) {
+                        Produto produto = doc.toObject(Produto.class);
+                        list.add(produto);
+                    }
+                }
+                ListaProduto listaProduto = new ListaProduto(list);
                 eventBus.post(listaProduto);
-            } else eventBus.post(ERRO_FALHA_CONEXAO);
+            }
         });
     }
 
     public static void listaVendas() {
-        firestoreAdapter.getVendas((queryDocumentSnapshots, e) -> {
-            if (requisicaoNaoEstiverVazia(queryDocumentSnapshots)) {
-                ListaVenda listaVenda;
-                listaVenda = new ListaVenda(queryDocumentSnapshots.toObjects(Venda.class));
+        firestoreAdapter.getVendas((querySnapshot, e) -> {
+            if (e != null) {
+                eventBus.post(ERRO_FALHA_CONEXAO);
+                return;
+            }
+            if (requisicaoNaoEstiverVazia(querySnapshot)) {
+                List<Venda> vendas = new ArrayList<>();
+                for (QueryDocumentSnapshot doc : querySnapshot) {
+                    if (doc.exists()) {
+                        Venda venda = doc.toObject(Venda.class);
+                        vendas.add(venda);
+                    }
+                }
+                ListaVenda listaVenda = new ListaVenda(vendas);
                 eventBus.post(listaVenda);
-            } else eventBus.post(ERRO_FALHA_CONEXAO);
+            }
         });
     }
 
     public static void atualizaVenda(final Venda venda) {
         firestoreAdapter.setVenda(venda,
-                aVoid -> eventBus.post(venda),
                 e -> eventBus.post(ERRO_ADICIONAR_VENDA));
+        eventBus.post(venda);
     }
 
     public static void atualizaProduto(final Produto produto) {
         firestoreAdapter.setProduto(produto,
-                aVoid -> eventBus.post(produto),
                 e -> eventBus.post(ERRO_ADICIONAR_PRODUTO));
+        eventBus.post(produto);
     }
 
     public static void atualizaCliente(final Cliente cliente) {
-        firestoreAdapter.setCliente(cliente,
-                aVoid -> eventBus.post(cliente),
-                e -> eventBus.post(ERRO_ADICIONAR_CLIENTE));
+        firestoreAdapter.setCliente(cliente, e -> eventBus.post(ERRO_ADICIONAR_CLIENTE));
+        eventBus.post(cliente);
     }
 
     public static void removerCliente(Cliente cliente, ClienteAdapter adapter, final int posicao) {
@@ -97,7 +151,8 @@ public class UpdateData {
                 e -> eventBus.post(ERRO_DELETAR_PRODUTO));
     }
 
-    private static boolean requisicaoNaoEstiverVazia(@Nullable QuerySnapshot queryDocumentSnapshots) {
+    private static boolean requisicaoNaoEstiverVazia(@Nullable QuerySnapshot
+                                                             queryDocumentSnapshots) {
         return queryDocumentSnapshots != null;
     }
 }

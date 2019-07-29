@@ -37,6 +37,8 @@ import gr.escsoft.michaelprimez.searchablespinner.interfaces.OnItemSelectedListe
 import static android.view.View.VISIBLE;
 
 public class ImplementaVendaFragment extends BottomSheetDialogFragment {
+    private static final int MIN_QTD = 1;
+    private static final int MAX_QTD = 1000;
     private final ArrayList<Produto> produtosCadastrados = new ArrayList<>();
     private final ArrayList<Cliente> clientesCadastrados = new ArrayList<>();
 
@@ -60,7 +62,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        UpdateData.listaClientes();
+        UpdateData.listaTodosClientes();
         UpdateData.listaProdutos();
         adapterClientes = new SearchableSpinnerAdapter(context, clientesCadastrados);
         adapterProdutos = new SearchableSpinnerAdapter(context, produtosCadastrados);
@@ -109,6 +111,7 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
         configuraBotaoDecrementa(bottomSheetAdicionarVenda);
         configuraSwitchEstadoVenda(bottomSheetAdicionarVenda);
         configuraBotaoCadastrar(bottomSheetAdicionarVenda);
+        toogleButton();
     }
 
     private void configuraBotaoCadastrar(View bottomSheetAdicionarVenda) {
@@ -200,9 +203,10 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
         botaoIncrementa = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_incrementar_quantidade);
         botaoIncrementa.setOnClickListener(v -> {
-            if (quantidade < 1000) quantidade++;
+            if (quantidade < MAX_QTD) quantidade++;
             textViewQuantidade.setText(String.valueOf(quantidade));
             calculaValor();
+            toogleButton();
         });
     }
 
@@ -210,10 +214,18 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
         botaoDecrementa = bottomSheetAdicionarVenda.
                 findViewById(R.id.bottom_sheet_add_venda_decrementar_quantidade);
         botaoDecrementa.setOnClickListener(v -> {
-            if (quantidade > 1) quantidade--;
+            if (quantidade > MIN_QTD) quantidade--;
             textViewQuantidade.setText(String.valueOf(quantidade));
             calculaValor();
+            toogleButton();
         });
+    }
+
+    private void toogleButton() {
+        if (quantidade == MIN_QTD) botaoDecrementa.setEnabled(false);
+        else botaoDecrementa.setEnabled(true);
+        if (quantidade == MAX_QTD) botaoIncrementa.setEnabled(false);
+        else botaoIncrementa.setEnabled(true);
     }
 
     private void calculaValor() {
