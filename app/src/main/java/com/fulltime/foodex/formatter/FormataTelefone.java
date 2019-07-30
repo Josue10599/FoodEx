@@ -16,6 +16,8 @@ public class FormataTelefone implements View.OnFocusChangeListener {
             if (telefoneDigitado.matches(regex)) {
                 telefoneDigitadoFormatado = telefoneDigitado
                         .replaceAll(regex, "($1) $2$3-$4");
+            } else {
+                telefoneDigitadoFormatado = "";
             }
         }
         v.setText(telefoneDigitadoFormatado);
