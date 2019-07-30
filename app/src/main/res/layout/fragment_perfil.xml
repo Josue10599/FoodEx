@@ -54,6 +54,7 @@
                 android:layout_marginTop="75dp"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
+                app:layout_constraintBottom_toTopOf="@id/fragment_perfil_dados_empresa"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -66,13 +67,31 @@
                 android:layout_marginTop="@dimen/keyline_2"
                 android:text="@string/company_data"
                 android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+                app:layout_constraintBottom_toTopOf="@id/fragment_perfil_scroll"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_perfil_nome_usuario" />
 
-            <ScrollView
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_perfil_button_add_business"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/keyline_4"
+                android:text="@string/add_corporation"
+                android:visibility="gone"
+                app:icon="@drawable/ic_business_black_24dp"
+                app:iconGravity="start"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_perfil_dados_empresa" />
+
+            <ScrollView
+                android:id="@+id/fragment_perfil_scroll"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_perfil_dados_empresa">
@@ -81,6 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/keyline_2"
+                    android:layout_marginBottom="@dimen/keyline_2"
                     android:orientation="vertical">
 
                     <ProgressBar
@@ -91,44 +111,107 @@
                         android:padding="@dimen/keyline_5" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fragment_perfil_nome_empresa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_business_black_24dp"
+                        android:drawableEnd="@drawable/ic_business_black_24dp"
+                        android:padding="@dimen/keyline_2"
+                        android:text="@string/company_name"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+                        android:textSize="20sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/fragment_perfil_dados_empresa_nome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="?colorSecondary"
                         android:padding="@dimen/keyline_2"
+                        android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.MyTheme.Body1"
                         android:textSize="20sp"
+                        android:textStyle="bold"
                         android:visibility="gone"
-                        tools:text="Nome: " />
+                        tools:text="FoodEx Inc." />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fragment_perfil_telefone_empresa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_local_phone_black_24dp"
+                        android:drawableEnd="@drawable/ic_local_phone_black_24dp"
+                        android:padding="@dimen/keyline_2"
+                        android:text="@string/company_phone"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+                        android:textSize="20sp"
+                        android:visibility="gone" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/fragment_perfil_dados_empresa_telefone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="?colorSecondary"
                         android:padding="@dimen/keyline_2"
+                        android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.MyTheme.Body1"
                         android:textSize="20sp"
+                        android:textStyle="bold"
                         android:visibility="gone"
-                        tools:text="Telefone: " />
+                        tools:text="(11) 99123-1233" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fragment_perfil_email_empresa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_email_black_24dp"
+                        android:drawableEnd="@drawable/ic_email_black_24dp"
+                        android:padding="@dimen/keyline_2"
+                        android:text="@string/company_email"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+                        android:textSize="20sp"
+                        android:visibility="gone" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/fragment_perfil_dados_empresa_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="?colorSecondary"
                         android:padding="@dimen/keyline_2"
+                        android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.MyTheme.Body1"
                         android:textSize="20sp"
+                        android:textStyle="bold"
                         android:visibility="gone"
-                        tools:text="E-mail: " />
+                        tools:text="foodex@foodex.com" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fragment_perfil_endereco_empresa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_location_on_black_24dp"
+                        android:drawableEnd="@drawable/ic_location_on_black_24dp"
+                        android:padding="@dimen/keyline_2"
+                        android:text="@string/company_address"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+                        android:textSize="20sp"
+                        android:visibility="gone" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/fragment_perfil_dados_empresa_endereco"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="?colorSecondary"
                         android:padding="@dimen/keyline_2"
+                        android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.MyTheme.Body1"
                         android:textSize="20sp"
+                        android:textStyle="bold"
                         android:visibility="gone"
-                        tools:text="Endereço: " />
+                        tools:text="Avenida Paulista, 900 - São Paulo, Brasil" />
                 </LinearLayout>
             </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>

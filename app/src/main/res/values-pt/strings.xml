@@ -56,10 +56,9 @@
     <string name="delete_client">Apagar Cliente</string>
     <string name="valor_em_deficit">O cliente está devendo</string>
     <string name="company_data">Dados da Empresa</string>
-    <string name="company_name">Nome: %s</string>
-    <string name="company_phone">Telefone: %s</string>
-    <string name="company_email">E-mail: %s</string>
-    <string name="company_address">Endereço: %s</string>
+    <string name="company_phone">Telefone</string>
+    <string name="company_email">E-mail</string>
+    <string name="company_address">Endereço</string>
     <string name="settings">Configurações</string>
     <string name="change_email">Alterar E-mail</string>
     <string name="change_endereco">Alterar Endereco</string>
@@ -69,4 +68,6 @@
     <string name="logout">Sair</string>
     <string name="save">Salvar</string>
     <string name="required_field">Este campo não deve iniciar com o espaço e deve ser preenchido obrigatoriamente.</string>
+    <string name="add_corporation">Adicione os dados da sua empresa!</string>
+    <string name="company_name">Nome</string>
 </resources>

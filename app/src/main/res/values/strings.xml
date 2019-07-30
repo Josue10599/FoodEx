@@ -85,10 +85,10 @@
     <string name="deseja_apagar">Want to delete: %s</string>
     <string name="valor_em_deficit">The customer is due</string>
     <string name="company_data">Company Data</string>
-    <string name="company_name">Name: %s</string>
-    <string name="company_phone">Phone: %s</string>
-    <string name="company_email">E-mail: %s</string>
-    <string name="company_address">Address: %s</string>
+    <string name="company_name">Name</string>
+    <string name="company_phone">Phone</string>
+    <string name="company_email">E-mail</string>
+    <string name="company_address">Address</string>
     <string name="change_endereco">Change Address</string>
     <string name="change_email">Change E-mail</string>
     <string name="change_name">Change Name</string>
@@ -97,5 +97,6 @@
     <string name="logout">Logout</string>
     <string name="save">Save</string>
     <string name="required_field">This field must not start with the space and must be filled in.</string>
+    <string name="add_corporation">Add your business data!</string>
 
 </resources>

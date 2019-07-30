@@ -13,10 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.fulltime.foodex.firebase.authentication.Usuario;
+import com.fulltime.foodex.helper.update.FirstCorporation;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Empresa;
 import com.fulltime.foodex.ui.fragments.dialog.EditaEmpresaFragment;
 import com.fulltime.foodex.ui.image.ImageLoader;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,7 +28,6 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.fulltime.foodex.R.id;
 import static com.fulltime.foodex.R.layout;
-import static com.fulltime.foodex.R.string;
 
 public class PerfilUsuarioFragment extends Fragment {
 
@@ -46,7 +47,7 @@ public class PerfilUsuarioFragment extends Fragment {
         configuraLoading();
         configuraFotoPerfil();
         configuraNomeUsuario();
-        configuraBotaoLogout();
+        buttonBusinessConfig();
         UpdateData.getEmpresa();
         return perfilUsuarioFragment;
     }
@@ -72,12 +73,24 @@ public class PerfilUsuarioFragment extends Fragment {
     public void getDadosEmpresa(Empresa empresa) {
         this.empresa = empresa;
         configuraDadosDaEmpresa();
-        loading.setVisibility(GONE);
+        setGone(loading);
     }
 
-    private void configuraBotaoLogout() {
-        ImageButton logout = perfilUsuarioFragment.findViewById(id.fragment_perfil_config_button);
-        logout.setOnClickListener(view -> openDialogConfig());
+    @Subscribe
+    public void firstCorporation(FirstCorporation firstCorporation) {
+        setGone(loading);
+        empresa = firstCorporation.getEmpresa();
+        MaterialButton buttonAddBusiness = perfilUsuarioFragment.findViewById(id.fragment_perfil_button_add_business);
+        setVisible(buttonAddBusiness);
+        buttonAddBusiness.setOnClickListener(view -> {
+            openDialogConfig();
+            setGone(buttonAddBusiness);
+        });
+    }
+
+    private void buttonBusinessConfig() {
+        ImageButton setUpBusinessButton = perfilUsuarioFragment.findViewById(id.fragment_perfil_config_button);
+        setUpBusinessButton.setOnClickListener(view -> openDialogConfig());
     }
 
     private void openDialogConfig() {
@@ -97,21 +110,37 @@ public class PerfilUsuarioFragment extends Fragment {
     }
 
     private void configuraDadosDaEmpresa() {
+        MaterialTextView textViewNome = perfilUsuarioFragment.findViewById(id.fragment_perfil_nome_empresa);
+        MaterialTextView textViewTelefone = perfilUsuarioFragment.findViewById(id.fragment_perfil_telefone_empresa);
+        MaterialTextView textViewEmail = perfilUsuarioFragment.findViewById(id.fragment_perfil_email_empresa);
+        MaterialTextView textViewEndereco = perfilUsuarioFragment.findViewById(id.fragment_perfil_endereco_empresa);
         MaterialTextView textViewEmpresaNome = perfilUsuarioFragment.findViewById(id.fragment_perfil_dados_empresa_nome);
         MaterialTextView textViewEmpresaTelefone = perfilUsuarioFragment.findViewById(id.fragment_perfil_dados_empresa_telefone);
         MaterialTextView textViewEmpresaEmail = perfilUsuarioFragment.findViewById(id.fragment_perfil_dados_empresa_email);
         MaterialTextView textViewEmpresaEndereco = perfilUsuarioFragment.findViewById(id.fragment_perfil_dados_empresa_endereco);
-        textViewEmpresaNome.setVisibility(VISIBLE);
-        textViewEmpresaTelefone.setVisibility(VISIBLE);
-        textViewEmpresaEmail.setVisibility(VISIBLE);
-        textViewEmpresaEndereco.setVisibility(VISIBLE);
-        textViewEmpresaNome.setText(formataTexto(string.company_name, empresa.getNomeEmpresa()));
-        textViewEmpresaTelefone.setText(formataTexto(string.company_phone, empresa.getTelefoneEmpresa()));
-        textViewEmpresaEmail.setText(formataTexto(string.company_email, empresa.getEmailEmpresa()));
-        textViewEmpresaEndereco.setText(formataTexto(string.company_address, empresa.getEnderecoEmpresa()));
+        setVisible(textViewNome);
+        setVisible(textViewTelefone);
+        setVisible(textViewEmail);
+        setVisible(textViewEndereco);
+        setVisible(textViewEmpresaNome);
+        setVisible(textViewEmpresaTelefone);
+        setVisible(textViewEmpresaEmail);
+        setVisible(textViewEmpresaEndereco);
+        setDataEmpresa(textViewEmpresaNome, textViewEmpresaTelefone, textViewEmpresaEmail, textViewEmpresaEndereco);
     }
 
-    private String formataTexto(int p, String nomeEmpresa) {
-        return String.format(getString(p), nomeEmpresa);
+    private void setDataEmpresa(MaterialTextView textViewEmpresaNome, MaterialTextView textViewEmpresaTelefone, MaterialTextView textViewEmpresaEmail, MaterialTextView textViewEmpresaEndereco) {
+        textViewEmpresaNome.setText(empresa.getNomeEmpresa());
+        textViewEmpresaTelefone.setText(empresa.getTelefoneEmpresa());
+        textViewEmpresaEmail.setText(empresa.getEmailEmpresa());
+        textViewEmpresaEndereco.setText(empresa.getEnderecoEmpresa());
+    }
+
+    private void setVisible(View textViewNome) {
+        textViewNome.setVisibility(VISIBLE);
+    }
+
+    private void setGone(View buttonAddBusiness) {
+        buttonAddBusiness.setVisibility(GONE);
     }
 }
