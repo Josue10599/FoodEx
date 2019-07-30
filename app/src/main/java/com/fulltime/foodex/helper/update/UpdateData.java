@@ -10,12 +10,10 @@ import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
 import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -44,7 +42,7 @@ public class UpdateData {
                 }, e -> eventBus.post(ERRO_FALHA_CONEXAO));
     }
 
-    public static void setEmpresa(Empresa empresa) {
+    private static void setEmpresa(Empresa empresa) {
         firestoreAdapter.setEmpresa(empresa,
                 aVoid -> eventBus.post(empresa),
                 e -> eventBus.post(ERRO_FALHA_CONEXAO));
@@ -56,9 +54,15 @@ public class UpdateData {
                 eventBus.post(ERRO_FALHA_CONEXAO);
                 return;
             }
-            if (requisicaoNaoEstiverVazia(queryDocumentSnapshots))
-                for (Empresa empresa : queryDocumentSnapshots.toObjects(Empresa.class))
+            if (requisicaoNaoEstiverVazia(queryDocumentSnapshots)) {
+                List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+                if (!documents.isEmpty()) {
+                    Empresa empresa = documents.get(0).toObject(Empresa.class);
                     eventBus.post(empresa);
+                } else {
+                    eventBus.post(new FirstCorporation(new Empresa()));
+                }
+            }
         });
     }
 
@@ -69,15 +73,10 @@ public class UpdateData {
                 return;
             }
             if (requisicaoNaoEstiverVazia(querySnapshot)) {
-                List<Cliente> list = new ArrayList<>();
-                for (DocumentSnapshot doc : querySnapshot) {
-                    if (doc.exists()) {
-                        Cliente cliente = doc.toObject(Cliente.class);
-                        list.add(cliente);
-                    }
-                }
-                ListaCliente listaCliente = new ListaCliente(list);
-                eventBus.post(listaCliente);
+                if (!querySnapshot.isEmpty()) {
+                    ListaCliente listaCliente = new ListaCliente(querySnapshot.toObjects(Cliente.class));
+                    eventBus.post(listaCliente);
+                } else eventBus.post(new ListaClienteVazia());
             }
         });
     }
@@ -89,15 +88,10 @@ public class UpdateData {
                 return;
             }
             if (requisicaoNaoEstiverVazia(querySnapshot)) {
-                List<Produto> list = new ArrayList<>();
-                for (DocumentSnapshot doc : querySnapshot) {
-                    if (doc.exists()) {
-                        Produto produto = doc.toObject(Produto.class);
-                        list.add(produto);
-                    }
-                }
-                ListaProduto listaProduto = new ListaProduto(list);
-                eventBus.post(listaProduto);
+                if (!querySnapshot.isEmpty()) {
+                    ListaProduto listaProduto = new ListaProduto(querySnapshot.toObjects(Produto.class));
+                    eventBus.post(listaProduto);
+                } else eventBus.post(new ListaProdutoVazia());
             }
         });
     }
@@ -109,15 +103,10 @@ public class UpdateData {
                 return;
             }
             if (requisicaoNaoEstiverVazia(querySnapshot)) {
-                List<Venda> vendas = new ArrayList<>();
-                for (QueryDocumentSnapshot doc : querySnapshot) {
-                    if (doc.exists()) {
-                        Venda venda = doc.toObject(Venda.class);
-                        vendas.add(venda);
-                    }
-                }
-                ListaVenda listaVenda = new ListaVenda(vendas);
-                eventBus.post(listaVenda);
+                if (!querySnapshot.isEmpty()) {
+                    ListaVenda listaVenda = new ListaVenda(querySnapshot.toObjects(Venda.class));
+                    eventBus.post(listaVenda);
+                } else eventBus.post(new ListaVendaVazia());
             }
         });
     }

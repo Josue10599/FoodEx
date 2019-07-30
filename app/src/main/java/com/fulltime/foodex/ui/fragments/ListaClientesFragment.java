@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.update.ListaCliente;
+import com.fulltime.foodex.helper.update.ListaClienteVazia;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaClienteFragment;
@@ -75,6 +76,11 @@ public class ListaClientesFragment extends Fragment {
     @Subscribe
     public void onGetListaClientes(ListaCliente listaCliente) {
         atualizaListas(listaCliente);
+    }
+
+    @Subscribe
+    public void voidListaCliente(ListaClienteVazia listaClienteVazia) {
+        swipe.setRefreshing(false);
     }
 
     private void atualizaListas(@NonNull ListaCliente listaCliente) {

@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.update.ListaProduto;
+import com.fulltime.foodex.helper.update.ListaProdutoVazia;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaProdutoFragment;
@@ -66,6 +67,11 @@ public class ListaProdutosFragment extends Fragment {
         List<Produto> produtos = listaProduto.getProdutos();
         if (produtos.size() > 0) swipe.setRefreshing(false);
         produtoAdapter.setListaProduto(produtos);
+    }
+
+    @Subscribe
+    public void voidListaProduto(ListaProdutoVazia listaProdutoVazia) {
+        swipe.setRefreshing(false);
     }
 
     private void configuraSwipe(View clientView) {

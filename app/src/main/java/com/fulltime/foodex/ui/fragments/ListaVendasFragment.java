@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.update.ListaVenda;
+import com.fulltime.foodex.helper.update.ListaVendaVazia;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.recyclerview.adapter.VendasAdapter;
@@ -62,6 +63,11 @@ public class ListaVendasFragment extends Fragment {
         List<Venda> vendas = listaVenda.getVendas();
         if (vendas.size() > 0) swipe.setRefreshing(false);
         vendasAdapter.setLista(vendas);
+    }
+
+    @Subscribe
+    public void voidListaVenda(ListaVendaVazia listaVendaVazia) {
+        swipe.setRefreshing(false);
     }
 
     private void configuraSwipe(View view) {
