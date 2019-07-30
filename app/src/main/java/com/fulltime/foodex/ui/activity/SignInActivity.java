@@ -48,13 +48,15 @@ public class SignInActivity extends AppCompatActivity {
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
+        Intent signIn = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setLogo(R.drawable.ic_iconfoodex) // Set logo drawable
+                .setTheme(R.style.MyTheme_DayNight) // Set theme
+                .build();
+        signIn.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(providers)
-                        .setLogo(R.drawable.ic_iconfoodex) // Set logo drawable
-                        .setTheme(R.style.MyTheme_DayNight) // Set theme
-                        .build(),
+                signIn,
                 RC_SIGN_IN);
     }
 
