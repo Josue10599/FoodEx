@@ -29,7 +29,7 @@
             android:layout_margin="@dimen/keyline_4"
             android:text="@string/change_name"
             android:textAlignment="center"
-            app:icon="@drawable/ic_business_white_24dp"
+            app:icon="@drawable/ic_business_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_dialog_titulo" />
@@ -59,7 +59,7 @@
             android:layout_margin="@dimen/keyline_4"
             android:text="@string/change_phone"
             android:textAlignment="center"
-            app:icon="@drawable/ic_local_phone_white_24dp"
+            app:icon="@drawable/ic_local_phone_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_dialog_nome_empresa" />
@@ -89,7 +89,7 @@
             android:layout_margin="@dimen/keyline_4"
             android:text="@string/change_email"
             android:textAlignment="center"
-            app:icon="@drawable/ic_email_white_24dp"
+            app:icon="@drawable/ic_email_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_dialog_telefone_empresa" />
@@ -119,7 +119,7 @@
             android:layout_margin="@dimen/keyline_4"
             android:text="@string/change_endereco"
             android:textAlignment="center"
-            app:icon="@drawable/ic_location_on_white_24dp"
+            app:icon="@drawable/ic_location_on_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_dialog_email_empresa" />

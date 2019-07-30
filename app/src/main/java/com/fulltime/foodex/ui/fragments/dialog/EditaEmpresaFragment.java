@@ -14,7 +14,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.firebase.ui.auth.AuthUI;
 import com.fulltime.foodex.R;
+import com.fulltime.foodex.formatter.FormataTelefone;
 import com.fulltime.foodex.helper.update.UpdateData;
+import com.fulltime.foodex.mask.MaskWatcher;
 import com.fulltime.foodex.model.Empresa;
 import com.fulltime.foodex.ui.activity.SignInActivity;
 import com.google.android.material.button.MaterialButton;
@@ -87,6 +89,8 @@ public class EditaEmpresaFragment extends DialogFragment {
         MaterialButton buttonConfiguraTelefoneEmpresa = view.findViewById(R.id.fragment_dialog_configura_telefone_empresa);
         TextInputLayout inputLayoutTelefoneEmpresa = view.findViewById(R.id.fragment_dialog_telefone_empresa);
         editTextTelefone = inputLayoutTelefoneEmpresa.getEditText();
+        editTextTelefone.setOnFocusChangeListener(new FormataTelefone());
+        editTextTelefone.addTextChangedListener(MaskWatcher.buildPhone());
         empresaSetText(empresa.getTelefoneEmpresa(), editTextTelefone);
         buttonConfiguraTelefoneEmpresa.setOnClickListener(view1 -> toggleTextInputLayout(inputLayoutTelefoneEmpresa));
     }
@@ -114,7 +118,8 @@ public class EditaEmpresaFragment extends DialogFragment {
         super.onStart();
         Dialog dialog = getDialog();
         if (dialog != null) {
-            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            Objects.requireNonNull(dialog.getWindow()).
+                    setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }
 
