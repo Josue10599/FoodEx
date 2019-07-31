@@ -120,7 +120,8 @@
                         android:text="@string/company_name"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.MyTheme.Body1"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:visibility="gone" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/fragment_perfil_dados_empresa_nome"
