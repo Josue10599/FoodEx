@@ -97,7 +97,7 @@ public class MenuClientFragment extends BottomSheetDialogFragment {
     private void configButtonEmail(View viewMenuClientFragment) {
         MaterialButton buttonEmail = viewMenuClientFragment.findViewById(R.id.bottom_sheet_menu_client_button_email);
         buttonEmail.setOnClickListener(view -> {
-            String uriText = MAIL + Uri.encode(cliente.getEmail()) +
+            String uriText = MAIL + Uri.encode(empresa.getEmailEmpresa()) +
                     SUBJECT + Uri.encode(empresa.getNomeEmpresa());
             if (cliente.estaDevendo())
                 uriText = uriText.concat(EMAIL_BODY + Uri.encode(messageForDebtor()));
