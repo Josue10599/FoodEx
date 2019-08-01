@@ -38,6 +38,7 @@ import com.google.android.material.button.MaterialButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import static android.view.View.GONE;
 import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 
 public class MenuClientFragment extends BottomSheetDialogFragment {
@@ -96,8 +97,9 @@ public class MenuClientFragment extends BottomSheetDialogFragment {
 
     private void configButtonEmail(View viewMenuClientFragment) {
         MaterialButton buttonEmail = viewMenuClientFragment.findViewById(R.id.bottom_sheet_menu_client_button_email);
+        ifIsEmptySetGone(buttonEmail, cliente.getEmail());
         buttonEmail.setOnClickListener(view -> {
-            String uriText = MAIL + Uri.encode(empresa.getEmailEmpresa()) +
+            String uriText = MAIL + Uri.encode(cliente.getEmail()) +
                     SUBJECT + Uri.encode(empresa.getNomeEmpresa());
             if (cliente.estaDevendo())
                 uriText = uriText.concat(EMAIL_BODY + Uri.encode(messageForDebtor()));
@@ -110,6 +112,7 @@ public class MenuClientFragment extends BottomSheetDialogFragment {
 
     private void configButtonMessage(View viewMenuClientFragment) {
         MaterialButton buttonMessage = viewMenuClientFragment.findViewById(R.id.bottom_sheet_menu_client_button_message);
+        ifIsEmptySetGone(buttonMessage, cliente.getTelefone());
         buttonMessage.setOnClickListener(view -> {
             Uri uri = Uri.parse(SMS + cliente.telefoneSemFormatacao());
             Intent message = new Intent(Intent.ACTION_SENDTO, uri);
@@ -124,12 +127,17 @@ public class MenuClientFragment extends BottomSheetDialogFragment {
 
     private void configButtonCall(View viewMenuClientFragment) {
         MaterialButton buttonCall = viewMenuClientFragment.findViewById(R.id.bottom_sheet_menu_client_button_call);
+        ifIsEmptySetGone(buttonCall, cliente.getTelefone());
         buttonCall.setOnClickListener(view -> {
             Uri uri = Uri.parse(PHONE + cliente.telefoneSemFormatacao());
             Intent call = new Intent(Intent.ACTION_DIAL, uri);
             startActivity(call);
             dismiss();
         });
+    }
+
+    private void ifIsEmptySetGone(MaterialButton button, String data) {
+        if (data.isEmpty()) button.setVisibility(GONE);
     }
 
     private String messageForDebtor() {
