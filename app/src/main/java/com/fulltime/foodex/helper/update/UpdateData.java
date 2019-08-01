@@ -147,14 +147,14 @@ public class UpdateData {
     }
 
     public static void removerCliente(Cliente cliente, ClienteAdapter adapter, final int posicao) {
+        adapter.removeCliente(posicao);
         firestoreAdapter.removeCliente(cliente,
-                aVoid -> adapter.removeCliente(posicao),
                 e -> eventBus.post(ERRO_DELETAR_CLIENTE));
     }
 
     public static void removeProduto(Produto produto, ProdutoAdapter adapter, final int posicao) {
+        adapter.removeProduto(posicao);
         firestoreAdapter.removeProduto(produto,
-                aVoid -> adapter.removeProduto(posicao),
                 e -> eventBus.post(ERRO_DELETAR_PRODUTO));
     }
 

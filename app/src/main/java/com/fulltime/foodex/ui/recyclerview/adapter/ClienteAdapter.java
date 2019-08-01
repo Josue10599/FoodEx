@@ -88,8 +88,8 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
     }
 
     public void removeCliente(int posicao) {
-        notifyItemRemoved(posicao);
         clientesSalvos.remove(posicao);
+        notifyItemRemoved(posicao);
     }
 
     public void movimentaCliente(int posicaoInicial, int posicaoFinal) {

@@ -109,20 +109,16 @@ public class FirestoreAdapter {
     }
 
     public void removeCliente(Cliente cliente,
-                              OnSuccessListener<Void> onSuccessListener,
                               OnFailureListener onFailureListener) {
         getDocument(CLIENTES, cliente.getId())
                 .delete()
-                .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
 
     public void removeProduto(Produto produto,
-                              OnSuccessListener<Void> onSuccessListener,
                               OnFailureListener onFailureListener) {
         getDocument(PRODUTOS, produto.getId())
                 .delete()
-                .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
 
