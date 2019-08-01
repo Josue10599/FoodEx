@@ -126,29 +126,22 @@ public class GerenciarActivity extends AppCompatActivity {
     @Subscribe
     public void onDeleteProduto(RemoveProduto removeProduto) {
         String dadosProduto = removeProduto.getProduto().getNome() + " (" + removeProduto.getProduto().getDescricao() + ")";
-        String textoFormatado = String.format(getString(R.string.deseja_apagar), dadosProduto);
+        String textoFormatado = getString(R.string.deseja_apagar, dadosProduto);
         new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.delete_product)
                 .setMessage(textoFormatado)
-                .setPositiveButton(R.string.delete, (dialogInterface, i) ->
-                        UpdateData.removeProduto(removeProduto.getProduto(),
-                                removeProduto.getAdapter(),
-                                removeProduto.getPosicao()))
+                .setPositiveButton(R.string.delete, (dialogInterface, i) -> UpdateData.removeProduto(removeProduto))
                 .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 
     @Subscribe
     public void onDeleteCliente(RemoveCliente removeCliente) {
-        String textoFormatado = String.format(getString(R.string.deseja_apagar),
-                removeCliente.getCliente().nomeCompleto());
+        String textoFormatado = getString(R.string.deseja_apagar, removeCliente.getCliente().nomeCompleto());
         new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.delete_client)
                 .setMessage(textoFormatado)
-                .setPositiveButton(R.string.delete, (dialogInterface, i) ->
-                        UpdateData.removerCliente(removeCliente.getCliente(),
-                                removeCliente.getAdapter(),
-                                removeCliente.getPosicao()))
+                .setPositiveButton(R.string.delete, (dialogInterface, i) -> UpdateData.removerCliente(removeCliente))
                 .setNegativeButton(R.string.cancel, null)
                 .show();
     }
