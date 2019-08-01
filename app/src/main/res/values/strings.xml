@@ -10,7 +10,7 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="checkout">Checkout</string>
-    <string name="sifra">R$ %s</string>
+    <string name="sifra">$ %s</string>
     <string name="plus" translatable="false">+</string>
     <string name="subtract" translatable="false">-</string>
 
@@ -98,5 +98,12 @@
     <string name="save">Save</string>
     <string name="required_field">This field must not start with the space and must be filled in.</string>
     <string name="add_corporation">Add your business data!</string>
+
+    <!-- Client Menu -->
+
+    <string name="send_email">Send an email</string>
+    <string name="send_message">Send a message</string>
+    <string name="call_client">Make a call</string>
+    <string name="message_to_debtor_customer">Hi, I\'m from %s and I\'m reminding you that you didn\'t pay $ %s.</string>
 
 </resources>

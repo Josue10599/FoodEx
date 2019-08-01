@@ -145,6 +145,7 @@ public class EditaEmpresaFragment extends DialogFragment {
         AuthUI.getInstance().signOut(Objects.requireNonNull(getContext())).addOnSuccessListener(aVoid -> {
             Intent telaLogin = new Intent(getContext(), SignInActivity.class);
             startActivity(telaLogin);
+            dismiss();
             Objects.requireNonNull(getActivity()).finish();
         });
         FirebaseAuth.getInstance().signOut();

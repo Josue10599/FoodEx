@@ -70,4 +70,8 @@
     <string name="required_field">Este campo não deve iniciar com o espaço e deve ser preenchido obrigatoriamente.</string>
     <string name="add_corporation">Adicione os dados da sua empresa!</string>
     <string name="company_name">Nome</string>
+    <string name="send_email">Enviar um email</string>
+    <string name="send_message">Enviar uma mensagem</string>
+    <string name="call_client">Realizar uma chamada</string>
+    <string name="message_to_debtor_customer">Oi, aqui quem fala é %s e estou lembrando que você não me pagou a quantia de R$ %s.</string>
 </resources>

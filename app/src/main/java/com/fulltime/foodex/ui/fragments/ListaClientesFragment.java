@@ -35,7 +35,7 @@ import com.fulltime.foodex.helper.update.ListaCliente;
 import com.fulltime.foodex.helper.update.ListaClienteVazia;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
-import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaClienteFragment;
+import com.fulltime.foodex.ui.fragments.bottomsheet.MenuClientFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
 import com.fulltime.foodex.ui.recyclerview.callback.ItemTouchCallback;
 import com.google.android.material.tabs.TabLayout;
@@ -145,7 +145,7 @@ public class ListaClientesFragment extends Fragment {
     private void configuraAdapter() {
         clienteAdapter.setOnItemClickListener((posicao, clienteSelecionado) -> {
             assert getFragmentManager() != null;
-            new ImplementaClienteFragment((Cliente) clienteSelecionado)
+            new MenuClientFragment((Cliente) clienteSelecionado)
                     .show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
         });
     }
