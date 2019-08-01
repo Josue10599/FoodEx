@@ -49,6 +49,7 @@ import static com.fulltime.foodex.R.layout;
 
 public class PerfilUsuarioFragment extends Fragment {
 
+    private static final String DIALOG = "DIALOG";
     private final Usuario usuario;
     private View perfilUsuarioFragment;
     private ProgressBar loading;
@@ -112,9 +113,8 @@ public class PerfilUsuarioFragment extends Fragment {
     }
 
     private void openDialogConfig() {
-        EditaEmpresaFragment editaEmpresaFragment = new EditaEmpresaFragment(empresa);
         assert getFragmentManager() != null;
-        editaEmpresaFragment.show(getFragmentManager(), "DIALOG");
+        new EditaEmpresaFragment().show(getFragmentManager(), DIALOG);
     }
 
     private void configuraNomeUsuario() {

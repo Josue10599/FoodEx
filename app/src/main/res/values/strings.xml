@@ -105,5 +105,6 @@
     <string name="send_message">Send a message</string>
     <string name="call_client">Make a call</string>
     <string name="message_to_debtor_customer">Hi, I\'m from %s and I\'m reminding you that you didn\'t pay $ %s.</string>
+    <string name="quantity_and_product" translatable="false">%d - %s</string>
 
 </resources>

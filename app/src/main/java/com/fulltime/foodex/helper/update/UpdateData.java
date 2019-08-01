@@ -24,9 +24,6 @@ import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Empresa;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
-import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
-import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -52,18 +49,12 @@ public class UpdateData {
         firestoreAdapter.adicionaUsuario(usuario);
     }
 
-    public static void setEmpresa(Empresa empresa, OnSuccessListener<Empresa> onSuccessListener) {
+    public static void setEmpresa(Empresa empresa) {
         firestoreAdapter.setEmpresa(empresa,
                 aVoid -> {
                     eventBus.post(empresa);
-                    onSuccessListener.onSuccess(empresa);
+                    eventBus.post(new ChangeEmpresa(empresa));
                 }, e -> eventBus.post(ERRO_FALHA_CONEXAO));
-    }
-
-    private static void setEmpresa(Empresa empresa) {
-        firestoreAdapter.setEmpresa(empresa,
-                aVoid -> eventBus.post(empresa),
-                e -> eventBus.post(ERRO_FALHA_CONEXAO));
     }
 
     public static void getEmpresa() {
@@ -77,9 +68,7 @@ public class UpdateData {
                 if (!documents.isEmpty()) {
                     Empresa empresa = documents.get(0).toObject(Empresa.class);
                     eventBus.post(empresa);
-                } else {
-                    eventBus.post(new FirstCorporation(new Empresa()));
-                }
+                } else eventBus.post(new FirstCorporation(new Empresa()));
             }
         });
     }
@@ -91,10 +80,9 @@ public class UpdateData {
                 return;
             }
             if (requisicaoNaoEstiverVazia(querySnapshot)) {
-                if (!querySnapshot.isEmpty()) {
-                    ListaCliente listaCliente = new ListaCliente(querySnapshot.toObjects(Cliente.class));
-                    eventBus.post(listaCliente);
-                } else eventBus.post(new ListaClienteVazia());
+                if (!querySnapshot.isEmpty())
+                    eventBus.post(new ListaCliente(querySnapshot.toObjects(Cliente.class)));
+                else eventBus.post(new ListaClienteVazia());
             }
         });
     }
@@ -106,10 +94,9 @@ public class UpdateData {
                 return;
             }
             if (requisicaoNaoEstiverVazia(querySnapshot)) {
-                if (!querySnapshot.isEmpty()) {
-                    ListaProduto listaProduto = new ListaProduto(querySnapshot.toObjects(Produto.class));
-                    eventBus.post(listaProduto);
-                } else eventBus.post(new ListaProdutoVazia());
+                if (!querySnapshot.isEmpty())
+                    eventBus.post(new ListaProduto(querySnapshot.toObjects(Produto.class)));
+                else eventBus.post(new ListaProdutoVazia());
             }
         });
     }
@@ -121,23 +108,20 @@ public class UpdateData {
                 return;
             }
             if (requisicaoNaoEstiverVazia(querySnapshot)) {
-                if (!querySnapshot.isEmpty()) {
-                    ListaVenda listaVenda = new ListaVenda(querySnapshot.toObjects(Venda.class));
-                    eventBus.post(listaVenda);
-                } else eventBus.post(new ListaVendaVazia());
+                if (!querySnapshot.isEmpty())
+                    eventBus.post(new ListaVenda(querySnapshot.toObjects(Venda.class)));
+                else eventBus.post(new ListaVendaVazia());
             }
         });
     }
 
     public static void atualizaVenda(final Venda venda) {
-        firestoreAdapter.setVenda(venda,
-                e -> eventBus.post(ERRO_ADICIONAR_VENDA));
+        firestoreAdapter.setVenda(venda, e -> eventBus.post(ERRO_ADICIONAR_VENDA));
         eventBus.post(venda);
     }
 
     public static void atualizaProduto(final Produto produto) {
-        firestoreAdapter.setProduto(produto,
-                e -> eventBus.post(ERRO_ADICIONAR_PRODUTO));
+        firestoreAdapter.setProduto(produto, e -> eventBus.post(ERRO_ADICIONAR_PRODUTO));
         eventBus.post(produto);
     }
 
@@ -146,20 +130,17 @@ public class UpdateData {
         eventBus.post(cliente);
     }
 
-    public static void removerCliente(Cliente cliente, ClienteAdapter adapter, final int posicao) {
-        adapter.removeCliente(posicao);
-        firestoreAdapter.removeCliente(cliente,
-                e -> eventBus.post(ERRO_DELETAR_CLIENTE));
+    public static void removerCliente(RemoveCliente removeCliente) {
+        removeCliente.getAdapter().removeCliente(removeCliente.getPosicao());
+        firestoreAdapter.removeCliente(removeCliente.getCliente(), e -> eventBus.post(ERRO_DELETAR_CLIENTE));
     }
 
-    public static void removeProduto(Produto produto, ProdutoAdapter adapter, final int posicao) {
-        adapter.removeProduto(posicao);
-        firestoreAdapter.removeProduto(produto,
-                e -> eventBus.post(ERRO_DELETAR_PRODUTO));
+    public static void removeProduto(RemoveProduto removeProduto) {
+        removeProduto.getAdapter().removeProduto(removeProduto.getPosicao());
+        firestoreAdapter.removeProduto(removeProduto.getProduto(), e -> eventBus.post(ERRO_DELETAR_PRODUTO));
     }
 
-    private static boolean requisicaoNaoEstiverVazia(@Nullable QuerySnapshot
-                                                             queryDocumentSnapshots) {
+    private static boolean requisicaoNaoEstiverVazia(@Nullable QuerySnapshot queryDocumentSnapshots) {
         return queryDocumentSnapshots != null;
     }
 }
