@@ -8,8 +8,9 @@ Essas instruções irão facilitar a você que deseja estudar ou auxiliar por es
 ## Pré-requisitos
 1. Android Studio
 2. Emulador ou Dispositivo Android
+3. Firebase
 
-## Configurando
+## Configurando o Projeto
 Para contribuir com o desenvolvimento da aplicação faça o **fork** da mesma, abra o projeto no
 _Android Studio_ clique em **Make Project** ou pressione `CTRL+F9` para realizar a configuração pelo 
 Gradle.
@@ -19,4 +20,54 @@ Ao criar uma nova implementação, basta criar uma nova **branch** colocando com
 de forma resumida solicitar um **Pull-Request** acrescentando uma descrição mais profunda dos dados e dos processos
 adicionados.
 
-> Qualquer problema ou dificuldade basta acrescentar uma Issue com a tag HELP
+> Qualquer problema ou dificuldade basta acrescentar uma Issue com a tag HELP_GRADLE
+
+## Configurando o Firebase
+
+1. Adicionando o Firebase ao projeto
+
+Nesta etapa irei deixar o link para a documentação do Google para o [Firebase](https://firebase.google.com/docs/android/setup?hl=pt-br#manually_add_firebase).
+
+2. Firebase Authentication
+
+Para configurar o Authentication vá em **Método de Login** e selecione *E-mail/Senha* e *Google*.
+
+3. Firebase Cloud Firestore
+
+Aqui devemos ir em **Regras** e adicionar as seguintes condições dentro de *service **cloud.firestore***:
+```
+  match /databases/{database}/documents {
+  	match /usuario/{usuario} {
+    	allow read, update, delete: if request.auth.uid == usuario
+      allow create: if request.auth.uid != null
+  	  match /clientes/{clientes} {
+	      allow read, create, update, delete: if request.auth.uid == usuario; 
+    	}
+    	match /produtos/{produtos} {
+      	allow read, create, update, delete: if request.auth.uid == usuario; 
+    	}
+    	match /vendas/{vendas} {
+      	allow read, create, delete: if request.auth.uid == usuario;
+    	}
+      match /empresa/{empresa} {
+      	allow read, create, update, delete: if request.auth.uid == usuario;
+      }
+  	}
+  }
+```
+
+**NOTA:** A aplicação já está configurada para utilizar as funções de Crashlytics e Performance do Firebase.
+
+> Qualquer problema ou dificuldade basta acrescentar uma Issue com a tag HELP_FIREBASE
+
+# API de Terceiros
+
+Abaixo se encontra as bibliotecas e as API de terceiros utilizadas juntamente de sua página no GitHub.
+* [EventBus](https://github.com/greenrobot/EventBus)
+* [Material Components](https://github.com/material-components)
+* [Searchable Spinner](https://github.com/michaelprimez/searchablespinner)
+* [Text Drawable](https://github.com/amulyakhare/TextDrawable)
+* [Universal Image Loader](https://github.com/nostra13/Android-Universal-Image-Loader)
+* [Firebase](https://github.com/firebase/quickstart-android)
+
+# O conhecimento não deve ser privado!!!
