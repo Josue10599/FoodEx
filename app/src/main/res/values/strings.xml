@@ -106,5 +106,13 @@
     <string name="call_client">Make a call</string>
     <string name="message_to_debtor_customer">Hi, I\'m from %s and I\'m reminding you that you didn\'t pay $ %s.</string>
     <string name="quantity_and_product" translatable="false">%d - %s</string>
+    <string name="product">Product</string>
+    <string name="quantity">Quantity</string>
+    <string name="value">Value</string>
+    <string name="acquired_by">Acquired by %s</string>
+    <string name="paid_at_time_of_purchase">Paid on purchase.</string>
+    <string name="sale_made_without_payment">Sale made without payment</string>
+    <string name="product_description">Product Description</string>
+    <string name="payments">Payments</string>
 
 </resources>

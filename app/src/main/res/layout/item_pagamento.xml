@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/keyline_2"
+    android:animateLayoutChanges="true"
+    app:cardCornerRadius="@dimen/keyline_4"
+    app:cardElevation="@dimen/keyline_1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/item_pagamento_nome_cliente_comprador"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/keyline_2"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/item_pagamento_valor_do_pagamento"
+            app:layout_constraintStart_toEndOf="@id/item_pagamento_nome_cliente_comprador"
+            app:layout_constraintTop_toBottomOf="@id/item_pagamento_data_pagamento"
+            tools:text="Josue" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/item_pagamento_valor_do_pagamento"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/keyline_2"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+            android:textColor="@color/color_pago"
+            app:layout_constraintBottom_toBottomOf="@id/item_pagamento_nome_cliente_comprador"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_pagamento_nome_cliente_comprador"
+            app:layout_constraintTop_toTopOf="@id/item_pagamento_nome_cliente_comprador"
+            tools:text="R$ 100,00" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/item_pagamento_data_pagamento"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/keyline_2"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/item_pagamento_nome_cliente_comprador"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10/05/2018" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

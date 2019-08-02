@@ -21,6 +21,7 @@ package com.fulltime.foodex.firebase.firestore;
 import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Empresa;
+import com.fulltime.foodex.model.Pagamento;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,6 +47,7 @@ public class FirestoreAdapter {
     private static final String VENDAS_CAMPO_DATA_VENDA = "dataVenda";
     private static final String USUARIO = "usuario";
     private static final String EMPRESA = "empresa";
+    private static final String PAGAMENTOS = "pagamentos";
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -81,6 +83,12 @@ public class FirestoreAdapter {
                 .addSnapshotListener(eventListener);
     }
 
+    public void getPagamentos(EventListener<QuerySnapshot> eventListener) {
+        getUser().collection(PAGAMENTOS)
+                .orderBy(VENDAS_CAMPO_DATA_VENDA, DESCENDING)
+                .addSnapshotListener(eventListener);
+    }
+
     public void setCliente(Cliente cliente,
                            OnFailureListener onFailureListener) {
         getDocument(CLIENTES, cliente.getId())
@@ -97,6 +105,11 @@ public class FirestoreAdapter {
     public void setVenda(Venda venda,
                          OnFailureListener onFailureListener) {
         getDocument(VENDAS, venda.getId()).set(venda)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    public void setPagamento(Pagamento pagamento, OnFailureListener onFailureListener) {
+        getDocument(PAGAMENTOS, pagamento.getId()).set(pagamento)
                 .addOnFailureListener(onFailureListener);
     }
 

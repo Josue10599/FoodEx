@@ -35,8 +35,8 @@ import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.fragments.ListaClientesFragment;
+import com.fulltime.foodex.ui.fragments.ListaFragment;
 import com.fulltime.foodex.ui.fragments.ListaProdutosFragment;
-import com.fulltime.foodex.ui.fragments.ListaVendasFragment;
 import com.fulltime.foodex.ui.fragments.PerfilUsuarioFragment;
 import com.fulltime.foodex.ui.fragments.bottomsheet.MenuOpcoesFragments;
 import com.google.android.material.badge.BadgeDrawable;
@@ -200,7 +200,7 @@ public class GerenciarActivity extends AppCompatActivity {
                 clearBadge(badgeProdutos);
                 break;
             case R.id.bottom_nav_sales_venda:
-                populaFragment(new ListaVendasFragment());
+                populaFragment(new ListaFragment());
                 clearBadge(badgeVendas);
                 break;
             case R.id.bottom_nav_user_perfil:

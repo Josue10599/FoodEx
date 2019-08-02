@@ -32,7 +32,7 @@ public class VendaTest {
     @Test
     public void deve_RegistrarValorDaVenda_QuandoClienteComprarVariosProdutos() {
         Venda venda = new Venda(cliente, true, produto, 3);
-        Assert.assertThat(venda.getValorDaCompra(), is(equalTo("31,50")));
+        Assert.assertThat(venda.valorDaCompraFormatado(), is(equalTo("31,50")));
         Assert.assertThat(cliente.estaDevendo(), is(equalTo(false)));
     }
 

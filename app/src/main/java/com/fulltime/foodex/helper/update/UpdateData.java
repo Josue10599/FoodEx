@@ -22,6 +22,7 @@ import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Empresa;
+import com.fulltime.foodex.model.Pagamento;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,6 +35,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_ADICIONAR_CLIENTE;
+import static com.fulltime.foodex.error.CodigoDeErro.ERRO_ADICIONAR_PAGAMENTO;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_ADICIONAR_PRODUTO;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_ADICIONAR_VENDA;
 import static com.fulltime.foodex.error.CodigoDeErro.ERRO_DELETAR_CLIENTE;
@@ -115,9 +117,28 @@ public class UpdateData {
         });
     }
 
+    public static void listaPagamentos() {
+        firestoreAdapter.getVendas((querySnapshot, e) -> {
+            if (e != null) {
+                eventBus.post(ERRO_FALHA_CONEXAO);
+                return;
+            }
+            if (requisicaoNaoEstiverVazia(querySnapshot)) {
+                if (!querySnapshot.isEmpty())
+                    eventBus.post(new ListaPagamentos(querySnapshot.toObjects(Pagamento.class)));
+                else eventBus.post(new ListaVendaVazia());
+            }
+        });
+    }
+
     public static void atualizaVenda(final Venda venda) {
         firestoreAdapter.setVenda(venda, e -> eventBus.post(ERRO_ADICIONAR_VENDA));
         eventBus.post(venda);
+    }
+
+    public static void atualizaPagamento(Pagamento pagamento) {
+        firestoreAdapter.setPagamento(pagamento, e -> eventBus.post(ERRO_ADICIONAR_PAGAMENTO));
+        eventBus.post(pagamento);
     }
 
     public static void atualizaProduto(final Produto produto) {

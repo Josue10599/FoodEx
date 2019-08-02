@@ -102,7 +102,7 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
             nomeClienteComprador.setText(comprador.nomeCompleto());
             nomeProdutoVendido.setText(context.getString(R.string.quantity_and_product,
                     venda.getQuantidade(), produtoComprado.getNome()));
-            valorDaVenda.setText(context.getString(R.string.sifra, venda.getValorDaCompra()));
+            valorDaVenda.setText(context.getString(R.string.sifra, venda.valorDaCompraFormatado()));
         }
     }
 }

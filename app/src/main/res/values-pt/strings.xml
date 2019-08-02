@@ -74,4 +74,12 @@
     <string name="send_message">Enviar uma mensagem</string>
     <string name="call_client">Realizar uma chamada</string>
     <string name="message_to_debtor_customer">Oi, aqui quem fala é %s e estou lembrando que você não me pagou a quantia de R$ %s.</string>
+    <string name="product">Produto</string>
+    <string name="quantity">Quantidade</string>
+    <string name="value">Valor</string>
+    <string name="acquired_by">Adquirido por %s</string>
+    <string name="paid_at_time_of_purchase">Pago no momento da compra.</string>
+    <string name="sale_made_without_payment">Venda realizada sem receber pagamento</string>
+    <string name="product_description">Descrição do Produto</string>
+    <string name="payments">Pagamentos</string>
 </resources>
