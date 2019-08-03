@@ -48,6 +48,7 @@ public class FirestoreAdapter {
     private static final String USUARIO = "usuario";
     private static final String EMPRESA = "empresa";
     private static final String PAGAMENTOS = "pagamentos";
+    private static final String PAGAMENTO_CAMPO_DATA_PAGAMENTO = "dataPagamento";
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -85,7 +86,7 @@ public class FirestoreAdapter {
 
     public void getPagamentos(EventListener<QuerySnapshot> eventListener) {
         getUser().collection(PAGAMENTOS)
-                .orderBy(VENDAS_CAMPO_DATA_VENDA, DESCENDING)
+                .orderBy(PAGAMENTO_CAMPO_DATA_PAGAMENTO, DESCENDING)
                 .addSnapshotListener(eventListener);
     }
 

@@ -14,6 +14,6 @@
             android:id="@+id/fragment_vendas_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_venda" />
+            tools:listitem="@layout/item_pagamento" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

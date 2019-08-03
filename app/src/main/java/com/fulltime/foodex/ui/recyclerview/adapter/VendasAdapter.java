@@ -67,7 +67,7 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
     public void adicionaVenda(Venda venda) {
         if (!vendasRealizadas.contains(venda)) {
             vendasRealizadas.add(venda);
-            notifyItemInserted(vendasRealizadas.size() - 1);
+            notifyItemInserted(0);
         }
     }
 

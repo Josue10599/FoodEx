@@ -18,34 +18,50 @@ package com.fulltime.foodex.ui.viewpager;
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.fulltime.foodex.R;
 import com.fulltime.foodex.ui.fragments.PagamentosFragments;
 import com.fulltime.foodex.ui.fragments.VendasFragments;
 
-public class VendasViewPager extends FragmentPagerAdapter {
+import java.util.Objects;
 
-    public VendasViewPager(@NonNull FragmentManager fm, int behavior) {
+public class VendasViewPager extends FragmentStatePagerAdapter{
+
+    private final Context context;
+
+    public VendasViewPager(@NonNull FragmentManager fm, int behavior, Context context) {
         super(fm, behavior);
+        this.context = context;
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return new VendasFragments();
-            case 1:
-                return new PagamentosFragments();
+        if (position == 1) {
+            return new PagamentosFragments();
         }
-        return null;
+        return new VendasFragments();
     }
 
     @Override
     public int getCount() {
         return 2;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        if (position == 1) {
+            return context.getString(R.string.payments);
+        }
+        return context.getString(R.string.sales);
     }
 }

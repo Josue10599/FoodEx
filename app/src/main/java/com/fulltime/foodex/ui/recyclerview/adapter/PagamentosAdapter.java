@@ -47,7 +47,7 @@ public class PagamentosAdapter extends RecyclerView.Adapter<PagamentosAdapter.Pa
     public void adicionaPagamento(Pagamento pagamento) {
         if (!pagamentosRealizados.contains(pagamento)) {
             pagamentosRealizados.add(pagamento);
-            notifyItemInserted(pagamentosRealizados.size() - 1);
+            notifyItemInserted(0);
         }
     }
 

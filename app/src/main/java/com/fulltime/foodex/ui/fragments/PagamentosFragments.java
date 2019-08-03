@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
+import com.fulltime.foodex.helper.update.ListaPagamentoVazia;
 import com.fulltime.foodex.helper.update.ListaPagamentos;
 import com.fulltime.foodex.helper.update.ListaVendaVazia;
 import com.fulltime.foodex.helper.update.UpdateData;
@@ -81,28 +82,26 @@ public class PagamentosFragments extends Fragment {
     }
 
     @Subscribe
-    public void onGetListaVenda(ListaPagamentos listaPagamentos) {
+    public void onGetListaPagamentos(ListaPagamentos listaPagamentos) {
         List<Pagamento> pagamentos = listaPagamentos.getPagamentos();
         if (pagamentos.size() > 0) swipe.setRefreshing(false);
         pagamentosAdapter.setLista(pagamentos);
     }
 
     @Subscribe
-    public void voidListaVenda(ListaVendaVazia listaVendaVazia) {
+    public void voidListaPagamento(ListaPagamentoVazia listaPagamentoVazia) {
         swipe.setRefreshing(false);
     }
 
     private void configuraSwipe(View view) {
         swipe = view.findViewById(R.id.swipe_refresh);
         swipe.setRefreshing(true);
-        swipe.setOnRefreshListener(UpdateData::listaVendas);
+        swipe.setOnRefreshListener(UpdateData::listaPagamentos);
     }
 
     private void configurarRecyclerView(View vendasView) {
-        RecyclerView listaVendas = vendasView.findViewById(R.id.fragment_vendas_recycler_view);
-        listaVendas.setLayoutManager(new LinearLayoutManager(getContext()));
-        listaVendas.setAdapter(pagamentosAdapter);
-        pagamentosAdapter.setOnItemClickListener((posicao, itemSelecionado) -> new DetalhesVendaFragment((Venda) itemSelecionado)
-                .show(Objects.requireNonNull(getFragmentManager()), BOTTOM_SHEET_FRAGMENT_TAG));
+        RecyclerView listaPagamentos = vendasView.findViewById(R.id.fragment_vendas_recycler_view);
+        listaPagamentos.setLayoutManager(new LinearLayoutManager(getContext()));
+        listaPagamentos.setAdapter(pagamentosAdapter);
     }
 }

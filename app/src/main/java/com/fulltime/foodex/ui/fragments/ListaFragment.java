@@ -39,7 +39,7 @@ public class ListaFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vendasView = inflater.inflate(R.layout.fragment_lista, container, false);
+        View vendasView = inflater.inflate(R.layout.fragment_vendas, container, false);
         configuraTab(vendasView);
         return vendasView;
     }
@@ -48,7 +48,8 @@ public class ListaFragment extends Fragment {
     private void configuraTab(View vendasView) {
         TabLayout tabLayout = vendasView.findViewById(R.id.fragment_vendas_tab_layout);
         ViewPager viewPager = vendasView.findViewById(R.id.view_pager);
-        VendasViewPager adapter = new VendasViewPager(getFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        assert getFragmentManager() != null;
+        VendasViewPager adapter = new VendasViewPager(getFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, getContext());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }

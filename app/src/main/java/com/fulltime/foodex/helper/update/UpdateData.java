@@ -118,7 +118,7 @@ public class UpdateData {
     }
 
     public static void listaPagamentos() {
-        firestoreAdapter.getVendas((querySnapshot, e) -> {
+        firestoreAdapter.getPagamentos((querySnapshot, e) -> {
             if (e != null) {
                 eventBus.post(ERRO_FALHA_CONEXAO);
                 return;
@@ -126,7 +126,7 @@ public class UpdateData {
             if (requisicaoNaoEstiverVazia(querySnapshot)) {
                 if (!querySnapshot.isEmpty())
                     eventBus.post(new ListaPagamentos(querySnapshot.toObjects(Pagamento.class)));
-                else eventBus.post(new ListaVendaVazia());
+                else eventBus.post(new ListaPagamentoVazia());
             }
         });
     }
