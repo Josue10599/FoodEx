@@ -32,6 +32,7 @@ import com.fulltime.foodex.helper.update.RemoveCliente;
 import com.fulltime.foodex.helper.update.RemoveProduto;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
+import com.fulltime.foodex.model.Pagamento;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.fragments.ListaClientesFragment;
@@ -67,7 +68,7 @@ public class GerenciarActivity extends AppCompatActivity {
     private View coordinatorLayoutForSnackBar;
     private BadgeDrawable badgeCliente;
     private BadgeDrawable badgeProdutos;
-    private BadgeDrawable badgeVendas;
+    private BadgeDrawable badgeRegistros;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,6 @@ public class GerenciarActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
-        itemSelectedBottonNavigation = bottomNavigationView.getSelectedItemId();
         super.onDestroy();
     }
 
@@ -158,7 +158,12 @@ public class GerenciarActivity extends AppCompatActivity {
 
     @Subscribe
     public void onCreateVenda(Venda venda) {
-        setBadge(R.id.bottom_nav_sales_venda, badgeVendas);
+        setBadge(R.id.bottom_nav_sales_venda, badgeRegistros);
+    }
+
+    @Subscribe
+    public void onCreateVenda(Pagamento pagamento) {
+        setBadge(R.id.bottom_nav_sales_venda, badgeRegistros);
     }
 
     private void setBadge(int p, BadgeDrawable badgeCliente) {
@@ -184,9 +189,11 @@ public class GerenciarActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(itemSelectedBottonNavigation);
         setFragment(itemSelectedBottonNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            setFragment(item.getItemId());
+            if (item.getItemId() != itemSelectedBottonNavigation)
+                setFragment(item.getItemId());
             return true;
         });
+        bottomNavigationView.setOnNavigationItemReselectedListener(null);
     }
 
     private void setFragment(int id) {
@@ -201,21 +208,22 @@ public class GerenciarActivity extends AppCompatActivity {
                 break;
             case R.id.bottom_nav_sales_venda:
                 populaFragment(new ListaFragment());
-                clearBadge(badgeVendas);
+                clearBadge(badgeRegistros);
                 break;
             case R.id.bottom_nav_user_perfil:
                 populaFragment(new PerfilUsuarioFragment(usuario));
                 break;
         }
+        itemSelectedBottonNavigation = id;
     }
 
     private void configuraBadge() {
         badgeCliente = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_clients_cliente);
         badgeProdutos = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_products_produto);
-        badgeVendas = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_sales_venda);
+        badgeRegistros = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_sales_venda);
         clearBadge(badgeCliente);
         clearBadge(badgeProdutos);
-        clearBadge(badgeVendas);
+        clearBadge(badgeRegistros);
     }
 
     private void clearBadge(BadgeDrawable badgeCliente) {
