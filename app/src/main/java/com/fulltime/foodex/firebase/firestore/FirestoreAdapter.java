@@ -31,11 +31,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
+import static com.google.firebase.firestore.Query.Direction.ASCENDING;
 import static com.google.firebase.firestore.Query.Direction.DESCENDING;
 
 public class FirestoreAdapter {
@@ -49,6 +49,7 @@ public class FirestoreAdapter {
     private static final String EMPRESA = "empresa";
     private static final String PAGAMENTOS = "pagamentos";
     private static final String PAGAMENTO_CAMPO_DATA_PAGAMENTO = "dataPagamento";
+    private static final String PRODUTO_CAMPO_VALOR = "valor";
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -69,13 +70,15 @@ public class FirestoreAdapter {
 
     public void getAllCliente(EventListener<QuerySnapshot> eventListener) {
         getUser().collection(CLIENTES)
-                .orderBy(CLIENTES_CAMPO_NOME, Query.Direction.ASCENDING)
-                .orderBy(CLIENTES_CAMPO_SOBRENOME, Query.Direction.ASCENDING)
+                .orderBy(CLIENTES_CAMPO_NOME, ASCENDING)
+                .orderBy(CLIENTES_CAMPO_SOBRENOME, ASCENDING)
                 .addSnapshotListener(eventListener);
     }
 
     public void getProdutos(EventListener<QuerySnapshot> eventListener) {
-        getUser().collection(PRODUTOS).addSnapshotListener(eventListener);
+        getUser().collection(PRODUTOS)
+                .orderBy(PRODUTO_CAMPO_VALOR, ASCENDING)
+                .addSnapshotListener(eventListener);
     }
 
     public void getVendas(EventListener<QuerySnapshot> eventListener) {
