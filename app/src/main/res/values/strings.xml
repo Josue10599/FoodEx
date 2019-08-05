@@ -114,5 +114,6 @@
     <string name="sale_made_without_payment">Sale made without payment</string>
     <string name="product_description">Product Description</string>
     <string name="payments">Payments</string>
+    <string name="records">Records</string>
 
 </resources>

@@ -31,22 +31,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.helper.update.ListaPagamentoVazia;
-import com.fulltime.foodex.helper.update.ListaPagamentos;
-import com.fulltime.foodex.helper.update.ListaVendaVazia;
+import com.fulltime.foodex.helper.eventbus.ListaPagamentoVazia;
+import com.fulltime.foodex.helper.eventbus.ListaPagamentos;
+import com.fulltime.foodex.helper.eventbus.ShowFAB;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Pagamento;
-import com.fulltime.foodex.model.Venda;
-import com.fulltime.foodex.ui.fragments.bottomsheet.DetalhesVendaFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.PagamentosAdapter;
+import com.fulltime.foodex.ui.scroll.ScrollChangeListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
-import java.util.Objects;
-
-import static com.fulltime.foodex.ui.fragments.bottomsheet.ConstantesBottomSheet.BOTTOM_SHEET_FRAGMENT_TAG;
 
 public class PagamentosFragments extends Fragment {
     private final PagamentosAdapter pagamentosAdapter = new PagamentosAdapter();
@@ -66,6 +62,7 @@ public class PagamentosFragments extends Fragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        EventBus.getDefault().post(new ShowFAB());
     }
 
     @Override
@@ -103,5 +100,6 @@ public class PagamentosFragments extends Fragment {
         RecyclerView listaPagamentos = vendasView.findViewById(R.id.fragment_vendas_recycler_view);
         listaPagamentos.setLayoutManager(new LinearLayoutManager(getContext()));
         listaPagamentos.setAdapter(pagamentosAdapter);
+        listaPagamentos.addOnScrollListener(new ScrollChangeListener());
     }
 }

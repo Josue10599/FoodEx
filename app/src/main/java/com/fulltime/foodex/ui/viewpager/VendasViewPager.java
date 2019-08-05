@@ -24,14 +24,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.ui.fragments.PagamentosFragments;
 import com.fulltime.foodex.ui.fragments.VendasFragments;
-
-import java.util.Objects;
 
 public class VendasViewPager extends FragmentStatePagerAdapter{
 

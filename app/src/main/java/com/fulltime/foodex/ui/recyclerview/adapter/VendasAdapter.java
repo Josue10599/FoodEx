@@ -103,6 +103,9 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
             nomeProdutoVendido.setText(context.getString(R.string.quantity_and_product,
                     venda.getQuantidade(), produtoComprado.getNome()));
             valorDaVenda.setText(context.getString(R.string.sifra, venda.valorDaCompraFormatado()));
+            if (venda.getPago())
+                valorDaVenda.setTextColor(context.getResources().getColor(R.color.color_pago));
+            else valorDaVenda.setTextColor(context.getResources().getColor(R.color.color_nao_pago));
         }
     }
 }

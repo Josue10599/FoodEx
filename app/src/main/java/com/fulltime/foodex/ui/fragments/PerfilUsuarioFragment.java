@@ -18,6 +18,7 @@ package com.fulltime.foodex.ui.fragments;
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,17 +26,19 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.fulltime.foodex.firebase.authentication.Usuario;
-import com.fulltime.foodex.helper.update.FirstCorporation;
+import com.fulltime.foodex.helper.eventbus.FirstCorporation;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Empresa;
 import com.fulltime.foodex.ui.fragments.dialog.EditaEmpresaFragment;
 import com.fulltime.foodex.ui.image.ImageLoader;
+import com.fulltime.foodex.ui.scroll.ScrollChangeListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -67,8 +70,15 @@ public class PerfilUsuarioFragment extends Fragment {
         configuraFotoPerfil();
         configuraNomeUsuario();
         buttonBusinessConfig();
+        scrollViewConfig();
         UpdateData.getEmpresa();
         return perfilUsuarioFragment;
+    }
+
+    private void scrollViewConfig() {
+        ScrollView scrollView = perfilUsuarioFragment.findViewById(id.fragment_perfil_scroll);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            scrollView.setOnScrollChangeListener(new ScrollChangeListener());
     }
 
     private void configuraLoading() {

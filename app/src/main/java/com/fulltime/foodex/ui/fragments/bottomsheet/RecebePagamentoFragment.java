@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.helper.update.ListaCliente;
+import com.fulltime.foodex.helper.eventbus.ListaCliente;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.mask.MoneyMaskWatcher;
 import com.fulltime.foodex.model.Cliente;

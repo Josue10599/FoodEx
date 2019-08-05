@@ -28,16 +28,18 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.firebase.authentication.Usuario;
-import com.fulltime.foodex.helper.update.RemoveCliente;
-import com.fulltime.foodex.helper.update.RemoveProduto;
+import com.fulltime.foodex.helper.eventbus.HideFAB;
+import com.fulltime.foodex.helper.eventbus.RemoveCliente;
+import com.fulltime.foodex.helper.eventbus.RemoveProduto;
+import com.fulltime.foodex.helper.eventbus.ShowFAB;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Pagamento;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.fragments.ListaClientesFragment;
-import com.fulltime.foodex.ui.fragments.ListaFragment;
 import com.fulltime.foodex.ui.fragments.ListaProdutosFragment;
+import com.fulltime.foodex.ui.fragments.ListaRegistrosFragment;
 import com.fulltime.foodex.ui.fragments.PerfilUsuarioFragment;
 import com.fulltime.foodex.ui.fragments.bottomsheet.MenuOpcoesFragments;
 import com.google.android.material.badge.BadgeDrawable;
@@ -69,6 +71,7 @@ public class GerenciarActivity extends AppCompatActivity {
     private BadgeDrawable badgeCliente;
     private BadgeDrawable badgeProdutos;
     private BadgeDrawable badgeRegistros;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +169,24 @@ public class GerenciarActivity extends AppCompatActivity {
         setBadge(R.id.bottom_nav_sales_venda, badgeRegistros);
     }
 
+    @Subscribe
+    public void hideFab(HideFAB hide) {
+        hideFab();
+    }
+
+    @Subscribe
+    public void showFab(ShowFAB show) {
+        showFab();
+    }
+
+    private void hideFab() {
+        fab.hide();
+    }
+
+    private void showFab() {
+        fab.show();
+    }
+
     private void setBadge(int p, BadgeDrawable badgeCliente) {
         if (bottomNavigationView.getSelectedItemId() != p) {
             badgeCliente.setVisible(true);
@@ -178,7 +199,7 @@ public class GerenciarActivity extends AppCompatActivity {
     }
 
     private void configuraFloatingActionButton() {
-        FloatingActionButton fab = findViewById(R.id.activity_main_fab);
+        fab = findViewById(R.id.activity_main_fab);
         fab.setOnClickListener(v ->
                 new MenuOpcoesFragments().show(getSupportFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG));
     }
@@ -207,7 +228,7 @@ public class GerenciarActivity extends AppCompatActivity {
                 clearBadge(badgeProdutos);
                 break;
             case R.id.bottom_nav_sales_venda:
-                populaFragment(new ListaFragment());
+                populaFragment(new ListaRegistrosFragment());
                 clearBadge(badgeRegistros);
                 break;
             case R.id.bottom_nav_user_perfil:
@@ -215,6 +236,7 @@ public class GerenciarActivity extends AppCompatActivity {
                 break;
         }
         itemSelectedBottonNavigation = id;
+        showFab();
     }
 
     private void configuraBadge() {

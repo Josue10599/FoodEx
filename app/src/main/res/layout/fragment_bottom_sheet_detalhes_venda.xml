@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/keyline_4"
         android:gravity="end"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintBottom_toTopOf="@id/fragment_detalhes_venda_titulo_nome_produto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
         app:layout_constraintBottom_toBottomOf="@id/fragment_detalhes_venda_nome_produto"
         app:layout_constraintEnd_toEndOf="@id/fragment_detalhes_venda_titulo_quantidade_produto"
         app:layout_constraintStart_toStartOf="@id/fragment_detalhes_venda_titulo_quantidade_produto"
-        app:layout_constraintTop_toBottomOf="@id/fragment_detalhes_venda_titulo_quantidade_produto"
+        app:layout_constraintTop_toTopOf="@id/fragment_detalhes_venda_nome_produto"
         tools:text="5" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -90,7 +90,7 @@
         app:layout_constraintBottom_toBottomOf="@id/fragment_detalhes_venda_quantidade_produto"
         app:layout_constraintEnd_toEndOf="@id/fragment_detalhes_venda_titulo_valor_produto"
         app:layout_constraintStart_toStartOf="@id/fragment_detalhes_venda_titulo_valor_produto"
-        app:layout_constraintTop_toBottomOf="@id/fragment_detalhes_venda_titulo_valor_produto"
+        app:layout_constraintTop_toTopOf="@id/fragment_detalhes_venda_quantidade_produto"
         tools:text="R$ 10,00" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -142,5 +142,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_detalhes_venda_nome_cliente" />
+        app:layout_constraintTop_toBottomOf="@id/fragment_detalhes_venda_nome_cliente"
+        tools:text="@string/sale_made_without_payment" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,7 @@ import androidx.fragment.app.DialogFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.formatter.FormataTelefone;
-import com.fulltime.foodex.helper.update.ChangeEmpresa;
+import com.fulltime.foodex.helper.eventbus.ChangeEmpresa;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.mask.MaskWatcher;
 import com.fulltime.foodex.model.Empresa;

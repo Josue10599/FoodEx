@@ -22,8 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fulltime.foodex.helper.update.RemoveCliente;
-import com.fulltime.foodex.helper.update.RemoveProduto;
+import com.fulltime.foodex.helper.eventbus.RemoveCliente;
+import com.fulltime.foodex.helper.eventbus.RemoveProduto;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;

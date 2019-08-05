@@ -82,4 +82,5 @@
     <string name="sale_made_without_payment">Venda realizada sem receber pagamento</string>
     <string name="product_description">Descrição do Produto</string>
     <string name="payments">Pagamentos</string>
+    <string name="records">Registros</string>
 </resources>

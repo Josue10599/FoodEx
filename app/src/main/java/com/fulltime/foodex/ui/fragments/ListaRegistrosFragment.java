@@ -29,21 +29,23 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulltime.foodex.R;
+import com.fulltime.foodex.helper.eventbus.ShowFAB;
 import com.fulltime.foodex.ui.viewpager.VendasViewPager;
 import com.google.android.material.tabs.TabLayout;
 
+import org.greenrobot.eventbus.EventBus;
+
 import static androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
-public class ListaFragment extends Fragment {
+public class ListaRegistrosFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vendasView = inflater.inflate(R.layout.fragment_vendas, container, false);
+        View vendasView = inflater.inflate(R.layout.fragment_registros, container, false);
         configuraTab(vendasView);
         return vendasView;
     }
-
 
     private void configuraTab(View vendasView) {
         TabLayout tabLayout = vendasView.findViewById(R.id.fragment_vendas_tab_layout);
@@ -52,5 +54,9 @@ public class ListaFragment extends Fragment {
         VendasViewPager adapter = new VendasViewPager(getFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, getContext());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void showFab() {
+        EventBus.getDefault().post(new ShowFAB());
     }
 }

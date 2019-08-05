@@ -31,12 +31,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.helper.update.ListaVenda;
-import com.fulltime.foodex.helper.update.ListaVendaVazia;
+import com.fulltime.foodex.helper.eventbus.ListaVenda;
+import com.fulltime.foodex.helper.eventbus.ListaVendaVazia;
+import com.fulltime.foodex.helper.eventbus.ShowFAB;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.fragments.bottomsheet.DetalhesVendaFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.VendasAdapter;
+import com.fulltime.foodex.ui.scroll.ScrollChangeListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -64,6 +66,7 @@ public class VendasFragments extends Fragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        EventBus.getDefault().post(new ShowFAB());
     }
 
     @Override
@@ -103,5 +106,6 @@ public class VendasFragments extends Fragment {
         listaVendas.setAdapter(vendasAdapter);
         vendasAdapter.setOnItemClickListener((posicao, itemSelecionado) -> new DetalhesVendaFragment((Venda) itemSelecionado)
                 .show(Objects.requireNonNull(getFragmentManager()), BOTTOM_SHEET_FRAGMENT_TAG));
+        listaVendas.addOnScrollListener(new ScrollChangeListener());
     }
 }
