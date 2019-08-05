@@ -1,4 +1,4 @@
-package com.fulltime.foodex.helper.update;
+package com.fulltime.foodex.helper.eventbus;
 
 /*
   FoodEx is a sales management application.
@@ -18,5 +18,5 @@ package com.fulltime.foodex.helper.update;
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-public class ListaPagamentoVazia {
+public class ShowFAB {
 }

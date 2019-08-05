@@ -1,15 +1,15 @@
-package com.fulltime.foodex.helper.update;
+package com.fulltime.foodex.helper.eventbus;
 
 /*
   FoodEx is a sales management application.
   Copyright (C) 2019 Josue Lopes.
   <p>
-  This program is free software: you can redistribute it and/or modify
+  FoodEx is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
   <p>
-  This program is distributed in the hope that it will be useful,
+  FoodEx is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
@@ -18,16 +18,19 @@ package com.fulltime.foodex.helper.update;
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.fulltime.foodex.model.Empresa;
+import com.fulltime.foodex.model.Produto;
 
-public class FirstCorporation {
-    private final Empresa empresa;
+import java.util.List;
 
-    public FirstCorporation(Empresa empresa) {
-        this.empresa = empresa;
+public class ListaProduto {
+
+    private final List<Produto> produtos;
+
+    public ListaProduto(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 
-    public Empresa getEmpresa() {
-        return this.empresa;
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 }

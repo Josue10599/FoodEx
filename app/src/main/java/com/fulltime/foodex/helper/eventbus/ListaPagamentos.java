@@ -1,4 +1,4 @@
-package com.fulltime.foodex.helper.update;
+package com.fulltime.foodex.helper.eventbus;
 
 /*
   FoodEx is a sales management application.
@@ -18,17 +18,18 @@ package com.fulltime.foodex.helper.update;
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.fulltime.foodex.model.Empresa;
+import com.fulltime.foodex.model.Pagamento;
 
-public class ChangeEmpresa {
+import java.util.List;
 
-    private final Empresa empresa;
+public class ListaPagamentos {
+    private final List<Pagamento> pagamentos;
 
-    ChangeEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public ListaPagamentos(List<Pagamento> pagamentos) {
+        this.pagamentos = pagamentos;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
+    public List<Pagamento> getPagamentos() {
+        return pagamentos;
     }
 }

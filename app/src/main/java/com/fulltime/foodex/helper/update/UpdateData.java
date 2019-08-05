@@ -20,6 +20,18 @@ package com.fulltime.foodex.helper.update;
 
 import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.firebase.firestore.FirestoreAdapter;
+import com.fulltime.foodex.helper.eventbus.ChangeEmpresa;
+import com.fulltime.foodex.helper.eventbus.FirstCorporation;
+import com.fulltime.foodex.helper.eventbus.ListaCliente;
+import com.fulltime.foodex.helper.eventbus.ListaClienteVazia;
+import com.fulltime.foodex.helper.eventbus.ListaPagamentoVazia;
+import com.fulltime.foodex.helper.eventbus.ListaPagamentos;
+import com.fulltime.foodex.helper.eventbus.ListaProduto;
+import com.fulltime.foodex.helper.eventbus.ListaProdutoVazia;
+import com.fulltime.foodex.helper.eventbus.ListaVenda;
+import com.fulltime.foodex.helper.eventbus.ListaVendaVazia;
+import com.fulltime.foodex.helper.eventbus.RemoveCliente;
+import com.fulltime.foodex.helper.eventbus.RemoveProduto;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Empresa;
 import com.fulltime.foodex.model.Pagamento;
