@@ -20,7 +20,7 @@
             android:layout_marginStart="@dimen/keyline_2"
             android:layout_marginTop="@dimen/keyline_2"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline5"
             app:layout_constraintEnd_toStartOf="@id/item_produto_valor"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"

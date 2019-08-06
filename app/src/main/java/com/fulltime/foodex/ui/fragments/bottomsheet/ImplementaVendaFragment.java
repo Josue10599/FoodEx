@@ -31,10 +31,11 @@ import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.formatter.FormataDinheiro;
-import com.fulltime.foodex.helper.update.ListaCliente;
-import com.fulltime.foodex.helper.update.ListaProduto;
+import com.fulltime.foodex.helper.eventbus.ListaCliente;
+import com.fulltime.foodex.helper.eventbus.ListaProduto;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
+import com.fulltime.foodex.model.Pagamento;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.searchablespinner.SearchableSpinnerAdapter;
@@ -136,8 +137,11 @@ public class ImplementaVendaFragment extends BottomSheetDialogFragment {
         buttonCadastrar = bottomSheetAdicionarVenda.findViewById(R.id.bottom_sheet_botao_cadastrar);
         buttonCadastrar.setOnClickListener(v -> {
             if (clienteEProdutoSelecionado()) {
-                UpdateData.atualizaVenda(new Venda(clienteSelecionado, vendaPaga, produtoSelecionado, quantidade));
-                UpdateData.atualizaCliente(clienteSelecionado);
+                Venda venda = new Venda(clienteSelecionado, vendaPaga, produtoSelecionado, quantidade);
+                UpdateData.atualizaVenda(venda);
+                if (!vendaPaga) UpdateData.atualizaCliente(clienteSelecionado);
+                else
+                    UpdateData.atualizaPagamento(new Pagamento(clienteSelecionado, venda.valorDaCompraFormatado()));
                 dismiss();
             }
         });

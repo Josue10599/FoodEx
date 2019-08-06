@@ -88,8 +88,8 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
     }
 
     public void removeCliente(int posicao) {
-        notifyItemRemoved(posicao);
         clientesSalvos.remove(posicao);
+        notifyItemRemoved(posicao);
     }
 
     public void movimentaCliente(int posicaoInicial, int posicaoFinal) {
@@ -105,7 +105,6 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
     class ClienteViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imagemCliente;
         private final TextView nomeCliente;
-        private final TextView telefoneCliente;
         private final TextView devendoCliente;
         private Cliente cliente;
 
@@ -113,19 +112,15 @@ public class ClienteAdapter extends RecyclerView.Adapter<ClienteAdapter.ClienteV
             super(itemView);
             imagemCliente = itemView.findViewById(R.id.item_cliente_foto);
             nomeCliente = itemView.findViewById(R.id.item_cliente_nome);
-            telefoneCliente = itemView.findViewById(R.id.item_cliente_telefone);
             devendoCliente = itemView.findViewById(R.id.item_cliente_valor);
-            itemView.setOnClickListener(v ->
-                    onItemClickListener.onItemClickListener(getAdapterPosition(), cliente));
+            if (onItemClickListener != null)
+                itemView.setOnClickListener(v -> onItemClickListener.onItemClickListener(getAdapterPosition(), cliente));
         }
 
         void bindView(@NonNull Cliente cliente) {
             this.cliente = cliente;
             imagemCliente.setImageDrawable(new ImageLoader(context).getDrawableCliente(cliente));
             nomeCliente.setText(cliente.nomeCompleto());
-            String telefone = cliente.getTelefone();
-            if (telefone.isEmpty()) telefoneCliente.setVisibility(View.GONE);
-            else telefoneCliente.setText(telefone);
             devendoCliente.setText(context.getString(R.string.sifra, cliente.getValorEmDeficit()));
             if (cliente.estaDevendo())
                 devendoCliente.setTextColor(context.getResources().getColor(R.color.color_nao_pago));

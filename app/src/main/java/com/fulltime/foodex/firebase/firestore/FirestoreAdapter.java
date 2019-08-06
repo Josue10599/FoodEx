@@ -21,6 +21,7 @@ package com.fulltime.foodex.firebase.firestore;
 import com.fulltime.foodex.firebase.authentication.Usuario;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Empresa;
+import com.fulltime.foodex.model.Pagamento;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,11 +31,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
+import static com.google.firebase.firestore.Query.Direction.ASCENDING;
 import static com.google.firebase.firestore.Query.Direction.DESCENDING;
 
 public class FirestoreAdapter {
@@ -46,6 +47,9 @@ public class FirestoreAdapter {
     private static final String VENDAS_CAMPO_DATA_VENDA = "dataVenda";
     private static final String USUARIO = "usuario";
     private static final String EMPRESA = "empresa";
+    private static final String PAGAMENTOS = "pagamentos";
+    private static final String PAGAMENTO_CAMPO_DATA_PAGAMENTO = "dataPagamento";
+    private static final String PRODUTO_CAMPO_VALOR = "valor";
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -66,18 +70,26 @@ public class FirestoreAdapter {
 
     public void getAllCliente(EventListener<QuerySnapshot> eventListener) {
         getUser().collection(CLIENTES)
-                .orderBy(CLIENTES_CAMPO_NOME, Query.Direction.ASCENDING)
-                .orderBy(CLIENTES_CAMPO_SOBRENOME, Query.Direction.ASCENDING)
+                .orderBy(CLIENTES_CAMPO_NOME, ASCENDING)
+                .orderBy(CLIENTES_CAMPO_SOBRENOME, ASCENDING)
                 .addSnapshotListener(eventListener);
     }
 
     public void getProdutos(EventListener<QuerySnapshot> eventListener) {
-        getUser().collection(PRODUTOS).addSnapshotListener(eventListener);
+        getUser().collection(PRODUTOS)
+                .orderBy(PRODUTO_CAMPO_VALOR, DESCENDING)
+                .addSnapshotListener(eventListener);
     }
 
     public void getVendas(EventListener<QuerySnapshot> eventListener) {
         getUser().collection(VENDAS)
                 .orderBy(VENDAS_CAMPO_DATA_VENDA, DESCENDING)
+                .addSnapshotListener(eventListener);
+    }
+
+    public void getPagamentos(EventListener<QuerySnapshot> eventListener) {
+        getUser().collection(PAGAMENTOS)
+                .orderBy(PAGAMENTO_CAMPO_DATA_PAGAMENTO, DESCENDING)
                 .addSnapshotListener(eventListener);
     }
 
@@ -100,6 +112,11 @@ public class FirestoreAdapter {
                 .addOnFailureListener(onFailureListener);
     }
 
+    public void setPagamento(Pagamento pagamento, OnFailureListener onFailureListener) {
+        getDocument(PAGAMENTOS, pagamento.getId()).set(pagamento)
+                .addOnFailureListener(onFailureListener);
+    }
+
     public void setEmpresa(Empresa empresa,
                            OnSuccessListener<Void> onSuccessListener,
                            OnFailureListener onFailureListener) {
@@ -109,20 +126,16 @@ public class FirestoreAdapter {
     }
 
     public void removeCliente(Cliente cliente,
-                              OnSuccessListener<Void> onSuccessListener,
                               OnFailureListener onFailureListener) {
         getDocument(CLIENTES, cliente.getId())
                 .delete()
-                .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
 
     public void removeProduto(Produto produto,
-                              OnSuccessListener<Void> onSuccessListener,
                               OnFailureListener onFailureListener) {
         getDocument(PRODUTOS, produto.getId())
                 .delete()
-                .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
 

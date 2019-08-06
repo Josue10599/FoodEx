@@ -31,6 +31,7 @@ import com.fulltime.foodex.R;
 import com.fulltime.foodex.model.Cliente;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
+import com.fulltime.foodex.ui.recyclerview.adapter.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
 
     private List<Venda> vendasRealizadas = new ArrayList<>();
     private Context context;
+    private OnItemClickListener onItemClickListener;
 
     @NonNull
     @Override
@@ -58,10 +60,14 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
         return vendasRealizadas.size();
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     public void adicionaVenda(Venda venda) {
         if (!vendasRealizadas.contains(venda)) {
             vendasRealizadas.add(venda);
-            notifyItemInserted(vendasRealizadas.size() - 1);
+            notifyItemInserted(0);
         }
     }
 
@@ -75,27 +81,31 @@ public class VendasAdapter extends RecyclerView.Adapter<VendasAdapter.VendasView
         final TextView dataVenda;
         final TextView nomeClienteComprador;
         final TextView nomeProdutoVendido;
-        final TextView descricaoProduto;
         final TextView valorDaVenda;
+        Venda venda;
 
         VendasViewHolder(@NonNull View itemView) {
             super(itemView);
             dataVenda = itemView.findViewById(R.id.item_venda_data_venda);
             nomeClienteComprador = itemView.findViewById(R.id.item_venda_nome_cliente_comprador);
-            nomeProdutoVendido = itemView.findViewById(R.id.item_venda_nome_produto_vendido);
-            descricaoProduto = itemView.findViewById(R.id.item_venda_descricao_produto_vendido);
+            nomeProdutoVendido = itemView.findViewById(R.id.item_venda_nome_e_quantidade_produto_vendido);
             valorDaVenda = itemView.findViewById(R.id.item_venda_valor_da_venda);
+            if (onItemClickListener != null)
+                itemView.setOnClickListener(v -> onItemClickListener.onItemClickListener(getAdapterPosition(), venda));
         }
 
         void bindViewHolder(Venda venda) {
+            this.venda = venda;
             Cliente comprador = venda.getCliente();
             Produto produtoComprado = venda.getProdutoVendido();
             dataVenda.setText(venda.dataVendaFormatada());
             nomeClienteComprador.setText(comprador.nomeCompleto());
-            nomeProdutoVendido.setText(produtoComprado.getNome());
-            descricaoProduto.setText(produtoComprado.getDescricao());
-            valorDaVenda.setText(String.format(context.getString(R.string.sifra),
-                    venda.getValorDaCompra()));
+            nomeProdutoVendido.setText(context.getString(R.string.quantity_and_product,
+                    venda.getQuantidade(), produtoComprado.getNome()));
+            valorDaVenda.setText(context.getString(R.string.sifra, venda.valorDaCompraFormatado()));
+            if (venda.getPago())
+                valorDaVenda.setTextColor(context.getResources().getColor(R.color.color_pago));
+            else valorDaVenda.setTextColor(context.getResources().getColor(R.color.color_nao_pago));
         }
     }
 }

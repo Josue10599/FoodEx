@@ -55,4 +55,10 @@ public class ClienteTest {
         Assert.assertThat(cliente.estaDevendo(), is(equalTo(true)));
     }
 
+    @Test
+    public void deve_DevolverONumeroCadastradoSemFormatacao() {
+        cliente.setTelefone("(14) 0000-0000");
+        Assert.assertEquals("1400000000", cliente.telefoneSemFormatacao());
+    }
+
 }

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_data_compra"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_4"
+        android:gravity="end"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintBottom_toTopOf="@id/fragment_detalhes_venda_titulo_nome_produto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="10/05/2019" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_titulo_nome_produto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_2"
+        android:gravity="center"
+        android:text="@string/product"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        app:layout_constraintBottom_toTopOf="@id/fragment_detalhes_venda_nome_produto"
+        app:layout_constraintEnd_toStartOf="@id/fragment_detalhes_venda_titulo_quantidade_produto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_detalhes_venda_data_compra" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_titulo_quantidade_produto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/quantity"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_detalhes_venda_titulo_nome_produto"
+        app:layout_constraintEnd_toStartOf="@id/fragment_detalhes_venda_titulo_valor_produto"
+        app:layout_constraintStart_toEndOf="@id/fragment_detalhes_venda_titulo_nome_produto"
+        app:layout_constraintTop_toTopOf="@id/fragment_detalhes_venda_titulo_nome_produto"
+        tools:text="Quantidade" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_titulo_valor_produto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/value"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_detalhes_venda_titulo_quantidade_produto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fragment_detalhes_venda_titulo_quantidade_produto"
+        app:layout_constraintTop_toTopOf="@id/fragment_detalhes_venda_titulo_quantidade_produto"
+        tools:text="Valor" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_nome_produto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+        app:layout_constraintBottom_toTopOf="@id/fragment_detalhes_venda_titulo_descricao_produto"
+        app:layout_constraintEnd_toEndOf="@id/fragment_detalhes_venda_titulo_nome_produto"
+        app:layout_constraintStart_toStartOf="@id/fragment_detalhes_venda_titulo_nome_produto"
+        app:layout_constraintTop_toBottomOf="@id/fragment_detalhes_venda_titulo_nome_produto"
+        tools:text="Pastel" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_quantidade_produto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_detalhes_venda_nome_produto"
+        app:layout_constraintEnd_toEndOf="@id/fragment_detalhes_venda_titulo_quantidade_produto"
+        app:layout_constraintStart_toStartOf="@id/fragment_detalhes_venda_titulo_quantidade_produto"
+        app:layout_constraintTop_toTopOf="@id/fragment_detalhes_venda_nome_produto"
+        tools:text="5" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_valor_produto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_detalhes_venda_quantidade_produto"
+        app:layout_constraintEnd_toEndOf="@id/fragment_detalhes_venda_titulo_valor_produto"
+        app:layout_constraintStart_toStartOf="@id/fragment_detalhes_venda_titulo_valor_produto"
+        app:layout_constraintTop_toTopOf="@id/fragment_detalhes_venda_quantidade_produto"
+        tools:text="R$ 10,00" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_titulo_descricao_produto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/keyline_2"
+        android:gravity="center"
+        android:text="@string/product_description"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline6"
+        app:layout_constraintBottom_toTopOf="@id/fragment_detalhes_venda_descricao_produto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_detalhes_venda_nome_produto" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_descricao_produto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/keyline_2"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+        app:layout_constraintBottom_toTopOf="@id/fragment_detalhes_venda_nome_cliente"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_detalhes_venda_titulo_descricao_produto"
+        tools:text="Recheio de carne moída" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_nome_cliente"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_2"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+        app:layout_constraintBottom_toTopOf="@id/fragment_detalhes_venda_estado_pagamento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_detalhes_venda_descricao_produto"
+        tools:text="Adquirido por cliente" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fragment_detalhes_venda_estado_pagamento"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/keyline_4"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MyTheme.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_detalhes_venda_nome_cliente"
+        tools:text="@string/sale_made_without_payment" />
+</androidx.constraintlayout.widget.ConstraintLayout>

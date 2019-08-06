@@ -32,13 +32,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.helper.update.ListaProduto;
-import com.fulltime.foodex.helper.update.ListaProdutoVazia;
+import com.fulltime.foodex.helper.eventbus.ListaProduto;
+import com.fulltime.foodex.helper.eventbus.ListaProdutoVazia;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaProdutoFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ProdutoAdapter;
 import com.fulltime.foodex.ui.recyclerview.callback.ItemTouchCallback;
+import com.fulltime.foodex.ui.scroll.ScrollChangeListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -105,6 +106,7 @@ public class ListaProdutosFragment extends Fragment {
         recyclerViewProdutos.setAdapter(produtoAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(recyclerViewProdutos);
+        recyclerViewProdutos.addOnScrollListener(new ScrollChangeListener());
     }
 
     private void configuraProdutoAdapter() {

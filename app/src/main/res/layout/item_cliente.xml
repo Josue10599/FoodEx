@@ -15,51 +15,40 @@
 
         <ImageView
             android:id="@+id/item_cliente_foto"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginStart="@dimen/keyline_4"
             android:contentDescription="@string/client_photo"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintCircleRadius="@dimen/keyline_5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp"
+            tools:layout_editor_absoluteX="80dp"
+            tools:layout_editor_absoluteY="80dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/item_cliente_nome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/item_cliente_foto"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.02"
+            app:layout_constraintTop_toTopOf="@id/item_cliente_foto"
+            app:layout_constraintVertical_bias="0"
             tools:text="Josue Lopes" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/item_cliente_telefone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keyline_2"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            app:layout_constraintEnd_toEndOf="@+id/item_cliente_nome"
-            app:layout_constraintStart_toStartOf="@+id/item_cliente_nome"
-            app:layout_constraintTop_toBottomOf="@id/item_cliente_nome"
-            tools:text="(14) 99802-1667" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/item_cliente_valor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/keyline_2"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_marginTop="@dimen/keyline_1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@android:color/holo_red_light"
-            app:layout_constraintEnd_toEndOf="@+id/item_cliente_telefone"
-            app:layout_constraintStart_toStartOf="@+id/item_cliente_telefone"
-            app:layout_constraintTop_toBottomOf="@id/item_cliente_telefone"
+            app:layout_constraintEnd_toEndOf="@+id/item_cliente_nome"
+            app:layout_constraintStart_toStartOf="@+id/item_cliente_nome"
+            app:layout_constraintTop_toBottomOf="@id/item_cliente_nome"
             tools:text="R$ 10,00" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

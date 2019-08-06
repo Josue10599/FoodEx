@@ -76,6 +76,13 @@ public class Cliente implements Serializable {
         return telefone;
     }
 
+    public String telefoneSemFormatacao() {
+        return telefone.replace("(", "")
+                .replace(")", "")
+                .replace(" ", "")
+                .replace("-", "");
+    }
+
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }

@@ -28,15 +28,18 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.firebase.authentication.Usuario;
-import com.fulltime.foodex.helper.update.RemoveCliente;
-import com.fulltime.foodex.helper.update.RemoveProduto;
+import com.fulltime.foodex.helper.eventbus.HideFAB;
+import com.fulltime.foodex.helper.eventbus.RemoveCliente;
+import com.fulltime.foodex.helper.eventbus.RemoveProduto;
+import com.fulltime.foodex.helper.eventbus.ShowFAB;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
+import com.fulltime.foodex.model.Pagamento;
 import com.fulltime.foodex.model.Produto;
 import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.fragments.ListaClientesFragment;
 import com.fulltime.foodex.ui.fragments.ListaProdutosFragment;
-import com.fulltime.foodex.ui.fragments.ListaVendasFragment;
+import com.fulltime.foodex.ui.fragments.ListaRegistrosFragment;
 import com.fulltime.foodex.ui.fragments.PerfilUsuarioFragment;
 import com.fulltime.foodex.ui.fragments.bottomsheet.MenuOpcoesFragments;
 import com.google.android.material.badge.BadgeDrawable;
@@ -67,7 +70,8 @@ public class GerenciarActivity extends AppCompatActivity {
     private View coordinatorLayoutForSnackBar;
     private BadgeDrawable badgeCliente;
     private BadgeDrawable badgeProdutos;
-    private BadgeDrawable badgeVendas;
+    private BadgeDrawable badgeRegistros;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +96,6 @@ public class GerenciarActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
-        itemSelectedBottonNavigation = bottomNavigationView.getSelectedItemId();
         super.onDestroy();
     }
 
@@ -126,29 +129,22 @@ public class GerenciarActivity extends AppCompatActivity {
     @Subscribe
     public void onDeleteProduto(RemoveProduto removeProduto) {
         String dadosProduto = removeProduto.getProduto().getNome() + " (" + removeProduto.getProduto().getDescricao() + ")";
-        String textoFormatado = String.format(getString(R.string.deseja_apagar), dadosProduto);
+        String textoFormatado = getString(R.string.deseja_apagar, dadosProduto);
         new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.delete_product)
                 .setMessage(textoFormatado)
-                .setPositiveButton(R.string.delete, (dialogInterface, i) ->
-                        UpdateData.removeProduto(removeProduto.getProduto(),
-                                removeProduto.getAdapter(),
-                                removeProduto.getPosicao()))
+                .setPositiveButton(R.string.delete, (dialogInterface, i) -> UpdateData.removeProduto(removeProduto))
                 .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 
     @Subscribe
     public void onDeleteCliente(RemoveCliente removeCliente) {
-        String textoFormatado = String.format(getString(R.string.deseja_apagar),
-                removeCliente.getCliente().nomeCompleto());
+        String textoFormatado = getString(R.string.deseja_apagar, removeCliente.getCliente().nomeCompleto());
         new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.delete_client)
                 .setMessage(textoFormatado)
-                .setPositiveButton(R.string.delete, (dialogInterface, i) ->
-                        UpdateData.removerCliente(removeCliente.getCliente(),
-                                removeCliente.getAdapter(),
-                                removeCliente.getPosicao()))
+                .setPositiveButton(R.string.delete, (dialogInterface, i) -> UpdateData.removerCliente(removeCliente))
                 .setNegativeButton(R.string.cancel, null)
                 .show();
     }
@@ -165,7 +161,30 @@ public class GerenciarActivity extends AppCompatActivity {
 
     @Subscribe
     public void onCreateVenda(Venda venda) {
-        setBadge(R.id.bottom_nav_sales_venda, badgeVendas);
+        setBadge(R.id.bottom_nav_sales_venda, badgeRegistros);
+    }
+
+    @Subscribe
+    public void onCreateVenda(Pagamento pagamento) {
+        setBadge(R.id.bottom_nav_sales_venda, badgeRegistros);
+    }
+
+    @Subscribe
+    public void hideFab(HideFAB hide) {
+        hideFab();
+    }
+
+    @Subscribe
+    public void showFab(ShowFAB show) {
+        showFab();
+    }
+
+    private void hideFab() {
+        fab.hide();
+    }
+
+    private void showFab() {
+        fab.show();
     }
 
     private void setBadge(int p, BadgeDrawable badgeCliente) {
@@ -180,7 +199,7 @@ public class GerenciarActivity extends AppCompatActivity {
     }
 
     private void configuraFloatingActionButton() {
-        FloatingActionButton fab = findViewById(R.id.activity_main_fab);
+        fab = findViewById(R.id.activity_main_fab);
         fab.setOnClickListener(v ->
                 new MenuOpcoesFragments().show(getSupportFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG));
     }
@@ -191,9 +210,11 @@ public class GerenciarActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(itemSelectedBottonNavigation);
         setFragment(itemSelectedBottonNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            setFragment(item.getItemId());
+            if (item.getItemId() != itemSelectedBottonNavigation)
+                setFragment(item.getItemId());
             return true;
         });
+        bottomNavigationView.setOnNavigationItemReselectedListener(null);
     }
 
     private void setFragment(int id) {
@@ -207,22 +228,24 @@ public class GerenciarActivity extends AppCompatActivity {
                 clearBadge(badgeProdutos);
                 break;
             case R.id.bottom_nav_sales_venda:
-                populaFragment(new ListaVendasFragment());
-                clearBadge(badgeVendas);
+                populaFragment(new ListaRegistrosFragment());
+                clearBadge(badgeRegistros);
                 break;
             case R.id.bottom_nav_user_perfil:
                 populaFragment(new PerfilUsuarioFragment(usuario));
                 break;
         }
+        itemSelectedBottonNavigation = id;
+        showFab();
     }
 
     private void configuraBadge() {
         badgeCliente = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_clients_cliente);
         badgeProdutos = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_products_produto);
-        badgeVendas = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_sales_venda);
+        badgeRegistros = bottomNavigationView.getOrCreateBadge(R.id.bottom_nav_sales_venda);
         clearBadge(badgeCliente);
         clearBadge(badgeProdutos);
-        clearBadge(badgeVendas);
+        clearBadge(badgeRegistros);
     }
 
     private void clearBadge(BadgeDrawable badgeCliente) {

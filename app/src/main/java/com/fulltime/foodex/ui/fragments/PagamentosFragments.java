@@ -31,29 +31,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.helper.update.ListaVenda;
-import com.fulltime.foodex.helper.update.ListaVendaVazia;
+import com.fulltime.foodex.helper.eventbus.ListaPagamentoVazia;
+import com.fulltime.foodex.helper.eventbus.ListaPagamentos;
 import com.fulltime.foodex.helper.update.UpdateData;
-import com.fulltime.foodex.model.Venda;
-import com.fulltime.foodex.ui.recyclerview.adapter.VendasAdapter;
+import com.fulltime.foodex.model.Pagamento;
+import com.fulltime.foodex.ui.recyclerview.adapter.PagamentosAdapter;
+import com.fulltime.foodex.ui.scroll.ScrollChangeListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-public class ListaVendasFragment extends Fragment {
-
-    private final VendasAdapter vendasAdapter = new VendasAdapter();
+public class PagamentosFragments extends Fragment {
+    private final PagamentosAdapter pagamentosAdapter = new PagamentosAdapter();
     private SwipeRefreshLayout swipe;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View vendasView = inflater.inflate(R.layout.fragment_vendas, container, false);
+        View vendasView = inflater.inflate(R.layout.fragment_lista, container, false);
         configuraSwipe(vendasView);
         configurarRecyclerView(vendasView);
-        UpdateData.listaVendas();
+        UpdateData.listaPagamentos();
         return vendasView;
     }
 
@@ -70,33 +70,34 @@ public class ListaVendasFragment extends Fragment {
     }
 
     @Subscribe
-    public void onCreateVenda(Venda venda) {
+    public void onCreatePagamento(Pagamento pagamento) {
         swipe.setRefreshing(false);
-        vendasAdapter.adicionaVenda(venda);
-        UpdateData.listaVendas();
+        pagamentosAdapter.adicionaPagamento(pagamento);
+        UpdateData.listaPagamentos();
     }
 
     @Subscribe
-    public void onGetListaVenda(ListaVenda listaVenda) {
-        List<Venda> vendas = listaVenda.getVendas();
-        if (vendas.size() > 0) swipe.setRefreshing(false);
-        vendasAdapter.setLista(vendas);
+    public void onGetListaPagamentos(ListaPagamentos listaPagamentos) {
+        List<Pagamento> pagamentos = listaPagamentos.getPagamentos();
+        if (pagamentos.size() > 0) swipe.setRefreshing(false);
+        pagamentosAdapter.setLista(pagamentos);
     }
 
     @Subscribe
-    public void voidListaVenda(ListaVendaVazia listaVendaVazia) {
+    public void voidListaPagamento(ListaPagamentoVazia listaPagamentoVazia) {
         swipe.setRefreshing(false);
     }
 
     private void configuraSwipe(View view) {
         swipe = view.findViewById(R.id.swipe_refresh);
         swipe.setRefreshing(true);
-        swipe.setOnRefreshListener(UpdateData::listaVendas);
+        swipe.setOnRefreshListener(UpdateData::listaPagamentos);
     }
 
     private void configurarRecyclerView(View vendasView) {
-        RecyclerView listaVendas = vendasView.findViewById(R.id.fragment_vendas_recycler_view);
-        listaVendas.setLayoutManager(new LinearLayoutManager(getContext()));
-        listaVendas.setAdapter(vendasAdapter);
+        RecyclerView listaPagamentos = vendasView.findViewById(R.id.fragment_vendas_recycler_view);
+        listaPagamentos.setLayoutManager(new LinearLayoutManager(getContext()));
+        listaPagamentos.setAdapter(pagamentosAdapter);
+        listaPagamentos.addOnScrollListener(new ScrollChangeListener());
     }
 }

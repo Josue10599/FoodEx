@@ -36,6 +36,7 @@ public class Venda implements Serializable {
     private Produto produtoVendido;
     private BigDecimal valorDaCompra;
     private int quantidade;
+    private boolean pago;
 
     public Venda() {
         this.id = UUID.randomUUID().toString();
@@ -53,6 +54,7 @@ public class Venda implements Serializable {
         this.valorDaCompra = new BigDecimal("0");
         this.quantidade = quantidade;
         calculaValorDaCompra(quantidade);
+        this.pago = pago;
         if (!pago) {
             cliente.setValorEmDeficit(formataDinheiro.formataValor(valorDaCompra));
         }
@@ -100,12 +102,16 @@ public class Venda implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public String getValorDaCompra() {
+    public String valorDaCompraFormatado() {
         return formataDinheiro.formataValor(valorDaCompra);
     }
 
-    public void setValorDaCompra(String valorDaCompra) {
-        this.valorDaCompra = formataDinheiro.getBigDecimal(valorDaCompra);
+    public double getValorDaCompra() {
+        return this.valorDaCompra.doubleValue();
+    }
+
+    public void setValorDaCompra(double valorDaCompra) {
+        this.valorDaCompra = BigDecimal.valueOf(valorDaCompra);
     }
 
     public String getId() {
@@ -125,5 +131,13 @@ public class Venda implements Serializable {
     @Override
     public int hashCode() {
         return getId() != null ? getId().hashCode() : 0;
+    }
+
+    public boolean getPago() {
+        return pago;
+    }
+
+    public void setPago(boolean pago) {
+        this.pago = pago;
     }
 }

@@ -31,13 +31,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.helper.update.ListaCliente;
-import com.fulltime.foodex.helper.update.ListaClienteVazia;
+import com.fulltime.foodex.helper.eventbus.ListaCliente;
+import com.fulltime.foodex.helper.eventbus.ListaClienteVazia;
+import com.fulltime.foodex.helper.eventbus.ShowFAB;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Cliente;
-import com.fulltime.foodex.ui.fragments.bottomsheet.ImplementaClienteFragment;
+import com.fulltime.foodex.ui.fragments.bottomsheet.MenuClientFragment;
 import com.fulltime.foodex.ui.recyclerview.adapter.ClienteAdapter;
 import com.fulltime.foodex.ui.recyclerview.callback.ItemTouchCallback;
+import com.fulltime.foodex.ui.scroll.ScrollChangeListener;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 
@@ -128,6 +130,7 @@ public class ListaClientesFragment extends Fragment {
                 if (tab.getPosition() == 1)
                     clienteAdapter.setLista(devedores);
                 else clienteAdapter.setLista(todosClientes);
+                EventBus.getDefault().post(new ShowFAB());
             }
 
             @Override
@@ -145,7 +148,7 @@ public class ListaClientesFragment extends Fragment {
     private void configuraAdapter() {
         clienteAdapter.setOnItemClickListener((posicao, clienteSelecionado) -> {
             assert getFragmentManager() != null;
-            new ImplementaClienteFragment((Cliente) clienteSelecionado)
+            new MenuClientFragment((Cliente) clienteSelecionado)
                     .show(getFragmentManager(), BOTTOM_SHEET_FRAGMENT_TAG);
         });
     }
@@ -156,6 +159,7 @@ public class ListaClientesFragment extends Fragment {
         listaCliente.setAdapter(clienteAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(listaCliente);
+        listaCliente.addOnScrollListener(new ScrollChangeListener());
     }
 
     private List<Cliente> filtraDevedores(List<Cliente> clientes) {

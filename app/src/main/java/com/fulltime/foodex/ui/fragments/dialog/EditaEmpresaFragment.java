@@ -33,6 +33,7 @@ import androidx.fragment.app.DialogFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.formatter.FormataTelefone;
+import com.fulltime.foodex.helper.eventbus.ChangeEmpresa;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.mask.MaskWatcher;
 import com.fulltime.foodex.model.Empresa;
@@ -41,20 +42,19 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.Objects;
 
 import static com.fulltime.foodex.model.Empresa.VAZIO;
 
 public class EditaEmpresaFragment extends DialogFragment {
-    private final Empresa empresa;
+    private Empresa empresa = new Empresa();
     private EditText editTextNome;
     private EditText editTextEmail;
     private EditText editTextEndereco;
     private EditText editTextTelefone;
-
-    public EditaEmpresaFragment(Empresa empresa) {
-        this.empresa = empresa;
-    }
 
     @Nullable
     @Override
@@ -66,7 +66,43 @@ public class EditaEmpresaFragment extends DialogFragment {
         configuraEnderecoEmpresa(dialogConfiguraDados);
         configuraBotaoSalvar(dialogConfiguraDados);
         configuraBotaoLogout(dialogConfiguraDados);
+        UpdateData.getEmpresa();
         return dialogConfiguraDados;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            Objects.requireNonNull(dialog.getWindow()).
+                    setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void getEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+        setDataEmpresa();
+    }
+
+    @Subscribe
+    public void sucessChange(ChangeEmpresa empresa) {
+        dismiss();
+    }
+
+    private void setDataEmpresa() {
+        empresaSetText(empresa.getEnderecoEmpresa(), editTextEndereco);
+        empresaSetText(empresa.getEmailEmpresa(), editTextEmail);
+        empresaSetText(empresa.getTelefoneEmpresa(), editTextTelefone);
+        empresaSetText(empresa.getNomeEmpresa(), editTextNome);
     }
 
     private void configuraBotaoLogout(View view) {
@@ -84,14 +120,13 @@ public class EditaEmpresaFragment extends DialogFragment {
         empresa.setTelefoneEmpresa(editTextTelefone.getText().toString());
         empresa.setEmailEmpresa(editTextEmail.getText().toString());
         empresa.setEnderecoEmpresa(editTextEndereco.getText().toString());
-        UpdateData.setEmpresa(empresa, empresa1 -> dismiss());
+        UpdateData.setEmpresa(empresa);
     }
 
     private void configuraEnderecoEmpresa(View view) {
         MaterialButton buttonConfiguraEnderecoEmpresa = view.findViewById(R.id.fragment_dialog_configura_endereco_empresa);
         TextInputLayout inputLayoutEnderecoEmpresa = view.findViewById(R.id.fragment_dialog_endereco_empresa);
         editTextEndereco = inputLayoutEnderecoEmpresa.getEditText();
-        empresaSetText(empresa.getEnderecoEmpresa(), editTextEndereco);
         buttonConfiguraEnderecoEmpresa.setOnClickListener(view1 -> toggleTextInputLayout(inputLayoutEnderecoEmpresa));
     }
 
@@ -99,7 +134,6 @@ public class EditaEmpresaFragment extends DialogFragment {
         MaterialButton buttonConfiguraEmailEmpresa = view.findViewById(R.id.fragment_dialog_configura_email_empresa);
         TextInputLayout inputLayoutEmailEmpresa = view.findViewById(R.id.fragment_dialog_email_empresa);
         editTextEmail = inputLayoutEmailEmpresa.getEditText();
-        empresaSetText(empresa.getEmailEmpresa(), editTextEmail);
         buttonConfiguraEmailEmpresa.setOnClickListener(view1 -> toggleTextInputLayout(inputLayoutEmailEmpresa));
     }
 
@@ -109,7 +143,6 @@ public class EditaEmpresaFragment extends DialogFragment {
         editTextTelefone = inputLayoutTelefoneEmpresa.getEditText();
         editTextTelefone.setOnFocusChangeListener(new FormataTelefone());
         editTextTelefone.addTextChangedListener(MaskWatcher.buildPhone());
-        empresaSetText(empresa.getTelefoneEmpresa(), editTextTelefone);
         buttonConfiguraTelefoneEmpresa.setOnClickListener(view1 -> toggleTextInputLayout(inputLayoutTelefoneEmpresa));
     }
 
@@ -117,7 +150,6 @@ public class EditaEmpresaFragment extends DialogFragment {
         MaterialButton buttonConfiguraNomeEmpresa = view.findViewById(R.id.fragment_dialog_configura_nome_empresa);
         TextInputLayout inputLayoutNomeEmpresa = view.findViewById(R.id.fragment_dialog_nome_empresa);
         editTextNome = inputLayoutNomeEmpresa.getEditText();
-        empresaSetText(empresa.getNomeEmpresa(), editTextNome);
         buttonConfiguraNomeEmpresa.setOnClickListener(view1 -> toggleTextInputLayout(inputLayoutNomeEmpresa));
     }
 
@@ -131,20 +163,11 @@ public class EditaEmpresaFragment extends DialogFragment {
         textInputLayout.setVisibility((textInputLayout.getVisibility() - View.GONE) * (-1));
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            Objects.requireNonNull(dialog.getWindow()).
-                    setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-    }
-
     private void logoutApp() {
         AuthUI.getInstance().signOut(Objects.requireNonNull(getContext())).addOnSuccessListener(aVoid -> {
             Intent telaLogin = new Intent(getContext(), SignInActivity.class);
             startActivity(telaLogin);
+            dismiss();
             Objects.requireNonNull(getActivity()).finish();
         });
         FirebaseAuth.getInstance().signOut();

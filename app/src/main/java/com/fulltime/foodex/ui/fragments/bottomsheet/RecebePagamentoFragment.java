@@ -29,10 +29,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.fulltime.foodex.R;
-import com.fulltime.foodex.helper.update.ListaCliente;
+import com.fulltime.foodex.helper.eventbus.ListaCliente;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.mask.MoneyMaskWatcher;
 import com.fulltime.foodex.model.Cliente;
+import com.fulltime.foodex.model.Pagamento;
 import com.fulltime.foodex.searchablespinner.SearchableSpinnerAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
@@ -113,6 +114,7 @@ public class RecebePagamentoFragment extends BottomSheetDialogFragment {
             if (clienteSelecionado != null && !valorPago.isEmpty()) {
                 clienteSelecionado.valorPago(valorPago);
                 UpdateData.atualizaCliente(clienteSelecionado);
+                UpdateData.atualizaPagamento(new Pagamento(clienteSelecionado, valorPago));
                 dismiss();
             }
         });

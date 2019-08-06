@@ -39,11 +39,11 @@ import java.util.List;
 public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
 
     private List<Produto> produtosSalvos = new ArrayList<>();
-    private OnItemClickListener listener;
+    private OnItemClickListener onItemClickListener;
     private Context context;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
+        this.onItemClickListener = listener;
     }
 
     @NonNull
@@ -112,7 +112,8 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
             nomeProduto = itemView.findViewById(R.id.item_produto_nome_do_produto);
             descricaoProduto = itemView.findViewById(R.id.item_produto_descricao_produto);
             valorProduto = itemView.findViewById(R.id.item_produto_valor);
-            itemView.setOnClickListener(v -> listener.onItemClickListener(getAdapterPosition(), produto));
+            if (onItemClickListener != null)
+                itemView.setOnClickListener(v -> onItemClickListener.onItemClickListener(getAdapterPosition(), produto));
         }
 
         void bindHolder(Produto produto) {
@@ -121,6 +122,5 @@ public class ProdutoAdapter extends Adapter<ProdutoAdapter.ProdutoViewHolder> {
             descricaoProduto.setText(produto.getDescricao());
             valorProduto.setText(context.getString(R.string.sifra, produto.getValor()));
         }
-
     }
 }
