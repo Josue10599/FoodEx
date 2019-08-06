@@ -33,7 +33,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.eventbus.ListaVenda;
 import com.fulltime.foodex.helper.eventbus.ListaVendaVazia;
-import com.fulltime.foodex.helper.eventbus.ShowFAB;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Venda;
 import com.fulltime.foodex.ui.fragments.bottomsheet.DetalhesVendaFragment;
@@ -66,7 +65,6 @@ public class VendasFragments extends Fragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        EventBus.getDefault().post(new ShowFAB());
     }
 
     @Override

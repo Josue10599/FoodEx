@@ -33,7 +33,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.fulltime.foodex.R;
 import com.fulltime.foodex.helper.eventbus.ListaPagamentoVazia;
 import com.fulltime.foodex.helper.eventbus.ListaPagamentos;
-import com.fulltime.foodex.helper.eventbus.ShowFAB;
 import com.fulltime.foodex.helper.update.UpdateData;
 import com.fulltime.foodex.model.Pagamento;
 import com.fulltime.foodex.ui.recyclerview.adapter.PagamentosAdapter;
@@ -62,7 +61,6 @@ public class PagamentosFragments extends Fragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        EventBus.getDefault().post(new ShowFAB());
     }
 
     @Override

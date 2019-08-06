@@ -53,6 +53,22 @@ public class ListaRegistrosFragment extends Fragment {
         assert getFragmentManager() != null;
         VendasViewPager adapter = new VendasViewPager(getFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, getContext());
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                EventBus.getDefault().post(new ShowFAB());
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                EventBus.getDefault().post(new ShowFAB());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                EventBus.getDefault().post(new ShowFAB());
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
     }
 
