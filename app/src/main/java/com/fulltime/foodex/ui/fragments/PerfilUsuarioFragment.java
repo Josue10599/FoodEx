@@ -56,6 +56,7 @@ public class PerfilUsuarioFragment extends Fragment {
     private final Usuario usuario;
     private View perfilUsuarioFragment;
     private ProgressBar loading;
+    private MaterialButton buttonAddBusiness;
     private Empresa empresa = new Empresa();
 
     public PerfilUsuarioFragment(Usuario usuario) {
@@ -103,14 +104,14 @@ public class PerfilUsuarioFragment extends Fragment {
         this.empresa = empresa;
         configuraDadosDaEmpresa();
         setGone(loading);
+        setGone(buttonAddBusiness);
     }
 
     @Subscribe
     public void firstCorporation(FirstCorporation firstCorporation) {
         setGone(loading);
-        empresa = firstCorporation.getEmpresa();
-        MaterialButton buttonAddBusiness = perfilUsuarioFragment.findViewById(id.fragment_perfil_button_add_business);
         setVisible(buttonAddBusiness);
+        empresa = firstCorporation.getEmpresa();
         buttonAddBusiness.setOnClickListener(view -> {
             openDialogConfig();
             setGone(buttonAddBusiness);
@@ -119,6 +120,7 @@ public class PerfilUsuarioFragment extends Fragment {
 
     private void buttonBusinessConfig() {
         ImageButton setUpBusinessButton = perfilUsuarioFragment.findViewById(id.fragment_perfil_config_button);
+        buttonAddBusiness = perfilUsuarioFragment.findViewById(id.fragment_perfil_button_add_business);
         setUpBusinessButton.setOnClickListener(view -> openDialogConfig());
     }
 
@@ -165,11 +167,11 @@ public class PerfilUsuarioFragment extends Fragment {
         textViewEmpresaEndereco.setText(empresa.getEnderecoEmpresa());
     }
 
-    private void setVisible(View textViewNome) {
-        textViewNome.setVisibility(VISIBLE);
+    private void setVisible(View view) {
+        view.setVisibility(VISIBLE);
     }
 
-    private void setGone(View buttonAddBusiness) {
-        buttonAddBusiness.setVisibility(GONE);
+    private void setGone(View view) {
+        view.setVisibility(GONE);
     }
 }
