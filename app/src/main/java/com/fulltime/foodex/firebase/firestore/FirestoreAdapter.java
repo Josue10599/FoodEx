@@ -77,7 +77,7 @@ public class FirestoreAdapter {
 
     public void getProdutos(EventListener<QuerySnapshot> eventListener) {
         getUser().collection(PRODUTOS)
-                .orderBy(PRODUTO_CAMPO_VALOR, ASCENDING)
+                .orderBy(PRODUTO_CAMPO_VALOR, DESCENDING)
                 .addSnapshotListener(eventListener);
     }
 
