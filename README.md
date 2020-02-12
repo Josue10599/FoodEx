@@ -41,21 +41,24 @@ Aqui devemos ir em **Regras** e adicionar as seguintes condições dentro de *se
 ```
   match /databases/{database}/documents {
   	match /usuario/{usuario} {
-    	allow read, update, delete: if request.auth.uid == usuario
-      allow create: if request.auth.uid != null
-  	  match /clientes/{clientes} {
-	      allow read, create, update, delete: if request.auth.uid == usuario; 
-    	}
-    	match /produtos/{produtos} {
-      	allow read, create, update, delete: if request.auth.uid == usuario; 
-    	}
-    	match /vendas/{vendas} {
-      	allow read, create, delete: if request.auth.uid == usuario;
-    	}
-      match /empresa/{empresa} {
-      	allow read, create, update, delete: if request.auth.uid == usuario;
-      }
-  	}
+    		allow read, update, delete: if request.auth.uid == usuario
+        	allow create: if request.auth.uid != null
+      		match /clientes/{clientes} {
+	  		allow read, create, update, delete: if request.auth.uid == usuario; 
+    		}
+    		match /produtos/{produtos} {
+      	  		allow read, create, update, delete: if request.auth.uid == usuario; 
+    		}
+	    	match /vendas/{vendas} {
+      		  allow read, create, delete: if request.auth.uid == usuario;
+    		}
+	        match /pagamentos/{pagamentos} {
+        	  allow read, create, delete: if request.auth.uid == usuario;
+	        }
+        	match /empresa/{empresa} {
+	      	  allow read, create, update, delete: if request.auth.uid == usuario;
+        	}
+     	}
   }
 ```
 
